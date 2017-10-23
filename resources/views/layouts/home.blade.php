@@ -16,6 +16,7 @@
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 </head>
     <body>
+        <div class="home-bg" style="background-image: url('{{asset('public/img/background/darkblue.jpg')}}')">
         <div class="container home-header">
         <div class="row">
             @include('nav.main')
@@ -26,7 +27,7 @@
         </div>
 
         </div>
-
+        </div>
         <!-- Scripts -->
         <script src="{{asset('public/js/jquery-3.2.1.min.js')}}"></script>
         <script src="{{ asset('public/js/app.js') }}"></script>
