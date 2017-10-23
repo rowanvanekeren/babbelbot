@@ -1,0 +1,211 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);* {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-image: url("/afstuderen/babbelbot/public/img/background/darkblue.jpg");
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
+}
+
+.navbar {
+  width: 100%;
+  padding: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  position: relative;
+  z-index: 3;
+}
+
+.navbar-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navbar-inner #nav-logo img {
+  width: 200px;
+}
+
+.navbar-inner ul.nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.navbar-inner ul.nav .burger-main .burger {
+  color: #4ca78c;
+  font-size: 30px;
+}
+
+.navbar-inner ul.nav li {
+  display: inline;
+}
+
+.navbar-inner ul.nav li a {
+  color: #4ca78c;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: 15px;
+  padding: 5px;
+  border: 2px solid #4ca78c;
+}
+
+@media only screen and (max-width: 500px) {
+  ul.nav li:not(.burger-main) {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  ul.nav li.burger-main {
+    display: none;
+  }
+}
+
+.background-gradient {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  /* FF3.6-15 */
+  /* Chrome10-25,Safari5.1-6 */
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.65)), to(transparent));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0%, transparent 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
+  /* IE6-9 */
+}
+
+.home-cta-section {
+  width: 100%;
+  text-align: center;
+}
+
+.home-title {
+  position: relative;
+  color: #dbdbdb;
+  font-size: 80px;
+  line-height: 70px;
+  width: 100%;
+}
+
+.home-cta {
+  position: relative;
+  font-weight: 600;
+  font-size: 25px;
+  color: #dbdbdb;
+  border: 4px solid #4ca78c;
+  background-color: #4ca78c;
+  padding: 15px;
+}
+
+.home-cta:hover {
+  text-decoration: none;
+  -webkit-animation-name: home-cta-transition;
+          animation-name: home-cta-transition;
+  -webkit-animation-duration: 0.5s;
+          animation-duration: 0.5s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes home-cta-transition {
+  0% {
+    border: 4px solid #4ca78c;
+    background-color: #4ca78c;
+    color: #dbdbdb;
+  }
+
+  100% {
+    background-color: transparent;
+    color: #4ca78c;
+  }
+}
+
+@keyframes home-cta-transition {
+  0% {
+    border: 4px solid #4ca78c;
+    background-color: #4ca78c;
+    color: #dbdbdb;
+  }
+
+  100% {
+    background-color: transparent;
+    color: #4ca78c;
+  }
+}
+
+.chat-section {
+  width: 500px;
+  max-height: 500px;
+  -webkit-transform: rotate(5deg);
+          transform: rotate(5deg);
+  margin-top: 30px;
+}
+
+.chat-section .chat-user,
+.chat-section .chat-bot {
+  position: relative;
+  margin: 10px;
+}
+
+.chat-section .chat-user p,
+.chat-section .chat-bot p {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chat-section .chat-row {
+  width: 100%;
+}
+
+.chat-section .chat-user {
+  float: right;
+  border-radius: 50px 50px 0 50px;
+  background-color: rgba(76, 167, 140, 0.51);
+}
+
+.chat-section .chat-user p {
+  padding-left: 30px;
+  padding-right: 30px;
+  color: #dbdbdb;
+}
+
+.chat-section .chat-bot {
+  float: left;
+  border-radius: 0 50px 50px 50px;
+  background-color: rgba(0, 0, 0, 0.54);
+}
+
+.chat-section .chat-bot p {
+  padding-right: 30px;
+  padding-left: 30px;
+  color: #dbdbdb;
+}
+
+.chat-section .chat-input {
+  width: 100%;
+}
+
+.chat-section .chat-input .chat-input-field {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 30px;
+}
+

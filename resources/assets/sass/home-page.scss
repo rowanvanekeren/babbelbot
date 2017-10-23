@@ -1,0 +1,109 @@
+.home-left{
+
+}
+
+.home-cta-section{
+  width: 100%;
+  text-align: center;
+}
+
+.home-title{
+  position: relative;
+  color: #dbdbdb;
+  font-size: 80px;
+  line-height: 70px;
+  width: 100%;
+  //text-shadow: 8px 8px 10px #393939;
+
+}
+
+.home-cta{
+  position: relative;
+  font-weight: 600;
+  font-size: 25px;
+  color:  #dbdbdb;
+  border:4px solid $main-color;
+  background-color: $main-color;
+  padding: 15px;
+
+
+  &:hover{
+
+    text-decoration: none;
+    animation-name: home-cta-transition;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+
+    
+  }
+
+}
+
+@keyframes home-cta-transition {
+  0%{
+    border:4px solid $main-color;
+    background-color: $main-color;
+    color:  #dbdbdb;
+  }
+  100%{
+    background-color: rgba(0, 0, 0, 0);
+    color: $main-color;
+  }
+}
+
+.chat-section{
+
+  width: 500px;
+  max-height: 500px;
+  transform: rotate(5deg);
+  margin-top: 30px;
+
+.chat-user, .chat-bot{
+  //width: 300px;
+  position: relative;
+
+  margin: 10px;
+  p{
+    font-size: 15px;
+    font-weight: 600;
+
+
+  }
+}
+
+.chat-row{
+  width: 100%;
+}
+.chat-user{
+  float:right;
+  border-radius: 50px 50px 0 50px;
+  p{
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #dbdbdb;
+  }
+  background-color: rgba(76, 167, 140, 0.51);
+}
+.chat-bot{
+  float: left;
+  border-radius: 0 50px 50px 50px;
+  p{
+    padding-right: 30px;
+    padding-left: 30px;
+    color: #dbdbdb;
+  }
+  background-color: rgba(0, 0, 0, 0.54);
+
+
+}
+  .chat-input{
+    width: 100%;
+
+    .chat-input-field{
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 30px;
+    }
+  }
+}
