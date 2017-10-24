@@ -90,6 +90,70 @@ body {
   /* IE6-9 */
 }
 
+.left-navigation {
+  float: left;
+  width: 250px;
+  background-color: #2d333f;
+  height: 100vh;
+}
+
+.left-navigation .top-info-bar {
+  height: 60px;
+  background-color: #353b49;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.left-navigation .top-info-bar img {
+  width: 150px;
+}
+
+.left-navigation .location-navigation {
+  height: 30px;
+  width: 100%;
+}
+
+.left-navigation .center-navigation {
+  padding: 15px 0;
+}
+
+.left-navigation .center-navigation ul li {
+  margin: 5px;
+  font-size: 16px;
+}
+
+.left-navigation .center-navigation ul li a {
+  text-decoration: none;
+  color: #a4aab6;
+}
+
+.left-navigation .center-navigation ul li a .dash-icon {
+  width: 15px;
+  margin-right: 5px;
+  text-align: center;
+}
+
+.top-navigation {
+  float: right;
+  height: 60px;
+  width: calc(100% - 250px);
+  background-color: #fff;
+}
+
+.main-dashboard-wrapper {
+  float: right;
+  height: calc(100vh - 60px);
+  width: calc(100% - 250px);
+  background-color: #f3f4f9;
+}
+
 .home-bg {
   min-height: 100vh;
 }
