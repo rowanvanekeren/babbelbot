@@ -24,6 +24,7 @@ a{
 
 .hidden{
   display:none !important;
+
 }
 
 .form-group{
@@ -59,7 +60,7 @@ a{
 }
 .see-password-input{
   position: relative;
-  i{
+  .password-eye-icon{
     color: $font-color-dark-grey;
     cursor: pointer;
     position: absolute;
@@ -72,7 +73,47 @@ a{
 
   }
 }
+.fa-repeat{
+  display:block;
+  -webkit-animation: rotate-infinite 1s infinite; /* Safari 4.0 - 8.0 */
+  animation: rotate-infinite 1s infinite;
 
+}
+.input-wrapper{
+  position: relative;
+  width: auto;
+  transition: 0.5s;
+
+}
+
+
+.input-saving-overlay{
+  position: absolute;
+  bottom: 0;
+  right: -25px;
+  top: 0;
+
+}
+.input-saving-overlay:before{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes rotate-infinite {
+  0%{
+    -ms-transform: rotate(0deg); /* IE 9 */
+    -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+    transform: rotate(0deg);
+  }
+
+  100%{
+    -ms-transform: rotate(360deg); /* IE 9 */
+    -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+    transform: rotate(360deg);
+  }
+}
 .main-btn{
   background-color: $main-color;
   color:white;
@@ -113,4 +154,8 @@ a{
 
   background-color: $main-color;
 }
+::selection{
+  background: $main-color;
+  color: #fff;
 
+}
