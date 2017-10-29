@@ -20,11 +20,11 @@
 
             @include('nav.dashboard')
 
-            <div class="main-dashboard-wrapper">
+            <div class="main-dashboard-wrapper ">
                 @yield('content')
             </div>
 <!-- Scripts -->
 <script src="{{asset('public/js/jquery-3.2.1.min.js')}}"></script>
-<script src="{{ asset('public/js/app.js') }}"></script>
+<script src="{{ asset('public/js/dashboard.js') }}"></script>
 </body>
 </html>

@@ -8,3 +8,109 @@ body{
 
 }
 
+ul, a, div , p , li, h1 , h2 ,h3 ,h4 ,h5 ,h6, i{
+  padding:0 ;
+  margin: 0;
+}
+li{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+  &:hover{
+    text-decoration: none;
+  }
+}
+
+.hidden{
+  display:none !important;
+}
+
+.form-group{
+  padding: 5px 0;
+  input{
+    background:none;
+    border: 2px solid $font-color-grey;
+    padding: 5px;
+    font-size: $font-size-2;
+
+
+    &:focus{
+      outline: $main-color solid;
+    }
+  }
+}
+.inp-head-name{
+  font-size: 30px;
+  padding: 5px 0;
+  border: none;
+  font-weight: 600;
+  color: $font-color-dark-grey;
+  border-bottom: 4px solid rgba(255, 255, 255, 0);
+  transition: 0.5s ease;
+  &:focus{
+    outline: none;
+    border-bottom: 4px solid $font-color-dark-grey;
+  }
+
+  &:hover{
+    border-bottom: 4px solid $font-color-dark-grey;
+  }
+}
+.see-password-input{
+  position: relative;
+  i{
+    color: $font-color-dark-grey;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    padding: 8px;
+    font-size: $font-size-2;
+  }
+  input{
+    padding-right: 25px;
+
+  }
+}
+
+.main-btn{
+  background-color: $main-color;
+  color:white;
+  font-size: $font-size-2;
+  border: 2px solid $main-color;
+  padding: 5px 10px;
+  transition:  0.5s;
+
+  &:hover{
+    background: none;
+    color: $main-color;
+  }
+}
+
+.top-row-navigation{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.align-right{
+  text-align: right;
+}
+
+::-webkit-scrollbar{
+  width: 14px;
+  height: 18px;
+  border: 4px solid rgba(0, 0, 0, 0);
+
+}
+
+::-webkit-scrollbar-thumb{
+  height: 6px;
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+
+  -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+
+
+  background-color: $main-color;
+}
+

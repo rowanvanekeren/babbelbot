@@ -1,6 +1,7 @@
 <div class="left-navigation">
 <div class="top-info-bar">
     <a id="nav-logo" href="/"><img src="{{asset('public/img/logo/babbelbot-logo.png')}}" alt="babbelbot logo"></a>
+    <a id="nav-bars" href="/"><i class="fa fa-bars" aria-hidden="true"></i></a>
 </div>
 <div class="location-navigation">
 
@@ -8,7 +9,16 @@
 <div class="center-navigation">
     <ul>
         <li>
-            <a href=""><i class="fa fa-list dash-icon" aria-hidden="true"></i> Apps</a>
+            <a href="" class="apps-nav active"><i class="fa fa-list dash-icon" aria-hidden="true"></i> Apps</a>
+            <ul class="center-sub-nav">
+                <li class="active-app-nav"><span>kies een app<i class="fa fa-circle app-on-off inactive-app-color" aria-hidden="true"></i></span></li>
+
+                <li class="sub-menu-seperator "><hr></li>
+                <li class=""><a href=""><i class="fa fa-comments" aria-hidden="true"></i>Dialogen</a></li>
+                <li class=""><a href=""><i class="fa fa-comment" aria-hidden="true"></i>Standaard antwoorden</a></li>
+                <li class=""><a href=""><i class="fa fa-book" aria-hidden="true"></i> Entities</a></li>
+
+            </ul>
         </li>
         <li>
             <a href=""><i class="fa fa-question dash-icon" aria-hidden="true"></i> Help</a>
@@ -21,5 +31,27 @@
 </div>
 
 <div class="top-navigation">
+<ul class="top-breadcrumbs">
+    <li>
+        <a href="">Apps</a>
 
+    </li>
+    <li>
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </li>
+    <li>
+        <a href="">Test</a>
+    </li>
+</ul>
+<ul class="top-user">
+        <li class="top-user-li active-user">
+            <a href="">Hallo, Rowan van Ekeren <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+                <ul class="top-user-sub">
+                 <li><a href=""><i class="fa fa-sign-out" aria-hidden="true"></i>  Uitloggen </a></li>
+                </ul>
+        </li>
+        <li class="top-user-li">
+           <a href=""> <i class="fa fa-cog" aria-hidden="true"></i></a>
+        </li>
+</ul>
 </div>
