@@ -1,3 +1,5 @@
+setTimeout(function(){
+
 $(document).ready(function () {
 
     passwordHint();
@@ -10,7 +12,7 @@ $(document).ready(function () {
 function passwordHint() {
     var passwordIcon = '.see-password-input>i';
     $(passwordIcon).click(function (e) {
-
+        console.log('eye clicked');
         $(this).parent().children('input').focus();
         if ($(this).parent().children('input').attr('type') == 'text') {
             $(this).parent().children('input').attr('type', 'password');
@@ -23,6 +25,10 @@ function passwordHint() {
 
 }
 
+function toggleError(elem, errorArray, showOrHide){
+
+    var el = $('.no-error'); el.addClass('has-error'); el.removeClass('no-error');
+}
 
 function testFunction() {
     var inpWrapperClass = '.input-wrapper';
@@ -93,9 +99,12 @@ function testFunction() {
         }
     });
 
+
+
+
     //function activateInputLoader(element)
 
-    //function changeInputLoaderState(element , succes/error , message (optional) )
+    //function changeInputLoaderState(element , succes/error/loading/);
 
     //function closeInputLoader(element);
 
@@ -103,3 +112,4 @@ function testFunction() {
 
     //focus and onchange fix
 }
+},100);

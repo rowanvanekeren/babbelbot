@@ -3,7 +3,7 @@
   margin-bottom: 40px;
   box-shadow: 4px 8px 15px  rgba(0, 0, 0, 0.3);
   padding: 15px;
-  > div:not(:last-child){
+  > div:not(:last-child),  form>div:not(:last-child){
     margin-bottom: 15px;
   }
   .app-top-section{
@@ -29,7 +29,50 @@
     text-align: right;
   }
 }
+.new-app{
+  z-index: 55;
+  overflow:hidden;
+  height: auto;
 
+
+  opacity: 0 ;
+}
+.new-app.ng-enter {
+  transition: 0.5s;
+  opacity: 0 ;
+}
+
+.new-app.ng-enter.ng-enter-active {
+  transition: 0.5s ease-in;
+  opacity:1 ;
+}
+.apps-loading{
+  margin: 15px;
+  text-align: center;
+  .fa-spinner{
+    color: $main-color;
+    font-size: 50px;
+    display: inline-block;
+    -webkit-animation: rotate-infinite-linear 1s infinite; /* Safari 4.0 - 8.0 */
+    animation: rotate-infinite-linear 1s infinite;
+  -webkit-animation-timing-function: linear; /* Safari 4.0 - 8.0 */
+    animation-timing-function: linear;;
+  }
+}
+
+@keyframes rotate-infinite-linear {
+  0% {
+    -ms-transform: rotate(0deg); /* IE 9 */
+    -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -ms-transform: rotate(360deg); /* IE 9 */
+    -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+    transform: rotate(360deg);
+  }
+}
 
 @media only screen and (max-width: 767px) {
   .app-wrapper{

@@ -45,9 +45,9 @@
 </ul>
 <ul class="top-user">
         <li class="top-user-li active-user">
-            <a href="">Hallo, Rowan van Ekeren <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <a href="">Hallo, {{Auth::user()->name}} <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
                 <ul class="top-user-sub">
-                 <li><a href=""><i class="fa fa-sign-out" aria-hidden="true"></i>  Uitloggen </a></li>
+                 <li><a href="{{ url('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i>  Uitloggen </a></li>
                 </ul>
         </li>
         <li class="top-user-li">

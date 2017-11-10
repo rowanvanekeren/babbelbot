@@ -1,47 +1,102 @@
-*{
+* {
   font-family: $main-font;
 }
 
-body{
+body {
 
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
 
 }
 
-ul, a, div , p , li, h1 , h2 ,h3 ,h4 ,h5 ,h6, i{
-  padding:0 ;
+ul, a, div, p, li, h1, h2, h3, h4, h5, h6, i {
+  padding: 0;
   margin: 0;
 }
-li{
+
+li {
   list-style: none;
 }
-a{
+
+a {
   text-decoration: none;
-  &:hover{
+  &:hover {
     text-decoration: none;
   }
 }
 
-.hidden{
-  display:none !important;
+.hidden {
+  display: none !important;
 
 }
 
-.form-group{
+.form-group {
   padding: 5px 0;
-  input{
-    background:none;
+  .default-input {
+    background: none;
     border: 2px solid $font-color-grey;
     padding: 5px;
     font-size: $font-size-2;
 
-
-    &:focus{
+    &:focus {
       outline: $main-color solid;
     }
   }
+  .inp-description {
+    max-width: 100%;
+    padding: 5px 0;
+    border: none;
+    font-weight: 600;
+    color: $font-color-dark-grey;
+    border-bottom: 4px solid rgba(255, 255, 255, 0);
+    transition: border 0.5s ease;
+    &:focus {
+      outline: none;
+      border-bottom: 4px solid $font-color-dark-grey;
+    }
+
+    &:hover {
+      border-bottom: 4px solid $font-color-dark-grey;
+    }
+  }
+
+
+
 }
-.inp-head-name{
+
+.input-error{
+  overflow:hidden;
+  div{
+
+    position: relative;
+    transition: 0.5s;
+    color: $main-error-red;
+    padding: 5px;
+    font-size: $font-size-1;
+    width:100%;
+    border: 1px solid $main-error-red;
+  }
+
+  .no-error{
+
+    margin-top: -40px;
+    opacity: 0;
+  }
+  .has-error{
+    &.ng-enter {
+      margin-top: -40px;
+      opacity: 0;
+    }
+
+    &.ng-enter.ng-enter-active {
+      margin-top: 5px;
+      opacity: 1;
+    }
+    margin-top: 5px;
+    opacity: 1;
+  }
+}
+
+.inp-head-name {
   font-size: 30px;
   padding: 5px 0;
   border: none;
@@ -49,18 +104,21 @@ a{
   color: $font-color-dark-grey;
   border-bottom: 4px solid rgba(255, 255, 255, 0);
   transition: 0.5s ease;
-  &:focus{
+  &:focus {
     outline: none;
     border-bottom: 4px solid $font-color-dark-grey;
   }
 
-  &:hover{
+  &:hover {
     border-bottom: 4px solid $font-color-dark-grey;
   }
 }
-.see-password-input{
+
+
+
+.see-password-input {
   position: relative;
-  .password-eye-icon{
+  .password-eye-icon {
     color: $font-color-dark-grey;
     cursor: pointer;
     position: absolute;
@@ -68,33 +126,35 @@ a{
     padding: 8px;
     font-size: $font-size-2;
   }
-  input{
+  input {
     padding-right: 25px;
 
   }
 }
-.fa-repeat{
-  display:block;
+
+.fa-repeat {
+  display: block;
   -webkit-animation: rotate-infinite 1s infinite; /* Safari 4.0 - 8.0 */
   animation: rotate-infinite 1s infinite;
 
 }
-.input-wrapper{
+
+.input-wrapper {
   position: relative;
   width: auto;
   transition: 0.5s;
 
 }
 
-
-.input-saving-overlay{
+.input-saving-overlay {
   position: absolute;
   bottom: 0;
   right: -25px;
   top: 0;
 
 }
-.input-saving-overlay:before{
+
+.input-saving-overlay:before {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -102,60 +162,85 @@ a{
 }
 
 @keyframes rotate-infinite {
-  0%{
+  0% {
     -ms-transform: rotate(0deg); /* IE 9 */
     -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
     transform: rotate(0deg);
   }
 
-  100%{
+  100% {
     -ms-transform: rotate(360deg); /* IE 9 */
     -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
     transform: rotate(360deg);
   }
 }
-.main-btn{
+
+.main-btn {
   background-color: $main-color;
-  color:white;
+  color: white;
   font-size: $font-size-2;
   border: 2px solid $main-color;
   padding: 5px 10px;
-  transition:  0.5s;
-
-  &:hover{
+  transition: 0.5s;
+  i{
+    display:inline-block;
+  }
+  &:hover {
     background: none;
     color: $main-color;
   }
 }
 
-.top-row-navigation{
+.modal-overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.60);
+}
+
+.top-row-navigation {
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
-.align-right{
+.align-right {
   text-align: right;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 14px;
   height: 18px;
   border: 4px solid rgba(0, 0, 0, 0);
 
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   height: 6px;
   border: 4px solid rgba(0, 0, 0, 0);
   background-clip: padding-box;
 
   -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
 
-
   background-color: $main-color;
 }
-::selection{
+
+::selection {
   background: $main-color;
   color: #fff;
 
+}
+
+.flowchart-wrapper{
+  overflow: hidden;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+.flowchart-base{
+
+  width: 10000px;
+  height: 10000px;
 }

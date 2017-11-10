@@ -60,119 +60,127 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */
+/******/ ({
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
-/* 4 */
+
+/***/ 8:
 /***/ (function(module, exports) {
 
-$(document).ready(function () {
+setTimeout(function () {
 
-    passwordHint();
+    $(document).ready(function () {
 
-    testFunction();
+        passwordHint();
 
-    //end of document ready function
-});
+        testFunction();
 
-function passwordHint() {
-    var passwordIcon = '.see-password-input>i';
-    $(passwordIcon).click(function (e) {
-
-        $(this).parent().children('input').focus();
-        if ($(this).parent().children('input').attr('type') == 'text') {
-            $(this).parent().children('input').attr('type', 'password');
-        } else if ($(this).parent().children('input').attr('type') == 'password') {
-            $(this).parent().children('input').attr('type', 'text');
-        }
-        $(this).toggleClass('fa-eye-slash');
+        //end of document ready function
     });
-}
 
-function testFunction() {
-    var inpWrapperClass = '.input-wrapper';
-    var inpIconElemClass = '.input-saving-overlay';
-    var inpElemClass = '.input-wrapper input';
+    function passwordHint() {
+        var passwordIcon = '.see-password-input>i';
+        $(passwordIcon).click(function (e) {
+            console.log('eye clicked');
+            $(this).parent().children('input').focus();
+            if ($(this).parent().children('input').attr('type') == 'text') {
+                $(this).parent().children('input').attr('type', 'password');
+            } else if ($(this).parent().children('input').attr('type') == 'password') {
+                $(this).parent().children('input').attr('type', 'text');
+            }
+            $(this).toggleClass('fa-eye-slash');
+        });
+    }
 
-    var shrinkClass = 'shrink-input-wapper';
+    function toggleError(elem, errorArray, showOrHide) {
 
-    $(window).resize(function () {
-        //  $(inpWrapperClass).css('width', '100%');
+        var el = $('.no-error');el.addClass('has-error');el.removeClass('no-error');
+    }
 
-        $('.processing:not(.disable-shrink)').css('width', '100%').css('width', 'calc(100% - 25px)');
-        $('.input-wrapper:not(.processing)').css('width', '100%');
-    });
-    $(inpElemClass).focus(function () {
+    function testFunction() {
+        var inpWrapperClass = '.input-wrapper';
+        var inpIconElemClass = '.input-saving-overlay';
+        var inpElemClass = '.input-wrapper input';
 
-        var currentParent = $(this).parent();
-        var cuurentInput = $(this);
+        var shrinkClass = 'shrink-input-wapper';
 
-        if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.animate({ 'width': currentParent.width() + 25 }, 100, 'linear', function () {
+        $(window).resize(function () {
+            //  $(inpWrapperClass).css('width', '100%');
+
+            $('.processing:not(.disable-shrink)').css('width', '100%').css('width', 'calc(100% - 25px)');
+            $('.input-wrapper:not(.processing)').css('width', '100%');
+        });
+        $(inpElemClass).focus(function () {
+
+            var currentParent = $(this).parent();
+            var cuurentInput = $(this);
+
+            if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
+                currentParent.animate({ 'width': currentParent.width() + 25 }, 100, 'linear', function () {
+                    currentParent.removeClass('processing');
+                    currentParent.children(inpIconElemClass).addClass('hidden');
+                    currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
+                    console.log('i added space');
+                });
+            } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
                 currentParent.removeClass('processing');
                 currentParent.children(inpIconElemClass).addClass('hidden');
                 currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-                console.log('i added space');
-            });
-        } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.removeClass('processing');
-            currentParent.children(inpIconElemClass).addClass('hidden');
-            currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-        }
-    });
-    $(inpElemClass).keyup(function (e) {
-        if (e.keyCode == 13) {
-            var currentParent = $(this).parent();
-            var cuurentInput = $(this);
-            if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing')) {
-                currentParent.addClass('processing');
-                cuurentInput.attr('disabled', true);
-                currentParent.animate({ 'width': currentParent.width() - 25 }, 100, 'linear', function () {
-                    setTimeout(function () {
-                        currentParent.children(inpIconElemClass).removeClass('hidden');
-
-                        setTimeout(function () {
-                            currentParent.children(inpIconElemClass).removeClass('fa-repeat').addClass('fa-check');
-                            cuurentInput.attr('disabled', false);
-                        }, 1000);
-                    }, 150);
-                });
-            } else if (!currentParent.hasClass('processing')) {
-
-                currentParent.addClass('processing');
-                cuurentInput.attr('disabled', true);
-
-                currentParent.children(inpIconElemClass).removeClass('hidden');
-
-                setTimeout(function () {
-                    currentParent.children(inpIconElemClass).removeClass('fa-repeat').addClass('fa-check');
-                    cuurentInput.attr('disabled', false);
-                }, 1000);
             }
-        }
-    });
+        });
+        $(inpElemClass).keyup(function (e) {
+            if (e.keyCode == 13) {
+                var currentParent = $(this).parent();
+                var cuurentInput = $(this);
+                if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing')) {
+                    currentParent.addClass('processing');
+                    cuurentInput.attr('disabled', true);
+                    currentParent.animate({ 'width': currentParent.width() - 25 }, 100, 'linear', function () {
+                        setTimeout(function () {
+                            currentParent.children(inpIconElemClass).removeClass('hidden');
 
-    //function activateInputLoader(element)
+                            setTimeout(function () {
+                                currentParent.children(inpIconElemClass).removeClass('fa-repeat').addClass('fa-check');
+                                cuurentInput.attr('disabled', false);
+                            }, 1000);
+                        }, 150);
+                    });
+                } else if (!currentParent.hasClass('processing')) {
 
-    //function changeInputLoaderState(element , succes/error , message (optional) )
+                    currentParent.addClass('processing');
+                    cuurentInput.attr('disabled', true);
 
-    //function closeInputLoader(element);
+                    currentParent.children(inpIconElemClass).removeClass('hidden');
 
-    //function watchloaderchange() <- not sure yet
+                    setTimeout(function () {
+                        currentParent.children(inpIconElemClass).removeClass('fa-repeat').addClass('fa-check');
+                        cuurentInput.attr('disabled', false);
+                    }, 1000);
+                }
+            }
+        });
 
-    //focus and onchange fix
-}
+        //function activateInputLoader(element)
+
+        //function changeInputLoaderState(element , succes/error/loading/);
+
+        //function closeInputLoader(element);
+
+        //function watchloaderchange() <- not sure yet
+
+        //focus and onchange fix
+    }
+}, 100);
 
 /***/ })
-/******/ ]);
+
+/******/ });

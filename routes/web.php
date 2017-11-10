@@ -15,8 +15,27 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('apps');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/create-app', 'AppController@create');
+    Route::get('/get-user-apps', 'AppController@getUserApps');
+
+
+
+    Route::get('/dashboard', function () {
+        return view('apps');
+    });
+
+
+});
+
+
+Route::get('/dashboard/dialogue', function () {
+    return view('app-dialogue');
+});
+
+Route::get('/dashboard/dialogue/diagram', function () {
+    return view('diagram');
 });
 
 Auth::routes();

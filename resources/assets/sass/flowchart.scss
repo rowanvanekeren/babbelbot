@@ -1,0 +1,80 @@
+#flowchart-menu{
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+
+
+  .toggle-menu{
+    float:right;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+    background: $main-color;
+    color: $font-color-subtile-white;
+    z-index: 15;
+  }
+
+  .toggle-menu-collapse{
+    z-index: 14;
+    position: absolute;
+    height: 80px;
+    left: -300px;
+    top: 0;
+    overflow:hidden;
+
+  }
+
+  .toggle-menu-close{
+    display:block;
+    height: 80px;
+    width: 20px;
+    float:left;
+    background: $main-color;
+    >div{
+      height: 80px;
+      width: 20px;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      color: $font-color-subtile-white;
+    }
+
+
+
+
+  }
+.toggle-content-wrapper{
+  position: relative;
+  width:300px;
+  left: 0;
+  transition: 0.2s;
+  &.toggle-animation{
+    left:300px ;
+  }
+}
+  .toggle-menu-content{
+    padding: 5px;
+    display:block;
+    float:left;
+    height: 80px;
+    width: calc(100% - 20px);
+    background: #fff;
+
+
+  }
+}
+
+#flowchart-popup{
+  width: 500px;
+  height:600px;
+  background: #fff;
+  position: absolute;
+  z-index: 15;
+  left: calc(50% - 250px);
+  top: 75px;
+  box-shadow: 4px 8px 15px  rgba(0, 0, 0, 0.3);
+}
