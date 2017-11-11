@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/create-app', 'AppController@create');
     Route::post('/update-app', 'AppController@update');
     Route::post('/delete-app', 'AppController@delete');
+    Route::post('/select-app', 'AppController@select');
 
     Route::get('/get-user-apps', 'AppController@getUserApps');
 

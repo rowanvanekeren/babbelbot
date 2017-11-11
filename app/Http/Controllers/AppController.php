@@ -40,6 +40,14 @@ class AppController extends Controller
 
         return $request;
     }
+
+    public function select(Request $request){
+
+        $app = App::where('id', $request->id)->first();
+
+        return $app;
+    }
+
     public function update(Request $request){
         $validationData = [];
 

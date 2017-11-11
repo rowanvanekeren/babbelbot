@@ -1,4 +1,4 @@
-angular.module('botApp').controller("appController", function ($scope, $http, $parse) {
+angular.module('botApp').controller("appController", function ($rootScope, $scope, $http, $parse) {
 
     $scope.newAppTrigger = function (formElem) {
        console.log(formElem);
@@ -292,6 +292,30 @@ angular.module('botApp').controller("appController", function ($scope, $http, $p
                 currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
             }
 
+    }
+
+
+    $scope.selectApp = function(app){
+        var req = {
+            method: 'POST',
+            url: './select-app',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: app
+        };
+
+        $http(req).then(function (data) {
+            console.log(data);
+            $rootScope.$emit("toggleAnimation", data.data);
+
+
+
+        }).catch(function (data) {
+
+
+        });
     }
 
 });

@@ -122,6 +122,31 @@ angular.module('botApp').directive('myRepeatDirective', function () {
     };
 });
 
+/*angular.module('botApp').directive('navActiveApp', function() {
+ return {
+ restrict: 'A',
+ link: function(scope, element, attrs) {
+ scope.$on('broadCastActiveApp', function(event, broadCastActiveApp) {
+ console.log('broadcast nav');
+ // element.find('input').prop('checked', broadCastActiveApp);
+ });
+ }
+ };
+ });*/
+
+angular.module('botApp').directive('activeApp', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'A',
+        link: function link($scope, element, attrs) {
+
+            $rootScope.$on('toggleAnimation', function (event, data) {
+                console.log('get a broadcast');
+                $scope.$eval(attrs.activeApp, { $element: element, data: data });
+            });
+        }
+    };
+}]);
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {

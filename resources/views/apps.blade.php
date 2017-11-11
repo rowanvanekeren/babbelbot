@@ -146,14 +146,16 @@
                                 <input id="inp-dev-token" class="default-input " type="password" name="server_token"
                                        ng-model="app.server_token" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">
+
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
                             </div>
                         </div>
                     </div>
                     <div class="app-footer-section">
                         <button class="main-btn">Embedden</button>
-                        <button class="main-btn">Selecteer</button>
+                        <button class="main-btn" ng-click="selectApp(app)">Selecteer</button>
                     </div>
+
                 </div>
 
                 <div class="col-md-12 apps-loading" ng-show="loadingApps && !latestPost">

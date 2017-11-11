@@ -70,14 +70,35 @@
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+__webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("appController", function ($scope, $http, $parse) {
+/**
+ * Created by Rowan on 11-11-2017.
+ */
+angular.module('botApp').controller("navController", function ($scope, $http, $parse) {
+
+    /*  $scope.changeActiveApp = function(){
+      console.log('broadcasted to navcontroller');
+      }*/
+
+    $scope.changeActiveApp = function (data) {
+        console.log(data);
+
+        $scope.activeApp = data.title;
+    };
+});
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+angular.module('botApp').controller("appController", function ($rootScope, $scope, $http, $parse) {
 
     $scope.newAppTrigger = function (formElem) {
         console.log(formElem);
@@ -333,6 +354,23 @@ angular.module('botApp').controller("appController", function ($scope, $http, $p
             currentParent.children(inpIconElemClass).addClass('hidden');
             currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
         }
+    };
+
+    $scope.selectApp = function (app) {
+        var req = {
+            method: 'POST',
+            url: './select-app',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: app
+        };
+
+        $http(req).then(function (data) {
+            console.log(data);
+            $rootScope.$emit("toggleAnimation", data.data);
+        }).catch(function (data) {});
     };
 });
 
