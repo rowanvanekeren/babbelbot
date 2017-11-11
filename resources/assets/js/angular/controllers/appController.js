@@ -64,7 +64,62 @@ angular.module('botApp').controller("appController", function ($scope, $http, $p
 
 
     }
+    $scope.deleteAppTrigger = function(id){
 
+
+        $scope.deleteID = id;
+
+        console.log( $scope.deleteID);
+        $scope.showDeleteApp = !$scope.showDeleteApp;
+    };
+    $scope.deleteApp = function(event, id){
+
+        setLoadingButton('.danger-btn', true, 'Verwijder');
+        var req = {
+            method: 'POST',
+            url: './delete-app',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                id : id
+            }
+        };
+
+        $http(req).then(function (data) {
+            console.log(data);
+            setLoadingButton('.danger-btn', false, 'Verwijder');
+            $scope.getUserApps(1);
+            $scope.showDeleteApp = !$scope.showDeleteApp;
+
+
+        }).catch(function (data) {
+            console.log(data);
+
+        });
+
+    };
+    $scope.updateApp = function(updateData, currentElement){
+        var req = {
+            method: 'POST',
+            url: './update-app',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: updateData
+        };
+
+        $http(req).then(function (data) {
+            console.log(data);
+            shrinkLoading(currentElement, 'success');
+
+        }).catch(function (data) {
+            console.log(data);
+            shrinkLoading(currentElement, 'error');
+        });
+    };
     $scope.storeNewApp = function (currModel) {
 
         console.log(currModel);
@@ -152,4 +207,91 @@ angular.module('botApp').controller("appController", function ($scope, $http, $p
     $scope.$on("atBottomOfElem", function() {
         $scope.getUserApps();
     });
+    $scope.$on("repeatReady", function() {
+       console.log('klaar jonguh');
+    });
+
+    $scope.inputEnter = function(currentElement, currentScope) {
+
+        var inputObject = {};
+        inputObject[currentElement.attr('name')] = currentElement.val();
+        inputObject['id'] = currentScope.app.id;
+        //console.log(currentElement.attr('name') + " " + currentElement.val() + ' ' + currentScope.app.id);
+        console.log(inputObject);
+
+        shrinkLoading(currentElement, 'loading');
+        $scope.updateApp(inputObject, currentElement);
+
+
+
+    }
+
+    function shrinkLoading(element, state){
+        var inpIconElemClass = '.input-saving-overlay';
+        var inpElemClass = '.input-wrapper input';
+        var currentParent = element.parent();
+        var cuurentInput = element;
+        if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing') && state == 'loading') {
+            currentParent.addClass('processing');
+            currentParent.children(inpIconElemClass).removeClass('fa-times').addClass('fa-repeat');
+            cuurentInput.attr('disabled', true);
+            currentParent.animate({'width': (currentParent.width() - 25)}, 100, 'linear', function () {
+                setTimeout(function () {
+                    currentParent.children(inpIconElemClass).removeClass('hidden');
+                }, 150);
+
+            });
+        }else if (!currentParent.hasClass('processing')) {
+
+            currentParent.addClass('processing');
+            cuurentInput.attr('disabled', true);
+
+            currentParent.children(inpIconElemClass).removeClass('hidden');
+
+
+        }else if(state == 'success') {
+
+                currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-times').addClass('fa-check');
+          /*  currentParent.removeClass('processing');*/
+                cuurentInput.attr('disabled', false);
+
+        }else if(state == 'error'){
+            currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-check').addClass('fa-times');
+          /*  currentParent.removeClass('processing');*/
+            cuurentInput.attr('disabled', false);
+        }
+
+
+
+
+
+
+    }
+
+    $scope.growBack = function(event){
+
+        console.log(event);
+        var inpElemClass = '.input-wrapper input';
+        var inpIconElemClass = '.input-saving-overlay';
+
+            var currentParent = $(event.target.parentElement);
+            var cuurentInput = $(event.currentTarget);
+
+            if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') &&
+                (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
+                currentParent.animate({'width': (currentParent.width() + 25)}, 100, 'linear', function () {
+                    currentParent.removeClass('processing');
+                    currentParent.children(inpIconElemClass).addClass('hidden');
+                    currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
+                    console.log('i added space');
+                });
+            } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') &&
+                (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
+                currentParent.removeClass('processing');
+                currentParent.children(inpIconElemClass).addClass('hidden');
+                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
+            }
+
+    }
+
 });

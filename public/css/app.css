@@ -38,6 +38,39 @@ a:hover {
   display: none !important;
 }
 
+.danger-btn {
+  background-color: #ff625d;
+  color: #fff;
+  font-size: 16px;
+  border: 2px solid #ff625d;
+  padding: 5px 10px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.danger-btn i {
+  display: inline-block;
+}
+
+.danger-btn:hover {
+  background: none;
+  color: #ff625d;
+}
+
+.warning-box {
+  position: fixed;
+  width: 500px;
+  left: calc(50% - 125px);
+  text-align: center;
+  top: 20%;
+  padding: 50px 0 !important;
+  z-index: 55;
+}
+
+.warning-box h2 {
+  margin-bottom: 25px;
+}
+
 .form-group {
   padding: 5px 0;
 }
@@ -213,7 +246,7 @@ a:hover {
 
 .main-btn {
   background-color: #4ca78c;
-  color: white;
+  color: #fff;
   font-size: 16px;
   border: 2px solid #4ca78c;
   padding: 5px 10px;

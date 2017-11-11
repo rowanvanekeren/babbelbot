@@ -102,6 +102,26 @@ angular.module('botApp').directive('scrolly', function () {
     };
 });
 
+angular.module('botApp').directive('myEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.myEnter, { $element: element });
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
+angular.module('botApp').directive('myRepeatDirective', function () {
+    return function (scope, element, attrs) {
+        if (scope.$last) {}
+    };
+});
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
