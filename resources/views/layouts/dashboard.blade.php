@@ -26,6 +26,13 @@
             <div  class="main-dashboard-wrapper"  scrolly="showMore()">
                 @yield('content')
             </div>
+
+            <script>
+
+                /* routes */
+
+                var ajaxAppSessionURL = '{{url("/check-app-session")}}';
+            </script>
 <!-- Scripts -->
     <script src="{{asset('public/js/jquery-3.2.1.min.js')}}"></script>
     @yield('custom-scripts-before')

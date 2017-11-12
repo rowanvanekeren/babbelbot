@@ -16,4 +16,8 @@ class App extends Model
     public function users() {
         return $this->belongsToMany( 'App\User');
     }
+
+    public function dialogues() {
+        return $this->hasMany( 'App\Dialogue' );
+    }
 }

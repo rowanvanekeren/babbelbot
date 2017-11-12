@@ -26,6 +26,20 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+    Route::get('/check-app-session', 'SessionController@checkActiveApp');
+
+    Route::group(['middleware' => 'checkapp'] ,function() {
+        Route::get('/dashboard/dialogue', function () {
+            return view('app-dialogue');
+        });
+
+        Route::post('/create-dialogue', 'DialogueController@create');
+        Route::post('/update-dialogue', 'DialogueController@update');
+        Route::post('/delete-dialogue', 'DialogueController@delete');
+        Route::post('/select-dialogue', 'DialogueController@select');
+        Route::get('/get-dialogues', 'DialogueController@getDialogues');
+    });
+
     Route::get('/dashboard', function () {
         return view('apps');
     });
@@ -34,9 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
-Route::get('/dashboard/dialogue', function () {
-    return view('app-dialogue');
-});
+
 
 Route::get('/dashboard/dialogue/diagram', function () {
     return view('diagram');

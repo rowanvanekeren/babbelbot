@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDialoguesTable extends Migration
+class CreateStateIntentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateDialoguesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dialogues', function (Blueprint $table) {
+        Schema::create('state_intents', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('description');
-            $table->integer('app_id')->unsigned();
+            $table->integer('state_id')->unsigned();
+            $table->string('intent');
+            $table->string('answers'); // object
+            $table->tinyInteger('type'); // freetext
+            //$table->string('');
             $table->tinyInteger('active');
             $table->timestamps();
-            $table->foreign('app_id')->references('id')->on('apps');
+            $table->foreign('state_id')->references('id')->on('states');
         });
     }
 
@@ -31,6 +33,6 @@ class CreateDialoguesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dialogues');
+        Schema::dropIfExists('state_intents');
     }
 }

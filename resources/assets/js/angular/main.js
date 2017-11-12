@@ -65,7 +65,7 @@ angular.module('botApp').directive('activeApp', ['$rootScope',function ($rootSco
         restrict: 'A',
         link: function ($scope, element, attrs) {
 
-            $rootScope.$on('toggleAnimation', function (event, data) {
+            $rootScope.$on('toggleApp', function (event, data) {
                 console.log('get a broadcast');
                 $scope.$eval(attrs.activeApp, {$element: element, data: data});
 
@@ -74,3 +74,43 @@ angular.module('botApp').directive('activeApp', ['$rootScope',function ($rootSco
         }
     };
 }]);
+
+angular.module('botApp').factory('shrinkLoading', function() {
+    return {
+        do: function(element, state) {
+            var inpIconElemClass = '.input-saving-overlay';
+            var inpElemClass = '.input-wrapper input';
+            var currentParent = element.parent();
+            var cuurentInput = element;
+            if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing') && state == 'loading') {
+                currentParent.addClass('processing');
+                currentParent.children(inpIconElemClass).removeClass('fa-times').addClass('fa-repeat');
+                cuurentInput.attr('disabled', true);
+                currentParent.animate({'width': (currentParent.width() - 25)}, 100, 'linear', function () {
+                    setTimeout(function () {
+                        currentParent.children(inpIconElemClass).removeClass('hidden');
+                    }, 150);
+
+                });
+            }else if (!currentParent.hasClass('processing')) {
+
+                currentParent.addClass('processing');
+                cuurentInput.attr('disabled', true);
+
+                currentParent.children(inpIconElemClass).removeClass('hidden');
+
+
+            }else if(state == 'success') {
+
+                currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-times').addClass('fa-check');
+                /*  currentParent.removeClass('processing');*/
+                cuurentInput.attr('disabled', false);
+
+            }else if(state == 'error'){
+                currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-check').addClass('fa-times');
+                /*  currentParent.removeClass('processing');*/
+                cuurentInput.attr('disabled', false);
+            }
+        }
+    };
+});

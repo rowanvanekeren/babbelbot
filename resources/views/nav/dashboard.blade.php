@@ -6,7 +6,7 @@
 <div class="location-navigation">
 
 </div>
-<div class="center-navigation" ng-controller="navController" active-app="changeActiveApp(data)">
+<div class="center-navigation" ng-controller="navController" ng-init="checkActiveApp()" active-app="changeActiveApp(data)">
     <ul>
         <li>
             <a href="" class="apps-nav active"><i class="fa fa-list dash-icon" aria-hidden="true"></i> Apps</a>
@@ -14,7 +14,7 @@
                 <li class="active-app-nav"><span>@{{activeApp ? activeApp : "Kies een app"}}<i class="fa fa-circle app-on-off "ng-class="(activeApp) ? 'active-app-color ' : 'inactive-app-color '" aria-hidden="true"></i></span></li>
 
                 <li class="sub-menu-seperator " ng-show="activeApp"><hr></li>
-                <li class="" ng-show="activeApp"><a href=""><i class="fa fa-comments" aria-hidden="true"></i>Dialogen</a></li>
+                <li class="" ng-show="activeApp"><a href="{{ url('./dashboard/dialogue') }}"><i class="fa fa-comments" aria-hidden="true"></i>Dialogen</a></li>
                 <li class="" ng-show="activeApp"><a href=""><i class="fa fa-comment" aria-hidden="true"></i>Standaard antwoorden</a></li>
                 <li class="" ng-show="activeApp"><a href=""><i class="fa fa-book" aria-hidden="true"></i> Entities</a></li>
             </ul>

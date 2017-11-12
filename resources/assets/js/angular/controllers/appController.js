@@ -308,7 +308,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
         $http(req).then(function (data) {
             console.log(data);
-            $rootScope.$emit("toggleAnimation", data.data);
+            $rootScope.$emit("toggleApp", data.data);
 
 
 

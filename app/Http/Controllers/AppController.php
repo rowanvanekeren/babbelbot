@@ -43,9 +43,12 @@ class AppController extends Controller
 
     public function select(Request $request){
 
+
         $app = App::where('id', $request->id)->first();
 
-        return $app;
+        $request->session()->put('active_app', $app);
+
+        return  $request->session()->get('active_app');
     }
 
     public function update(Request $request){
