@@ -1,0 +1,93 @@
+#flowchart-popup{
+  width: 500px;
+  height:600px;
+  background: #fff;
+  position: absolute;
+  z-index: 15;
+  left: calc(50% - 250px);
+  top: 75px;
+  box-shadow: 4px 8px 15px  rgba(0, 0, 0, 0.3);
+  overflow-y: scroll;
+  padding: 15px;
+  input{
+    width: 100%;
+  }
+}
+
+
+.found-intent{
+display:flex;
+  justify-content: space-between;
+  background: $font-color-subtile-white;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: 5px;
+/*  .main-btn{
+    padding: 2px 5px;
+    font-size: 15px;
+  }*/
+  .confidence-intent{
+    display:inline-block;
+    font-size: $font-size-2;
+    color: $font-color-grey;
+    border: 2px solid $font-color-grey;
+    padding: 5px 5px;
+  }
+  span{
+
+
+    font-size: $font-size-2;
+  }
+}
+
+.popup-wrapper{
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.span-option{
+  color: $main-color;
+  cursor: pointer;
+  text-align: right;
+}
+
+.current-active-intent{
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: space-between;
+  background: $font-color-subtile-white;
+/*  .main-btn{
+    padding: 2px 5px;
+    font-size: 15px;
+  }*/
+  i{
+    padding-left: 5px;
+    color:$main-error-red;
+    cursor: pointer;
+  }
+}
+.new-intent{
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  background: $font-color-subtile-white;
+/*  .main-btn{
+    padding: 2px 5px;
+    font-size: 15px;
+  }*/
+  input{
+    flex:2;
+    background: #fff !important;
+  }
+  button{
+
+    margin-left: 5px;
+  }
+  i{
+   padding-left: 5px;
+    color:$main-error-red;
+    cursor: pointer;
+  }
+}
+

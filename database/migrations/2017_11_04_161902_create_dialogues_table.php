@@ -16,9 +16,9 @@ class CreateDialoguesTable extends Migration
         Schema::create('dialogues', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('app_id')->unsigned();
-            $table->tinyInteger('active');
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
             $table->foreign('app_id')->references('id')->on('apps');
         });

@@ -14,7 +14,8 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/angular/main.js', 'public/js').
     js(['resources/assets/js/angular/controllers/navController.js',
         'resources/assets/js/angular/controllers/appController.js',
-        'resources/assets/js/angular/controllers/dialogueController.js'
+        'resources/assets/js/angular/controllers/dialogueController.js',
+        'resources/assets/js/angular/controllers/intentController.js'
     ], 'public/js/controllers.js').
     js('resources/assets/js/app.js', 'public/js').
     js(['resources/assets/js/dashboard.js'],'public/js').

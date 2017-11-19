@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAppsTable extends Migration
+class CreateStateIntentDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateAppsTable extends Migration
      */
     public function up()
     {
-        Schema::create('apps', function (Blueprint $table) {
+        Schema::create('state_intent_data', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->unique();
-            $table->string('access_token');
-            $table->string('server_token');
-            $table->integer('user_id')->unsigned();
+            $table->string('name');
+            $table->integer('state_intents_id')->unsigned()->nullable();
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('state_intents_id')->references('id')->on('state_intents');
         });
     }
 
@@ -32,6 +30,6 @@ class CreateAppsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apps');
+        Schema::dropIfExists('state_intent_data');
     }
 }

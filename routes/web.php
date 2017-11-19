@@ -45,6 +45,22 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
+    /*flowchart test */
+
+    Route::post('/testFlowChart', 'FlowChartController@test');
+    Route::post('/createState', 'FlowChartController@createState');
+    Route::post('/createStateLink', 'FlowChartController@createStateLink');
+    Route::post('/updateOperatorPosition', 'FlowChartController@updatePosition');
+    Route::post('/getAllStates', 'FlowChartController@getAllStates');
+
+
+    /* intent */
+    Route::post('/get-intent-wit', 'IntentController@getIntentWit');
+    Route::post('/save-intent-local-wit', 'IntentController@saveIntentToState');
+    Route::post('/save-intent-local', 'IntentController@saveIntentLocal');
+    Route::post('/get-state-intent', 'IntentController@getStateIntent');
+    Route::post('/update-state-type', 'IntentController@updateStateType');
+    Route::post('/save-intent-answer', 'IntentController@saveAnswer');
 });
 
 

@@ -16,9 +16,10 @@ class CreateStatesTable extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('dialogue_id')->unsigned();
-            $table->string('next_states');
-            $table->tinyInteger('start_state');
-            $table->tinyInteger('active');
+            $table->string('next_states')->nullable();
+            $table->tinyInteger('start_state')->default(0);
+
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
             $table->foreign('dialogue_id')->references('id')->on('dialogues');
         });

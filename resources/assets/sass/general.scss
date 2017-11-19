@@ -23,10 +23,52 @@ a {
     text-decoration: none;
   }
 }
+input[type=checkbox]{
+  &:checked{
+
+   /* border: 2px solid $main-color;*/
+
+    color: #99a1a7;
+  }
+  &:checked:active{
+
+  }
+  &:hover{
+ /*   border: 2px solid $main-color;*/
+  }
+
+  &:checked:after{
+    content: '\2714';
+    font-size: 14px;
+    position: absolute;
+    top: 0px;
+    left: 3px;
+    color: $main-color;
+  }
+  &:focus{
+    outline:none;
+  }
+  -webkit-appearance: none;
+  border: 2px solid $font-color-grey;
+  padding: 9px;
+  width: auto !important;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
 
 .hidden {
   display: none !important;
 
+}
+
+.checkbox-header{
+  display:flex;
+  align-items: center;
+  h1, h2, h3{
+    flex:2;
+    margin-left: 5px;
+  }
 }
 .danger-btn{
   background-color: $main-error-red;
@@ -140,9 +182,9 @@ a {
   }
 }
 
-.see-password-input {
+.see-password-input, .deletable-input {
   position: relative;
-  .password-eye-icon {
+  .password-eye-icon , .input-trash-icon {
     color: $font-color-dark-grey;
     cursor: pointer;
     position: absolute;
@@ -153,6 +195,13 @@ a {
   input {
     padding-right: 25px;
 
+  }
+
+  .input-trash-icon{
+    &:hover{
+      transition: 0.5s;
+      color:$main-error-red;
+    }
   }
 }
 
@@ -166,6 +215,8 @@ a {
 .input-wrapper {
   position: relative;
   width: auto;
+
+
   transition: 0.5s;
 
 }

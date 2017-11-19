@@ -41,7 +41,7 @@
     <script src="{{asset('public/js/angular/angular-cookies.min.js')}}"></script>
     <script src="{{asset('public/js/main.js')}}"></script>
     <script src="{{asset('public/js/controllers.js')}}"></script>
-    <script src="{{ asset('public/js/dashboard.js') }}"></script>
+   {{-- <script src="{{ asset('public/js/dashboard.js') }}"></script>--}}
 
     @yield('custom-scripts-after')
 

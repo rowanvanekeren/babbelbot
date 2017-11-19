@@ -17,4 +17,8 @@ class Dialogue extends Model
         return $this->belongsToMany( 'App\App');
     }
 
+    public function states() {
+        return $this->hasMany( 'App\State' );
+    }
+
 }

@@ -16,11 +16,12 @@ class CreateStateIntentsTable extends Migration
         Schema::create('state_intents', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('state_id')->unsigned();
-            $table->string('intent');
-            $table->string('answers'); // object
+            $table->string('intent')->nullable();
+            $table->string('action')->nullable();
+          //  $table->string('answers')->nullable(); // object
             $table->tinyInteger('type'); // freetext
-            //$table->string('');
-            $table->tinyInteger('active');
+           // $table->integer('intent_data')->unsigned()->nullable();
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
             $table->foreign('state_id')->references('id')->on('states');
         });

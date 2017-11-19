@@ -34,8 +34,58 @@ a:hover {
   text-decoration: none;
 }
 
+input[type=checkbox] {
+  -webkit-appearance: none;
+  border: 2px solid #a4aab6;
+  padding: 9px;
+  width: auto !important;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type=checkbox]:checked {
+  /* border: 2px solid $main-color;*/
+  color: #99a1a7;
+}
+
+input[type=checkbox]:hover {
+  /*   border: 2px solid $main-color;*/
+}
+
+input[type=checkbox]:checked:after {
+  content: '\2714';
+  font-size: 14px;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  color: #4ca78c;
+}
+
+input[type=checkbox]:focus {
+  outline: none;
+}
+
 .hidden {
   display: none !important;
+}
+
+.checkbox-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.checkbox-header h1,
+.checkbox-header h2,
+.checkbox-header h3 {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  margin-left: 5px;
 }
 
 .danger-btn {
@@ -161,11 +211,15 @@ a:hover {
   border-bottom: 4px solid #5e5e5e;
 }
 
-.see-password-input {
+.see-password-input,
+.deletable-input {
   position: relative;
 }
 
-.see-password-input .password-eye-icon {
+.see-password-input .password-eye-icon,
+.see-password-input .input-trash-icon,
+.deletable-input .password-eye-icon,
+.deletable-input .input-trash-icon {
   color: #5e5e5e;
   cursor: pointer;
   position: absolute;
@@ -174,8 +228,16 @@ a:hover {
   font-size: 16px;
 }
 
-.see-password-input input {
+.see-password-input input,
+.deletable-input input {
   padding-right: 25px;
+}
+
+.see-password-input .input-trash-icon:hover,
+.deletable-input .input-trash-icon:hover {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  color: #ff625d;
 }
 
 .fa-repeat {
@@ -1040,5 +1102,109 @@ a:hover {
   top: 75px;
   -webkit-box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.3);
           box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.3);
+  overflow-y: scroll;
+  padding: 15px;
+}
+
+#flowchart-popup input {
+  width: 100%;
+}
+
+.found-intent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: #e1e1e1;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5px;
+  margin-bottom: 5px;
+  /*  .main-btn{
+    padding: 2px 5px;
+    font-size: 15px;
+  }*/
+}
+
+.found-intent .confidence-intent {
+  display: inline-block;
+  font-size: 16px;
+  color: #a4aab6;
+  border: 2px solid #a4aab6;
+  padding: 5px 5px;
+}
+
+.found-intent span {
+  font-size: 16px;
+}
+
+.popup-wrapper {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.span-option {
+  color: #4ca78c;
+  cursor: pointer;
+  text-align: right;
+}
+
+.current-active-intent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: #e1e1e1;
+  /*  .main-btn{
+    padding: 2px 5px;
+    font-size: 15px;
+  }*/
+}
+
+.current-active-intent i {
+  padding-left: 5px;
+  color: #ff625d;
+  cursor: pointer;
+}
+
+.new-intent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #e1e1e1;
+  /*  .main-btn{
+    padding: 2px 5px;
+    font-size: 15px;
+  }*/
+}
+
+.new-intent input {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  background: #fff !important;
+}
+
+.new-intent button {
+  margin-left: 5px;
+}
+
+.new-intent i {
+  padding-left: 5px;
+  color: #ff625d;
+  cursor: pointer;
 }
 

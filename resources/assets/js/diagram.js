@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    var flowchartReady = false;
     var $flowchartPopup = $('#flowchart-popup');
     var $flowchart = $('#flowchart-base');
     var $container = $flowchart.parent();
@@ -33,70 +33,176 @@ $(document).ready(function() {
     });
 
     var data = {
-        defaultLinkColor : '4ca78c',
         operators: {
-            operator1: {
-                top: cy - 100,
-                left: cx - 200,
+            operator_89: {
+                top: '4640',
+                left: '4460',
                 properties: {
-                    title: 'Operator 1',
-                    inputs: {},
+                    title: '1 input & 1 output',
+                    inputs: {
+                        ins: {
+                            label: 'Input (:i)',
+                            multiple: true
+                        }
+                    },
                     outputs: {
-                        output_1: {
-                            label: 'Output 1',multiple: true
+                        outs: {
+                            label: 'Output (:i)',
+                            multiple: true
                         }
                     }
                 }
             },
-            operator2: {
-                top: cy,
-                left: cx + 140,
+            operator_90: {
+                top: '4640',
+                left: '5380',
                 properties: {
-                    title: 'Operator 2',
+                    title: '1 input & 1 output',
                     inputs: {
-                        input_1: {
-                            label: 'Input 1',
-                        },
-                        input_2: {
-                            label: 'Input 2',
-                        },
+                        ins: {
+                            label: 'Input (:i)',
+                            multiple: true
+                        }
                     },
-                    outputs: {}
+                    outputs: {
+                        outs: {
+                            label: 'Output (:i)',
+                            multiple: true
+                        }
+                    }
                 }
             },
+            operator_91: {
+                top: '4901.5',
+                left: '5387.5',
+                properties: {
+                    title: '1 input & 1 output',
+                    inputs: {
+                        ins: {
+                            label: 'Input (:i)',
+                            multiple: true
+                        }
+                    },
+                    outputs: {
+                        outs: {
+                            label: 'Output (:i)',
+                            multiple: true
+                        }
+                    }
+                }
+            },
+            operator_92: {
+                top: '5060',
+                left: '5020',
+                properties: {
+                    title: '1 input & 1 output',
+                    inputs: {
+                        ins: {
+                            label: 'Input (:i)',
+                            multiple: true
+                        }
+                    },
+                    outputs: {
+                        outs: {
+                            label: 'Output (:i)',
+                            multiple: true
+                        }
+                    }
+                }
+            }
         },
         links: {
-            link_1: {
-                fromOperator: 'operator1',
-                fromConnector: 'output_1',
-                toOperator: 'operator2',
-                toConnector: 'input_2',
+            link_0: {
+                fromOperator: 'operator_89',
+                fromConnector: 'outs',
+                fromSubConnector: '0',
+                toOperator: 'operator_90',
+                toConnector: 'ins',
+                toSubConnector: '0',
+                custom_link_id: '0'
             },
-        }
+            link_1: {
+                fromOperator: 'operator_89',
+                fromConnector: 'outs',
+                fromSubConnector: '1',
+                toOperator: 'operator_91',
+                toConnector: 'ins',
+                toSubConnector: '0',
+                custom_link_id: '1'
+            },
+            link_2: {
+                fromOperator: 'operator_89',
+                fromConnector: 'outs',
+                fromSubConnector: '2',
+                toOperator: 'operator_92',
+                toConnector: 'ins',
+                toSubConnector: '0',
+                custom_link_id: '2'
+            },
+            link_3: {
+                fromOperator: 'operator_92',
+                fromConnector: 'outs',
+                fromSubConnector: '0',
+                toOperator: 'operator_91',
+                toConnector: 'ins',
+                toSubConnector: '1',
+                custom_link_id: '3'
+            }
+
+        },
+        operatorTypes: {}
     };
 
 
     // Apply the plugin on a standard, empty div...
+
     $flowchart.flowchart({
         defaultLinkColor : '#4ca78c',
-        data: data,
-        onOperatorSelect: function(operatorId) {
-           console.log(operatorId);
+       /* data: data,*/
+        onOperatorCreate: function(operatorID, operatorData){
+          // console.log( $flowchart.flowchart('getOperatorElement', data) );
 
+
+
+            return true;
+        },
+        onOperatorSelect: function(operatorId) {
+
+            angular.element(document.getElementById('flowchart-popup')).scope().popupOpen(operatorId);
             $flowchartPopup.removeClass('hidden');
             return true;
         },
-        onLinkCreate: function(linkdata, data){
-            console.log(data);
+        onLinkCreate: function(linkID, linkData){
+
+            if(flowchartReady){
+              //  $flowchart.flowchart('redrawLinksLayer');
+              //  console.log( $flowchart.flowchart('getOperatorCompleteData', $flowchart.flowchart('getOperatorData', linkData.fromOperator)));
+                createLinkOperator(linkID,linkData);
+            }
+
             return true;
+
         },
-        onOperatorUnselect: function(){
-            console.log('deselect');
+
+        onOperatorMoved: function(operatorID, position){
+
+            updateOperatorPosition(operatorID,position);
+        },
+
+        onAfterChange: function(data1 ,data2){
+
+        },
+        onOperatorUnselect: function(operatorId){
+            angular.element(document.getElementById('flowchart-popup')).scope().popupClose();
             $flowchartPopup.addClass('hidden');
 
             return true;
+        },
+        onLinkSelect: function(data1, data2){
+
         }
     });
+
 
     $flowchart.parent().siblings('.delete_selected_button').click(function() {
         $flowchart.flowchart('deleteSelected');
@@ -109,35 +215,7 @@ $(document).ready(function() {
 
 
 
-    function getOperatorData($element) {
-        var nbInputs = parseInt($element.data('nb-inputs'));
-        var nbOutputs = parseInt($element.data('nb-outputs'));
-        var data = {
-            properties: {
-                title: $element.text(),
-                inputs: {},
-                outputs: {
 
-                }
-
-            }
-        };
-
-        var i = 0;
-        for (i = 0; i < nbInputs; i++) {
-            data.properties.inputs['input_' + i] = {
-                label: 'Input ' + (i + 1)
-            };
-        }
-        for (i = 0; i < nbOutputs; i++) {
-            data.properties.outputs['output_' + i] = {
-                label: 'Output ' + (i + 1),
-                multiple: true
-            };
-        }
-
-        return data;
-    }
 
     var operatorId = 0;
 
@@ -149,11 +227,11 @@ $(document).ready(function() {
         appendTo: 'body',
         zIndex: 1000,
 
-        helper: function(e) {
+/*        helper: function(e) {
             var $this = $(this);
-            var data = getOperatorData($this);
+            var data = createDraggableOperator($this);
             return $flowchart.flowchart('getOperatorElement', data);
-        },
+        },*/
         stop: function(e, ui) {
             var $this = $(this);
             var elOffset = ui.offset;
@@ -172,11 +250,10 @@ $(document).ready(function() {
                 relativeLeft /= positionRatio;
                 relativeTop /= positionRatio;
 
-                var data = getOperatorData($this);
-                data.left = relativeLeft;
-                data.top = relativeTop;
+                var data = createDraggableOperator($this, relativeLeft , relativeTop);
+               // data.left = relativeLeft;
+              //  data.top = relativeTop;
 
-                $flowchart.flowchart('addOperator', data);
             }
         }
     });
@@ -185,5 +262,234 @@ $(document).ready(function() {
     $('.toggle-menu').click(function(){
         $('.toggle-content-wrapper').toggleClass('toggle-animation');
     });
+
+    $('#intent-title').on('changeOperatorTitle',function(event, name, operatorID){
+        console.log('test trigger ' + name + ' ' + operatorID );
+
+        $flowchart.flowchart('setOperatorTitle', operatorID , name);
+    });
+
+
+
+
+    $.ajax({
+        url: '../../getAllStates',
+        type: 'post',
+        data: {
+          test: 'test'
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+
+        success: function (data) {
+           // console.log(JSON.parse(data));
+          //  console.log(data);
+
+           // $flowchart.flowchart('setData', JSON.parse(data));
+            console.log('test init');
+
+
+          //  flowchartReady = !flowchartReady;
+           processData(data);
+
+
+
+        }
+    });
+    function processData(data){
+
+
+        var chartJson = {
+            operators : {
+
+            },
+            links : {
+
+            }
+        };
+
+
+
+        for(var i = 0; i < data.length; i++){
+
+
+            if(typeof data[i].state_data.link_data != 'undefined' &&
+                data[i].state_data.link_data != '' &&
+                data[i].state_data.link_data != null){
+                var links = JSON.parse(data[i].state_data.link_data);
+            }
+
+
+            //console.log(JSON.parse(data[i].next_states));
+            chartJson.operators[data[i].id] = {
+                top: data[i].state_data.top,
+                left: data[i].state_data.left,
+                properties: {
+                    title: data[i].state_data.name,
+                    inputs: {
+                        ins: {
+                            label: 'Input (:i)',
+                            multiple: true
+                        }
+                    },
+                    outputs: {
+
+                        outs: {
+                            label: 'Output (:i)',
+                            multiple: true
+                        }
+                    }
+                }
+            };
+            if(typeof links != 'undefined' &&  links != '' && links != null){
+                    for(var a = 0; a < links.length; a++){
+                        chartJson.links[links[a].custom_link_id] = {
+                            fromOperator: links[a].fromOperator,
+                            fromConnector: links[a].fromConnector,
+                            fromSubConnector: parseInt(links[a].fromSubConnector),
+                            toOperator: links[a].toOperator,
+                            toConnector: links[a].toConnector,
+                            toSubConnector: parseInt(links[a].toSubConnector),
+                            custom_link_id:links[a].custom_link_id
+                        };
+                    }
+            }
+
+
+        }
+
+
+        console.log(chartJson);
+
+
+        $flowchart.flowchart('setData', chartJson);
+
+
+        flowchartReady = !flowchartReady;
+    }
+
+    function getAllLinksFromOperator(operatorID){
+        var completeData = $flowchart.flowchart('getData');
+        var completeLinks = completeData.links;
+        var links = [];
+
+
+        for (var key in completeLinks) {
+            if(completeLinks[key].fromOperator == operatorID){
+                completeLinks[key]['custom_link_id'] = key;
+                links.push(completeLinks[key]);
+            }
+        }
+
+
+        return links;
+    }
+
+    function createLinkOperator(linkID, linkData){
+
+        var allLinks = getAllLinksFromOperator(linkData.fromOperator);
+        var currentLink = linkData;
+        currentLink['custom_link_id'] = linkID;
+        allLinks.push(currentLink);
+
+        $.ajax({
+            url: '../../createStateLink',
+            type: 'post',
+            data: {
+                link_data: allLinks,
+                parent_id : linkData.fromOperator
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            success: function (data) {
+
+
+            },
+            error: function(error){
+
+                $flowchart.flowchart('deleteLink', linkID);
+            }
+        });
+    }
+
+    function createDraggableOperator($element , $left, $top) {
+        console.log('createDraggableoperator called');
+
+
+
+        $.ajax({
+            url: '../../createState',
+            type: 'post',
+            data: {
+                top : $top,
+                left : $left,
+                title : $element.attr('data-default-text'),
+                type : $element.attr('data-intent-type')
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            success: function (data) {
+
+                var resultData = data;
+
+                var Newoperator= {
+                    top: resultData.top,
+                    left: resultData.left,
+
+                    properties: {
+                        title: $element.attr('data-default-text'),
+                        inputs: {
+                            ins: {
+                                label: 'Input (:i)',
+                                multiple: true
+                            }
+                        },
+                        outputs: {
+
+                            outs: {
+                                label: 'Output (:i)',
+                                multiple: true
+                            }
+                        }
+                    }
+                };
+                $flowchart.flowchart('createOperator', data.state_id, Newoperator);
+
+            }
+        });
+
+
+    }
+
+
+    function updateOperatorPosition(operatorID, position){
+        $.ajax({
+            url: '../../updateOperatorPosition',
+            type: 'post',
+            data: {
+                operator_id: operatorID,
+                top: position.top,
+                left: position.left
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            success: function (data) {
+              //  console.log(data);
+
+            },
+            error: function(error){
+              //  console.log(error);
+
+            }
+        });
+    }
+
 
 });
