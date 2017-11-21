@@ -89,6 +89,33 @@ class IntentController extends Controller
 
 
     }
+
+    public function deleteAnswer(Request $request){
+        if(isset( $request->answer_id)){
+            $answer = StateIntentAnswer::where('id' ,$request->answer_id )->first();
+
+            $answer->delete();
+
+            return $answer;
+        }else{
+            return null;
+        }
+    }
+
+    public function deleteActiveIntent(Request $request){
+        $intent = StateIntent::where('id', $request->intent_id)->first();
+
+        $intent->intent = '';
+
+        $intent->save();
+
+        $this->updateStateName($request->state_id, $request->name, $request->intent_id);
+
+        $intent['default_state_name'] = '(nog geen titel)';
+        return $intent;
+
+
+    }
     public function saveIntentLocal(Request $request){
 
 

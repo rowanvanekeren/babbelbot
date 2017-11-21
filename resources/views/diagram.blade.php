@@ -7,15 +7,15 @@
         <div id="flowchart-base" class="flowchart-base"></div>
         <div id="flowchart-popup" ng-controller='intentController' class="flowchart-popup hidden">
             <div class="popup-wrapper">
-                <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">Titel: @{{ activeStateName }}</h2>
+                <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">Titel: @{{ intentData.state_intent_data.name }}</h2>
                 <hr>
 
                 <h3>Actieve intent:</h3>
                 <div class="current-active-intent">
-                    <span>@{{ activeIntent ? activeIntent : 'geen actieve intent'  }}</span>
-                    <div ng-show="activeIntent">
+                    <span>@{{ intentData.intent ? intentData.intent : 'geen actieve intent'  }}</span>
+                    <div ng-show="intentData.intent">
                     <button class="main-btn" >Trainen</button>
-                    <i class="fa fa-times " aria-hidden="true"></i>
+                    <i class="fa fa-times " aria-hidden="true" ng-click="removeActiveIntent()"></i>
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@
                         <input id="" class="default-input inp-loading" type="text"
                                name="user_input_intent"
                                placeholder="Als gebruiker zegt..." ng-focus="growBack($event)"
-                               my-enter="inputEnterSearchIntent($element, this)" ng-model="userInputIntent">
+                               my-enter="inputEnterSearchIntent($element, this)" ng-model="intentData.state_intent_data.name">
 
                         <i class="fa fa-repeat input-saving-overlay hidden"></i>
 
@@ -82,10 +82,10 @@
                 <div class="" ng-show="!hasBackend">
                 <div class="checkbox-header"><input type="checkbox" ng-model="hasIntentAnswers" ng-click="updateType()"> <h3>Antwoorden:</h3></div>
 
-                <div class="form-group" ng-repeat="answer in intentAnswers | filter: {answer_type: 1}">
+                <div class="form-group" ng-repeat="answer in intentData.state_intent_answers | filter: {answer_type: 1}">
 
                     <div class="input-wrapper deletable-input">
-                        <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"></i>
+                        <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, answer.id)"></i>
                         <input id="inp-access-token" class="default-input inp-loading" type="text"
                                my-enter="saveAnswer($element, this, 1)" data-answer-id="@{{ answer.id }}" data-state-intents-id="@{{ answer.state_intents_id }}"  placeholder="Geef antwoord in" name="answer.answer"
                                 ng-model="answer.answer">
@@ -101,9 +101,9 @@
 
                <div class="checkbox-header"><input type="checkbox" ng-model="hasQuickReplies" ng-click="updateType()"> <h3> Snelle Opties:</h3></div>
                 <div>
-                    <div class="form-group" ng-repeat="quickReply in intentAnswers | filter: {answer_type: 2}">
+                    <div class="form-group" ng-repeat="quickReply in intentData.state_intent_answers | filter: {answer_type: 2}">
                         <div class="input-wrapper deletable-input">
-                            <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"></i>
+                            <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, quickReply.id)"></i>
                             <input id="inp-access-token" class="default-input inp-loading" type="text"
                                    my-enter="saveAnswer($element, this, 2)" data-answer-id="@{{ quickReply.id }}" data-state-intents-id="@{{ quickReply.state_intents_id }}" name="quickReply" ng-model="quickReply.answer" placeholder="Geef snelle optie in">
                             <i class="fa fa-repeat input-saving-overlay hidden"></i>

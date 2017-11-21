@@ -61,6 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/get-state-intent', 'IntentController@getStateIntent');
     Route::post('/update-state-type', 'IntentController@updateStateType');
     Route::post('/save-intent-answer', 'IntentController@saveAnswer');
+    Route::post('/delete-intent-answer', 'IntentController@deleteAnswer');
+    Route::post('/delete-active-intent', 'IntentController@deleteActiveIntent');
 });
 
 

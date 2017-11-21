@@ -636,7 +636,6 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         };
 
         $http(req).then(function (data) {
-            console.log(data);
             // shrinkLoading.do(currentElement, 'success');
         }).catch(function (data) {
 
@@ -656,14 +655,13 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             if (typeof data.data.entities.intent[0] != 'undefined') {
                 shrinkLoading.do(currentElement, 'success');
                 $scope.intentSearchValue = data.data.entities.intent[0].value;
                 $scope.intentSearchConf = Math.round(data.data.entities.intent[0].confidence * 100);
                 $scope.newIntent = false;
                 $scope.intentSearchResult = true;
-                console.log('succes');
             } else {
                 $scope.newIntent = true;
                 $scope.intentSearchResult = false;
@@ -685,17 +683,16 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/
             },
             data: {
-                user_input_intent: $scope.userInputIntent,
+                user_input_intent: $scope.intentData['state_intent_data']['name'],
                 intent: $scope.intentSearchValue,
                 state_id: $scope.activeStateID,
-                name: $scope.userInputIntent
+                name: $scope.intentData['state_intent_data']['name']
             }
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            $scope.activeStateName = data.data.state_data.name;
-            $scope.activeIntent = data.data.intent;
+            $scope.intentData['state_intent_data']['name'] = data.data.state_data.name;
+            $scope.intentData['intent'] = data.data.intent;
             $('#intent-title').trigger('changeOperatorTitle', [data.data.state_data.name, $scope.activeStateID]);
         }).catch(function (data) {});
     };
@@ -706,9 +703,7 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         $scope.getIntentState(state_id);
     };
 
-    $scope.popupClose = function () {
-        console.log('close');
-    };
+    $scope.popupClose = function () {};
 
     $scope.getIntentState = function (stateID) {
         var req = {
@@ -724,8 +719,6 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-
             $scope.updateFullPopUp(data, 'open');
         }).catch(function (data) {});
     };
@@ -734,35 +727,49 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
 
         if (openOrClose == 'open') {
             console.log('open');
-            console.log(data);
+            //console.log(data);
+            $scope.intentData = data.data;
 
-            $scope.userInputIntent = null;
-            $scope.activeStateName = null;
-            $scope.activeIntent = null;
-            $scope.intentID = null;
-            if (typeof data.data.state_intent_data != 'undefined') {
-                $scope.userInputIntent = typeof data.data.state_intent_data.name != 'undefined' ? data.data.state_intent_data.name : '';
-                $scope.activeStateName = typeof data.data.state_intent_data.name != 'undefined' ? data.data.state_intent_data.name : '';
-            }
-            if (typeof data.data.state_intent_answers[0] != 'undefined') {
-                $scope.intentAnswers = data.data.state_intent_answers;
-            }
             if (typeof data.data != 'undefined') {
-                $scope.activeIntent = typeof data.data.intent != 'undefined' ? data.data.intent : '';
                 $scope.intentID = typeof data.data.id != 'undefined' ? data.data.id : '';
                 $scope.typeSetter(data.data.type);
+                $scope.intentData.id;
+            } else {
+                $scope.intentData = {};
             }
         } else {
+            $scope.intentData = {};
             $scope.activeStateID = '';
         }
     };
+    $scope.removeActiveIntent = function () {
+        var req = {
+            method: 'POST',
+            url: '../../delete-active-intent',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                intent_id: $scope.intentData.id,
+                state_id: $scope.activeStateID
+            }
+        };
 
+        $http(req).then(function (data) {
+            //console.log(data);
+
+            $scope.intentData.intent = null;
+            // $scope.intentData.state_intent_data.name = data.data.default_state_name;
+            $('#intent-title').trigger('changeOperatorTitle', [data.data.default_state_name, $scope.activeStateID]);
+        }).catch(function (data) {});
+    };
     $scope.addQuickReply = function () {
-        if (typeof $scope.intentAnswers == 'undefined' || $scope.intentAnswers == '') {
-            $scope.intentAnswers = {};
+        if (typeof $scope.intentData['state_intent_answers'] == 'undefined' || $scope.intentData['state_intent_answers'] == '') {
+            $scope.intentData['state_intent_answers'] = [];
         }
-        $scope.intentAnswers.push({
-            state_intents_id: $scope.intentID,
+        $scope.intentData['state_intent_answers'].push({
+            state_intents_id: $scope.intentData.id,
             answer: '',
             answer_type: 2
         });
@@ -770,8 +777,6 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
 
     $scope.saveAnswer = function (currentElement, currentScope, type) {
         shrinkLoading.do(currentElement, 'loading');
-        console.log(currentElement.attr('data-state-intents-id'));
-        console.log(currentScope);
 
         var req = {
             method: 'POST',
@@ -790,7 +795,6 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         };
 
         $http(req).then(function (data) {
-            console.log(data);
             shrinkLoading.do(currentElement, 'success');
         }).catch(function (data) {
             shrinkLoading.do(currentElement, 'error');
@@ -798,20 +802,17 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
     };
 
     $scope.addAnswer = function () {
-        var objToPush = {
-            state_intents_id: $scope.intentID,
+        if (typeof $scope.intentData.state_intent_answers == 'undefined' || $scope.intentData.state_intent_answers == '') {
+            $scope.intentData['state_intent_answers'] = [];
+        }
+        $scope.intentData.state_intent_answers.push({
+            state_intents_id: $scope.intentData.id,
             answer: '',
             answer_type: 1
-        };
-        if (typeof $scope.intentAnswers == 'undefined') {
-            $scope.intentAnswers = [objToPush];
-        } else {
-            $scope.intentAnswers.push(objToPush);
-        }
+        });
     };
 
     $scope.updateType = function () {
-        console.log($scope.typeChecker());
         var req = {
             method: 'POST',
             url: '../../update-state-type',
@@ -826,7 +827,7 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+            //console.log(data);
         }).catch(function (data) {});
     };
     $scope.typeChecker = function () {
@@ -884,13 +885,35 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
                 break;
         }
     };
+
+    $scope.deleteAnswer = function (event, currentScope, answerID) {
+        console.log('delete answer');
+        console.log(answerID);
+
+        var req = {
+            method: 'POST',
+            url: '../../delete-intent-answer',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                answer_id: answerID
+            }
+        };
+
+        $http(req).then(function (data) {
+            event.currentTarget.closest('.form-group').remove();
+        }).catch(function (data) {});
+    };
+
     $scope.inputEnterSearchIntent = function (currentElement, currentScope) {
         $scope.newIntent = false;
         $scope.intentSearchResult = false;
 
         var inputObject = {};
         inputObject[currentElement.attr('name')] = currentElement.val();
-        console.log(inputObject);
+
         shrinkLoading.do(currentElement, 'loading');
 
         $scope.getAvailableIntent(inputObject, currentElement);
@@ -901,15 +924,13 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         inputObject[currentElement.attr('name')] = currentElement.val();
         //inputObject['id'] = currentScope.dialogue.id;
         //console.log(currentElement.attr('name') + " " + currentElement.val() + ' ' + currentScope.app.id);
-        console.log(inputObject);
+
 
         shrinkLoading.do(currentElement, 'loading');
         $scope.getIntent(inputObject, currentElement);
     };
 
     $scope.growBack = function (event) {
-
-        console.log(event);
         var inpElemClass = '.input-wrapper input';
         var inpIconElemClass = '.input-saving-overlay';
 
@@ -921,7 +942,6 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
                 currentParent.removeClass('processing');
                 currentParent.children(inpIconElemClass).addClass('hidden');
                 currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-                console.log('i added space');
             });
         } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
             currentParent.removeClass('processing');
