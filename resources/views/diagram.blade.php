@@ -4,17 +4,51 @@
 
 @section('content')
     <div class="flowchart-wrapper">
-        <div id="flowchart-base" class="flowchart-base"></div>
-        <div id="flowchart-popup" ng-controller='intentController' class="flowchart-popup hidden">
-            <div class="popup-wrapper">
-                <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">Titel: @{{ intentData.state_intent_data.name }}</h2>
+        <div id="flowchart-base" class="flowchart-base"> <div class="row modal-overlay hidden" ></div></div>
+
+        <div class="app-wrapper warning-box delete-link hidden">
+            <h2>Weet je zeker dat je deze link wilt verwijderen?</h2>
+
+            <button class="danger-btn delete-link-button">Verwijder</button>
+            <button class="main-btn exit-warning-box" >Annuleer</button>
+        </div>
+        <div id="flowchart-popup-intent" ng-controller='intentTrainController' active-training="toggleTrainingPopup(data)" ng-show="showTrainingPopup">
+            <div class="popup-wrapper " >
+
+               
+                <div class="popup-title">
+                <h2 id="intent-title" >Intent: @{{ intentValueData.value }}</h2>
+                    <i class="fa fa-times " aria-hidden="true" ng-click="toggleTrainingPopup({intent: null, toggle: 'close'})"></i>
+                </div>
                 <hr>
+                <span ng-show="intentValueData.expressions" ng-click="checkExpressionsForEntities(intentValueData.expressions)">Kijk voor data parameters</span>
+                <div class="intent-content">
+                    <div class="form-group" ng-repeat="intent in intentValueData.expressions">
+
+                        <div class=" deletable-input">
+                            <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, answer.id)"></i>
+                            <div class="styled-input" id="intent_@{{ $index }}"  contenteditable="true" ng-mouseup="selectedIntentText($event)">@{{intent }}</div>
+                            <i class="fa fa-repeat input-saving-overlay hidden"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="flowchart-popup" ng-controller='intentController' class="flowchart-popup hidden">
+
+            <div class="popup-wrapper">
+                <div class="popup-title">
+                <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">Titel: @{{ intentData.state_intent_data.name }}</h2>
+                <i class="fa fa-times " aria-hidden="true" ng-click="popupClose()"></i>
+                </div >
+                    <hr>
 
                 <h3>Actieve intent:</h3>
                 <div class="current-active-intent">
                     <span>@{{ intentData.intent ? intentData.intent : 'geen actieve intent'  }}</span>
                     <div ng-show="intentData.intent">
-                    <button class="main-btn" >Trainen</button>
+                    <button class="main-btn" ng-click="getIntentData()">Trainen</button>
                     <i class="fa fa-times " aria-hidden="true" ng-click="removeActiveIntent()"></i>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-angular.module('botApp').controller("intentController", function ($scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("intentController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
 
     $scope.activeStateID = null;
 
@@ -75,7 +75,8 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         $http(req).then(function (data) {
             $scope.intentData['state_intent_data']['name'] = data.data.state_data.name;
             $scope.intentData['intent'] = data.data.intent;
-            $('#intent-title').trigger('changeOperatorTitle', [data.data.state_data.name, $scope.activeStateID]);
+            $('#intent-title').trigger('changeOperatorTitle', [data.data.state_data.name, $scope.activeStateID, true]);
+            $scope.resetIntentSearch();
 
         }).catch(function (data) {
 
@@ -90,7 +91,8 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
     };
 
     $scope.popupClose = function () {
-
+        $('#flowchart-popup').addClass('hidden');
+        $rootScope.$emit("toggleIntentTraining", {intent: null, toggle: 'close'});
     };
 
 
@@ -113,8 +115,17 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
 
         });
     };
-
+    $scope.resetIntentSearch = function(){
+        $scope.intentSearchResult = false;
+        $scope.newIntent = false;
+        $scope.intentSearchValue = null;
+        $scope.intentSearchConf = null;
+    }
     $scope.updateFullPopUp = function (data, openOrClose) {
+        console.log(data);
+
+        $scope.resetIntentSearch();
+
 
         if (openOrClose == 'open') {
             console.log('open');
@@ -138,6 +149,8 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
 
     };
     $scope.removeActiveIntent = function(){
+
+
         var req = {
             method: 'POST',
             url: '../../delete-active-intent',
@@ -152,11 +165,11 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
         };
 
         $http(req).then(function (data) {
-            //console.log(data);
+            console.log(data);
 
             $scope.intentData.intent = null;
            // $scope.intentData.state_intent_data.name = data.data.default_state_name;
-            $('#intent-title').trigger('changeOperatorTitle', [data.data.default_state_name, $scope.activeStateID]);
+            $('#intent-title').trigger('changeOperatorTitle', [ $scope.intentData.state_intent_data.name, $scope.activeStateID]);
         }).catch(function (data) {
 
         });
@@ -360,6 +373,14 @@ angular.module('botApp').controller("intentController", function ($scope, $http,
             currentParent.children(inpIconElemClass).addClass('hidden');
             currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
         }
+
+    }
+
+
+
+    $scope.getIntentData = function(){
+        $rootScope.$emit("toggleIntentTraining", {intent: $scope.intentData.intent, toggle: 'open'});
+
 
     }
 });

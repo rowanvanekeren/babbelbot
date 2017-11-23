@@ -18,7 +18,7 @@ class State extends Model
     }
 
     public function stateIntents() {
-        return $this->hasMany( 'App\StateIntent' , 'state_id');
+        return $this->hasOne( 'App\StateIntent' , 'state_id');
     }
 
     public function stateData() {

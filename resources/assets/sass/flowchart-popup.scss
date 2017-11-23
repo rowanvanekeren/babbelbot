@@ -1,4 +1,4 @@
-#flowchart-popup{
+#flowchart-popup, #flowchart-popup-intent{
   width: 500px;
   height:600px;
   background: #fff;
@@ -12,8 +12,31 @@
   input{
     width: 100%;
   }
+  .popup-title{
+    display:flex;
+    align-items: center;
+    h2{
+      flex: 2;
+    }
+    i{
+      color: $main-error-red;
+    }
+  }
 }
+#flowchart-popup-intent{
+  z-index: 16;
 
+  .styled-input{
+    padding: 5px;
+    border: 2px solid black;
+    white-space: nowrap;
+    overflow: hidden;
+    .entity-span{
+      background: $font-color-subtile-white;
+      padding: 2px;
+    }
+  }
+}
 
 .found-intent{
 display:flex;

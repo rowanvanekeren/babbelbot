@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/createStateLink', 'FlowChartController@createStateLink');
     Route::post('/updateOperatorPosition', 'FlowChartController@updatePosition');
     Route::post('/getAllStates', 'FlowChartController@getAllStates');
+    Route::post('/deleteLinkOperator', 'FlowChartController@deleteLink');
 
 
     /* intent */
@@ -63,6 +64,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/save-intent-answer', 'IntentController@saveAnswer');
     Route::post('/delete-intent-answer', 'IntentController@deleteAnswer');
     Route::post('/delete-active-intent', 'IntentController@deleteActiveIntent');
+
+    Route::post('/get-intent-data-wit', 'IntentController@getIntentData');
+    Route::post('/get-intent-entity-data-wit', 'IntentController@getIntentEntityData');
 });
 
 

@@ -14,7 +14,7 @@ class StateIntent extends Model
 
 
     public function states() {
-        return $this->belongsToMany( 'App\States');
+        return $this->belongsTo( 'App\States');
     }
 
     public function stateIntentAnswers() {

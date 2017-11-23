@@ -1,13 +1,14 @@
 $(document).ready(function() {
     var flowchartReady = false;
     var $flowchartPopup = $('#flowchart-popup');
+    var $flowchartPopupIntent = $('#flowchart-popup-intent');
     var $flowchart = $('#flowchart-base');
     var $container = $flowchart.parent();
 
     var cx = $flowchart.width() / 2;
     var cy = $flowchart.height() / 2;
 
-
+    $flowchartPopupIntent.draggable({cancel : '.styled-input'});
     $flowchartPopup.draggable();
 
 
@@ -158,7 +159,8 @@ $(document).ready(function() {
 
     $flowchart.flowchart({
         defaultLinkColor : '#4ca78c',
-       /* data: data,*/
+
+    /* data: data,*/
         onOperatorCreate: function(operatorID, operatorData){
           // console.log( $flowchart.flowchart('getOperatorElement', data) );
 
@@ -198,21 +200,80 @@ $(document).ready(function() {
 
             return true;
         },
-        onLinkSelect: function(data1, data2){
+        onLinkSelect: function(linkID){
+            console.log(linkID);
+            //deleteSelectedLink(linkID);
+            toggleWarningLink(true, linkID);
+            return true;
+        },
+        onLinkUnselect: function(){
+            toggleWarningLink(false);
 
+            return true;
         }
     });
 
+    $('.delete-link-button').click(function(){
+        deleteSelectedLink( $(this).attr('data-delete-link-id'));
+    });
 
+    $('.exit-warning-box').click(function(){
+        toggleWarningLink(false);
+    })
+
+
+    function toggleWarningLink(toggleEvent, linkID){
+
+        if(toggleEvent){
+            $('.delete-link-button').attr('data-delete-link-id', linkID);
+            $('.modal-overlay').removeClass('hidden');
+            $('.delete-link').removeClass('hidden');
+        }else{
+            $('.delete-link-button').attr('data-delete-link-id', '');
+            $('.modal-overlay').addClass('hidden');
+            $('.delete-link').addClass('hidden');
+        }
+
+    }
     $flowchart.parent().siblings('.delete_selected_button').click(function() {
         $flowchart.flowchart('deleteSelected');
     });
 
 
     var $draggableOperators = $('.draggable_operator');
+    function deleteSelectedLink(linkID){
+
+        var linkObj = getSelectedLink(linkID);
+        $.ajax({
+            url: '../../deleteLinkOperator',
+            type: 'post',
+            data: {
+                custom_link_id:linkObj.custom_link_id,
+                state_id: linkObj.fromOperator
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            success: function (data) {
+                $flowchart.flowchart('deleteSelected');
+            }
+        });
+    }
+
+    function getSelectedLink(linkID){
+        var data = $flowchart.flowchart('getData');
 
 
+        for (var key in data.links) {
+            // skip loop if the property is from prototype
+            if (!data.links.hasOwnProperty(key)) continue;
 
+            if(data.links[key].custom_link_id == linkID){
+                return data.links[key];
+            }
+        }
+    }
 
 
 
@@ -263,10 +324,12 @@ $(document).ready(function() {
         $('.toggle-content-wrapper').toggleClass('toggle-animation');
     });
 
-    $('#intent-title').on('changeOperatorTitle',function(event, name, operatorID){
+    $('#intent-title').on('changeOperatorTitle',function(event, name, operatorID, forceActive){
+        forceActive = forceActive || false;
+
         console.log('test trigger ' + name + ' ' + operatorID );
 
-        $flowchart.flowchart('setOperatorTitle', operatorID , name);
+        $flowchart.flowchart('setOperatorTitle', operatorID , checkActiveTitle(null,name, forceActive));
     });
 
 
@@ -297,10 +360,27 @@ $(document).ready(function() {
 
         }
     });
+
+    function checkActiveTitle(intent, name, forceActive){
+        if((typeof  intent != 'undefined' &&
+                    intent!= '' &&
+                    intent != null) ||
+            forceActive
+
+        ){
+
+                return '<i class="fa fa-circle active-intent-color" aria-hidden="true"></i> ' + name;
+
+        }else{
+                return '<i class="fa fa-circle inactive-intent-color" aria-hidden="true"></i> ' + name;
+        }
+    }
     function processData(data){
 
-
+        console.log('data = ');
+        console.log(data);
         var chartJson = {
+
             operators : {
 
             },
@@ -326,7 +406,7 @@ $(document).ready(function() {
                 top: data[i].state_data.top,
                 left: data[i].state_data.left,
                 properties: {
-                    title: data[i].state_data.name,
+                        title: checkActiveTitle(data[i].state_intents.intent, data[i].state_data.name),
                     inputs: {
                         ins: {
                             label: 'Input (:i)',
@@ -370,7 +450,10 @@ $(document).ready(function() {
     }
 
     function getAllLinksFromOperator(operatorID){
+
+
         var completeData = $flowchart.flowchart('getData');
+
         var completeLinks = completeData.links;
         var links = [];
 
@@ -442,7 +525,7 @@ $(document).ready(function() {
                     left: resultData.left,
 
                     properties: {
-                        title: $element.attr('data-default-text'),
+                        title: "<i class='fa fa-circle inactive-intent-color' aria-hidden='true'></i> " + $element.attr('data-default-text'),
                         inputs: {
                             ins: {
                                 label: 'Input (:i)',

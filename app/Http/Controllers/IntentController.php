@@ -19,6 +19,27 @@ class IntentController extends Controller
 
     }
 
+    function getIntentData(Request $request){
+
+        $server_token = $request->session()->get('active_app')->server_token;
+        $full_intent = json_decode(witGetIntent($server_token, $request->intent), true);
+
+        return $this->searchForIntentValue($full_intent['values'],  $request->intent);
+    }
+
+    function getIntentEntityData(Request $request){
+        $server_token = $request->session()->get('active_app')->server_token;
+        return witGetIntentWithEntities($server_token,$request->intent_value );
+    }
+
+    function searchForIntentValue($intentValues, $user_intent){
+
+        foreach($intentValues as $key => $value){
+            if($value['value'] == $user_intent){
+                return $value;
+            }
+        }
+    }
     function getStateIntent(Request $request){
         $stateIntent = StateIntent::where('state_id', $request->state_id)->with('stateIntentAnswers')->with('stateIntentData')->first();
 
@@ -103,19 +124,23 @@ class IntentController extends Controller
     }
 
     public function deleteActiveIntent(Request $request){
+        $default_state_name = '(nog geen titel)';
         $intent = StateIntent::where('id', $request->intent_id)->first();
 
         $intent->intent = '';
 
         $intent->save();
 
-        $this->updateStateName($request->state_id, $request->name, $request->intent_id);
+      //  $this->updateStateName($request->state_id, null , $request->intent_id);
 
         $intent['default_state_name'] = '(nog geen titel)';
         return $intent;
 
 
     }
+
+
+
     public function saveIntentLocal(Request $request){
 
 
@@ -143,6 +168,7 @@ class IntentController extends Controller
 
         return $stateIntent;
     }
+
 
 
 }

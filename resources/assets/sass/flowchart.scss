@@ -68,3 +68,9 @@
   }
 }
 
+.active-intent-color{
+  color: $main-color;
+}
+.inactive-intent-color{
+  color: $main-error-red;
+}

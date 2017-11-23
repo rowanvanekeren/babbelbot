@@ -14,7 +14,7 @@ class FlowChartController extends Controller
     {
         $dialogue_id = $request->session()->get('active_dialogue')->id;
 
-        $states = State::where('dialogue_id', $dialogue_id)->with('stateData')->get();
+        $states = State::where('dialogue_id', $dialogue_id)->with('stateData')->with('stateIntents')->get();
 
 
         return $states;
@@ -58,6 +58,7 @@ class FlowChartController extends Controller
        // return $request->link_data;
         $stateData = StateData::where('state_id', $request->parent_id)->first();
 
+        $this->updateNexStatesState($request->parent_id , $request->link_data);
 
         $stateData->link_data = json_encode($request->link_data);
 
@@ -67,6 +68,24 @@ class FlowChartController extends Controller
         return response($stateData, 200);
 
 
+    }
+
+    function updateNexStatesState($state_id, $links){
+
+        $state = State::where('id', $state_id)->first();
+        $formatLinks = array();
+
+
+        foreach($links as $key => $link){
+        array_push($formatLinks, $link['toOperator']);
+
+        }
+
+        $formatLinks = array_values(array_unique($formatLinks));
+
+        $state->next_states = json_encode($formatLinks);
+
+        $state->save();
     }
 
     function updatePosition(Request $request)
@@ -91,5 +110,30 @@ class FlowChartController extends Controller
     function deleteState()
     {
 
+    }
+
+
+    public function deleteLink(Request $request){
+        $stateData = stateData::where('state_id', $request->state_id)->first();
+
+        if(isset($stateData->link_data)){
+            $link_data = json_decode($stateData->link_data,true);
+
+            foreach($link_data as $key => $value){
+                if($value['custom_link_id'] == $request->custom_link_id){
+                    unset($link_data[$key]);
+                }
+            }
+
+            $new_link_data =  array_values($link_data);
+
+            $stateData->link_data = json_encode($new_link_data);
+
+            $stateData->save();
+
+
+        }
+
+        return $stateData;
     }
 }
