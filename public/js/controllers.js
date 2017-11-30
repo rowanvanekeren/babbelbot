@@ -74,7 +74,8 @@ __webpack_require__(4);
 __webpack_require__(5);
 __webpack_require__(6);
 __webpack_require__(7);
-module.exports = __webpack_require__(8);
+__webpack_require__(8);
+module.exports = __webpack_require__(9);
 
 
 /***/ }),
@@ -973,7 +974,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 /* 8 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("intentTrainController", function ($scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("intentTrainController", function ($rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
 
     $scope.toggleTrainingPopup = function (data) {
         console.log(data);
@@ -982,10 +983,42 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
             $scope.getIntentDataWit(data.intent);
         } else if (data.toggle == 'close') {
             $scope.showTrainingPopup = false;
+            $rootScope.$emit("toggleIntentEntity", { toggle: 'close' });
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
         }
+    };
+
+    $scope.getEntity = function (event) {
+        console.log('get entity', event);
+        /* console.log($(event.currentTarget).offset());*/
+
+        //    $scope.showFastEntity = true;
+
+        /*    jQuery(jQuery('.fast-entity-popup')).offset({
+         top: ($(event.currentTarget).offset().top - 165),
+         left: ($(event.currentTarget).offset().left - 110)
+         });*/
+
+        var relativeY = $(event.currentTarget).offset().top - 235;
+        var relativeX = $(event.currentTarget).offset().left - 110;
+        var entity = $(event.currentTarget).attr('data-entity-name');
+        var value = $(event.currentTarget).text();
+        $rootScope.$emit("toggleIntentEntity", {
+            toggle: 'open',
+            top: relativeY,
+            left: relativeX,
+            entity: entity,
+            value: value,
+            element: event.currentTarget
+        });
+
+        //jQuery(jQuery('.fast-entity-popup')).detach().appendTo($(event.currentTarget).parent());
+        // $('.fast-entity-popup').css({'position' :  'element(#intent_3)'});
+        //breakOverflow($('.fast-entity-popup'));
+
+        //$(event.currentElement).offset().top - $(window).scrollTop();
     };
 
     $scope.getIntentDataWit = function (intent) {
@@ -1010,6 +1043,7 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
         }).catch(function (data) {});
     };
     $scope.checkExpressionsForEntities = function (expressions) {
+
         for (var keyExpression in expressions) {
             if (!expressions.hasOwnProperty(keyExpression)) continue;
             setTimeout(function (currKey) {
@@ -1039,7 +1073,9 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
             $scope.updateIntentEntityHtml(data.data.entities, intentSelector);
         }).catch(function (data) {});
     };
-
+    $scope.saveIntentValue = function (currentElement, currentScope) {
+        shrinkLoading.do(currentElement, 'loading');
+    };
     $scope.updateIntentEntityHtml = function (witData, domSelector) {
 
         console.log(witData);
@@ -1059,8 +1095,11 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
                         if (typeof entityObj[entityKey]._body != 'undefined') {
                             var fullHtml = $(domSelector).html();
                             console.log(fullHtml);
-                            var replaceHtml = fullHtml.replace(entityObj[entityKey]._body, "<span data-entity-object='" + key + "'  class='entity-span'>" + entityObj[entityKey]._body + "</span>");
+                            var replaceHtml = fullHtml.replace(entityObj[entityKey]._body, "<span data-entity-name='" + key + "'  class='entity-span' ng-click='getEntity($event)'>" + entityObj[entityKey]._body + "</span>");
+
                             $(domSelector).html(replaceHtml);
+
+                            $compile($(domSelector))($scope);
                         }
                     }
                 }
@@ -1071,54 +1110,250 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
         // var replaceHtml = fullHtml.replace(selectedText, "<span style='background:red'>" + selectedText + "</span>");
     };
     $scope.selectedIntentText = function ($event) {
-        /*        console.log('i selected somthing', $($event.currentTarget).text());
-         var selectedText =  GetSelection();
-           var fullHtml = $($event.currentTarget).html();
-           var replaceHtml = fullHtml.replace(selectedText, "<span style='background:red'>" + selectedText + "</span>");
-           $($event.currentTarget).html(replaceHtml);
-           var firstIndexHtml = fullHtml.indexOf(selectedText);
-         var lastIndexHtml = firstIndex + selectedText.length;
-        
-         var fullText = $($event.currentTarget).text();
-           var firstIndexText = fullText.indexOf(selectedText);
-         var lastIndexText = firstIndex + selectedText.length;
-               console.log(firstIndexText);
-         console.log(lastIndexText);*/
 
+        var tempClass = 'temp-' + guidGenerator();
+        var tempClassSelector = '.' + tempClass;
+
+        if (typeof tempClass != 'undefined') {
+            var selectionRange = textSelection(tempClass, $event.currentTarget);
+        }
+
+        if (typeof selectionRange != 'undefined' && selectionRange != null) {
+
+            if (!selectionRange.hasOwnProperty('start') && typeof selectionRange.start == null) {
+                return;
+            }
+
+            var addedElement = $(tempClassSelector);
+
+            addedElement.attr('data-first-index', selectionRange.start);
+            addedElement.attr('data-last-index', selectionRange.end);
+            addedElement.attr('ng-click', 'getEntity($event)');
+
+            $compile($($event.currentTarget))($scope);
+
+            var relativeY = $(tempClassSelector).offset().top - 235;
+            var relativeX = $(tempClassSelector).offset().left - 110;
+
+            $rootScope.$emit("toggleIntentEntity", {
+                toggle: 'open',
+                top: relativeY,
+                left: relativeX,
+                value: $(tempClassSelector).text(),
+                element: tempClassSelector
+            });
+        }
     };
-    $scope.renderSelection = function (text, startIndex, endIndex) {
-        var originalText = 'ik wil een vliegtuig naar londen';
+    $scope.trainExpression = function (event) {
+        console.log($(event.currentTarget).parent().find('.styled-input').text());
 
-        $('.test-input').val('ik wil een vliegtuig naar <span style="color:red">londen</span>');
-        var firstPart = originalText.substring(26, 32);
-
-        console.log(firstPart);
+        //setLoadingButton(event.currentTarget, true, 'Train');
     };
-    $scope.renderSelection();
 
+    $scope.convertSentenceToTrainObj = function () {};
     /*  $('.styled-input').mouseup(function(){
      console.log('i selected somthing');
      GetSelection();
      });*/
 });
+function setLoadingButton(element, trueOrFalse, defaultText) {
+    var icon = ' <i class="fa fa-repeat"></i>';
+    if (!trueOrFalse) {
+        angular.element(element).html(defaultText);
+    } else if (trueOrFalse) {
+        angular.element(element).html(defaultText + icon);
+    }
+}
 
 function GetSelection() {
 
     if (window.getSelection) {
         // all browsers, except IE before version 9
         var selectionRange = window.getSelection();
-        console.log(selectionRange.toString());
-        return selectionRange.toString();
+        // console.log(selectionRange.toString())
+        //  console.log('selectionRange', selectionRange);
+        return selectionRange;
     } else {
         if (document.selection.type == 'None') {
             return "";
         } else {
             var textRange = document.selection.createRange();
-            console.log(textRange.text);
-            return textRange.text;
+            // console.log('textRange',textRange);
+            return textRange;
         }
     }
 };
+
+function guidGenerator() {
+    var S4 = function S4() {
+        return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+    };
+    return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4();
+}
+
+String.prototype.replaceBetween = function (start, end, what) {
+    return this.substring(0, start) + what + this.substring(end);
+};
+
+function getSelectionContainerElement(selection) {
+    var sel = selection,
+        el = null;
+    if (sel.rangeCount) {
+        var range = sel.getRangeAt(0);
+        el = range.commonAncestorContainer;
+        if (el.nodeType != 1) {
+            el = el.parentNode;
+        }
+    }
+    return el;
+}
+
+function textSelection(tempClass, element) {
+    if (window.getSelection && window.getSelection().toString().length > 0) {
+        // not IE case
+        var selObj = window.getSelection();
+        var selRange = selObj.getRangeAt(0);
+
+        var checkChilds = checkForDifferentNodes(selRange.cloneContents().childNodes);
+
+        var selectedElement = getSelectionContainerElement(selObj);
+        console.log(checkChilds);
+        if (selectedElement.nodeName == 'DIV' && checkChilds) {
+            var newElement = document.createElement("span");
+            newElement.className = 'entity-span span-dark ' + tempClass;
+            var documentFragment = selRange.extractContents();
+            newElement.appendChild(documentFragment);
+            selRange.insertNode(newElement);
+
+            //offset within
+            var range = selRange;
+            var preCaretRange = range.cloneRange();
+            preCaretRange.selectNodeContents(element);
+            preCaretRange.setEnd(range.startContainer, range.startOffset);
+            startOffset = preCaretRange.toString().length;
+            endOffset = startOffset + range.toString().length;
+
+            var returnRelativeRange = { start: startOffset, end: endOffset };
+            console.log('check position', returnRelativeRange);
+            selObj.removeAllRanges();
+
+            return returnRelativeRange;
+        } else {
+            return null;
+        }
+    }
+}
+
+function checkForDifferentNodes(childnodes) {
+    for (var i = 0; i < childnodes.length; i++) {
+        if (childnodes[i].nodeName != '#text') {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+angular.module('botApp').controller("intentEntityController", function ($rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
+
+    $scope.initEntity = function () {};
+
+    $scope.showEnitityPopup = function (toggle) {
+
+        if (toggle == 'open') {
+            $('.fast-entity-popup').addClass('soft-show');
+
+            $scope.popupIsOpen = true;
+        } else if (toggle == 'close') {
+            $('.fast-entity-popup').removeClass('soft-show');
+            $scope.popupIsOpen = false;
+            $scope.removeWhenNotAccepted();
+        }
+    };
+
+    $scope.saveEntity = function () {
+
+        $scope.selectedEntity = $(".entity-select option:selected").text();
+
+        if ($scope.selectedEntity) {
+            console.log($scope.selectedEntity);
+
+            var element = $scope.currentSpan;
+            $scope.entityName = $scope.selectedEntity;
+            $(element).attr('data-entity-name', $scope.entityName);
+            $scope.toggleEntityPopup({ toggle: 'close' });
+        } else {
+            console.log('error');
+        }
+    };
+    $scope.toggleEntityPopup = function (data) {
+        $scope.selectedEntity = null;
+        console.log(data);
+        if (data.toggle == 'open') {
+            if (!$scope.popupIsOpen) {
+                $scope.showEnitityPopup('open');
+            } else {
+                $scope.removeWhenNotAccepted();
+            }
+            $scope.getAllEntities();
+
+            $scope.entityName = data.entity;
+            $scope.entityValue = data.value;
+            $scope.currentSpan = data.element;
+            $($('.fast-entity-popup')).offset({
+                top: data.top,
+                left: data.left
+            });
+        } else if (data.toggle == 'close') {
+            $scope.showEnitityPopup('close');
+            /* $scope.showFastEntity = false;*/
+            $scope.entityName = null;
+            $scope.entityValue = null;
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        }
+    };
+
+    $scope.removeWhenNotAccepted = function () {
+        if (typeof $scope.entityName == 'undefined' || $scope.entityName == '') {
+            var element = $scope.currentSpan;
+            $(element).contents().unwrap();
+        }
+    };
+    $scope.deleteEntity = function () {
+
+        var element = $scope.currentSpan;
+        $(element).contents().unwrap();
+        $scope.showEnitityPopup('close');
+    };
+
+    $scope.getAllEntities = function () {
+        var req = {
+            method: 'GET',
+            url: '../../get-all-entities',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            }
+        };
+
+        $http(req).then(function (data) {
+
+            //console.log(data);
+
+            $scope.allEntities = data.data;
+        }).catch(function (data) {});
+    };
+});
+
+$(document).ready(function () {
+    $('.entity-select').select2();
+});
 
 /***/ })
 /******/ ]);

@@ -15,6 +15,7 @@
     <link href="{{ asset('public/css/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/jquery.flowchart.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/addons/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 
 </head>

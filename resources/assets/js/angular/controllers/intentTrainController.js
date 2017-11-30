@@ -1,4 +1,4 @@
-angular.module('botApp').controller("intentTrainController", function ($scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("intentTrainController", function ($rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
 
     $scope.toggleTrainingPopup = function (data) {
         console.log(data);
@@ -7,12 +7,45 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
             $scope.getIntentDataWit(data.intent);
         } else if (data.toggle == 'close') {
             $scope.showTrainingPopup = false;
+            $rootScope.$emit("toggleIntentEntity", {toggle: 'close'});
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
 
         }
     }
+
+    $scope.getEntity = function (event) {
+        console.log('get entity', event);
+        /* console.log($(event.currentTarget).offset());*/
+
+        //    $scope.showFastEntity = true;
+
+        /*    jQuery(jQuery('.fast-entity-popup')).offset({
+         top: ($(event.currentTarget).offset().top - 165),
+         left: ($(event.currentTarget).offset().left - 110)
+         });*/
+
+        var relativeY = ($(event.currentTarget).offset().top - 235);
+        var relativeX = ($(event.currentTarget).offset().left - 110);
+        var entity = $(event.currentTarget).attr('data-entity-name');
+        var value = $(event.currentTarget).text();
+        $rootScope.$emit("toggleIntentEntity", {
+            toggle: 'open',
+            top: relativeY,
+            left: relativeX,
+            entity: entity,
+            value: value,
+            element: event.currentTarget
+        });
+
+
+        //jQuery(jQuery('.fast-entity-popup')).detach().appendTo($(event.currentTarget).parent());
+        // $('.fast-entity-popup').css({'position' :  'element(#intent_3)'});
+        //breakOverflow($('.fast-entity-popup'));
+
+        //$(event.currentElement).offset().top - $(window).scrollTop();
+    };
 
     $scope.getIntentDataWit = function (intent) {
 
@@ -38,12 +71,14 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
 
         });
     };
-    $scope.checkExpressionsForEntities = function(expressions){
+    $scope.checkExpressionsForEntities = function (expressions) {
+
+
         for (var keyExpression in expressions) {
             if (!expressions.hasOwnProperty(keyExpression)) continue;
-            setTimeout(function(currKey){
+            setTimeout(function (currKey) {
                 $scope.checkEntityInIntent(expressions[currKey], currKey);
-            }.bind(this, keyExpression),500);
+            }.bind(this, keyExpression), 500);
         }
     }
     $scope.checkEntityInIntent = function (intentValue, index) {
@@ -65,14 +100,16 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
 
             var intentSelector = '#intent_' + index;
 
-            $scope.updateIntentEntityHtml(data.data.entities,intentSelector );
+            $scope.updateIntentEntityHtml(data.data.entities, intentSelector);
 
 
         }).catch(function (data) {
 
         });
     }
-
+    $scope.saveIntentValue = function (currentElement, currentScope) {
+        shrinkLoading.do(currentElement, 'loading');
+    }
     $scope.updateIntentEntityHtml = function (witData, domSelector) {
 
         console.log(witData);
@@ -91,11 +128,14 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
                         if (!entityObj.hasOwnProperty(entityKey)) continue;
 
 
-                        if(typeof entityObj[entityKey]._body != 'undefined') {
+                        if (typeof entityObj[entityKey]._body != 'undefined') {
                             var fullHtml = $(domSelector).html();
                             console.log(fullHtml);
-                            var replaceHtml = fullHtml.replace(entityObj[entityKey]._body , "<span data-entity-object='" + key +  "'  class='entity-span'>" + entityObj[entityKey]._body  + "</span>");
+                            var replaceHtml = fullHtml.replace(entityObj[entityKey]._body, "<span data-entity-name='" + key + "'  class='entity-span' ng-click='getEntity($event)'>" + entityObj[entityKey]._body + "</span>");
+
                             $(domSelector).html(replaceHtml);
+
+                            $compile($(domSelector))($scope);
                         }
                     }
                 }
@@ -107,44 +147,55 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
         // var replaceHtml = fullHtml.replace(selectedText, "<span style='background:red'>" + selectedText + "</span>");
     };
     $scope.selectedIntentText = function ($event) {
-        /*        console.log('i selected somthing', $($event.currentTarget).text());
-         var selectedText =  GetSelection();
 
-         var fullHtml = $($event.currentTarget).html();
+        var tempClass = 'temp-' + guidGenerator();
+        var tempClassSelector = '.' + tempClass;
 
-         var replaceHtml = fullHtml.replace(selectedText, "<span style='background:red'>" + selectedText + "</span>");
+        if(typeof tempClass != 'undefined'){
+            var selectionRange = textSelection(tempClass,$event.currentTarget);
+        }
 
-         $($event.currentTarget).html(replaceHtml);
+        if ( typeof selectionRange != 'undefined' && selectionRange != null) {
 
-         var firstIndexHtml = fullHtml.indexOf(selectedText);
-         var lastIndexHtml = firstIndex + selectedText.length;
+            if (!selectionRange.hasOwnProperty('start') && typeof selectionRange.start == null){
+                return;
+            }
 
+            var addedElement = $(tempClassSelector);
 
-
-
-
-         var fullText = $($event.currentTarget).text();
-
-         var firstIndexText = fullText.indexOf(selectedText);
-         var lastIndexText = firstIndex + selectedText.length;
-
+            addedElement.attr('data-first-index', selectionRange.start);
+            addedElement.attr('data-last-index', selectionRange.end);
+            addedElement.attr('ng-click', 'getEntity($event)');
 
 
-         console.log(firstIndexText);
-         console.log(lastIndexText);*/
+            $compile($($event.currentTarget))($scope);
+
+            var relativeY = ($(tempClassSelector).offset().top - 235);
+            var relativeX = ($(tempClassSelector).offset().left - 110);
+
+            $rootScope.$emit("toggleIntentEntity", {
+                toggle: 'open',
+                top: relativeY,
+                left: relativeX,
+                value: $(tempClassSelector).text(),
+                element: tempClassSelector
+            });
+
+
+        }
+
 
 
     };
-    $scope.renderSelection = function (text, startIndex, endIndex) {
-        var originalText = 'ik wil een vliegtuig naar londen';
+    $scope.trainExpression = function (event) {
+            console.log($(event.currentTarget).parent().find('.styled-input').text());
 
-        $('.test-input').val('ik wil een vliegtuig naar <span style="color:red">londen</span>');
-        var firstPart = originalText.substring(26, 32);
-
-        console.log(firstPart)
+        //setLoadingButton(event.currentTarget, true, 'Train');
     }
-    $scope.renderSelection();
 
+    $scope.convertSentenceToTrainObj= function(){
+
+    }
     /*  $('.styled-input').mouseup(function(){
      console.log('i selected somthing');
      GetSelection();
@@ -152,14 +203,23 @@ angular.module('botApp').controller("intentTrainController", function ($scope, $
 
 
 });
+function setLoadingButton(element, trueOrFalse , defaultText){
+    var icon = ' <i class="fa fa-repeat"></i>';
+    if(!trueOrFalse){
+        angular.element(  element ).html(defaultText);
+    }else if(trueOrFalse){
+        angular.element(  element ).html(defaultText + icon);
+    }
 
+}
 
 function GetSelection() {
 
     if (window.getSelection) {  // all browsers, except IE before version 9
         var selectionRange = window.getSelection();
-        console.log(selectionRange.toString())
-        return selectionRange.toString();
+       // console.log(selectionRange.toString())
+      //  console.log('selectionRange', selectionRange);
+        return selectionRange;
     }
     else {
         if (document.selection.type == 'None') {
@@ -167,9 +227,83 @@ function GetSelection() {
         }
         else {
             var textRange = document.selection.createRange();
-            console.log(textRange.text);
-            return textRange.text;
+           // console.log('textRange',textRange);
+            return textRange;
         }
     }
 
 };
+
+function guidGenerator() {
+    var S4 = function () {
+        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
+String.prototype.replaceBetween = function(start, end, what) {
+    return this.substring(0, start) + what + this.substring(end);
+};
+
+
+
+function getSelectionContainerElement(selection) {
+    var sel = selection, el = null;
+    if (sel.rangeCount) {
+        var range = sel.getRangeAt(0);
+        el = range.commonAncestorContainer;
+        if (el.nodeType != 1) {
+            el = el.parentNode;
+        }
+    }
+    return el;
+}
+
+
+
+function textSelection(tempClass, element){
+    if (window.getSelection && (window.getSelection().toString().length > 0)) {
+        // not IE case
+        var selObj = window.getSelection();
+        var selRange = selObj.getRangeAt(0);
+
+        var checkChilds = checkForDifferentNodes(selRange.cloneContents().childNodes);
+
+        var selectedElement =  getSelectionContainerElement(selObj);
+        console.log(checkChilds);
+        if(selectedElement.nodeName == 'DIV' && checkChilds){
+            var newElement = document.createElement("span");
+            newElement.className = 'entity-span span-dark ' + tempClass;
+            var documentFragment = selRange.extractContents();
+            newElement.appendChild(documentFragment);
+            selRange.insertNode(newElement);
+
+            //offset within
+            var range = selRange;
+            var preCaretRange = range.cloneRange();
+            preCaretRange.selectNodeContents(element);
+            preCaretRange.setEnd(range.startContainer, range.startOffset);
+            startOffset = preCaretRange.toString().length;
+            endOffset = startOffset + range.toString().length;
+
+
+            var returnRelativeRange = {start: startOffset, end: endOffset};
+            console.log('check position', returnRelativeRange);
+            selObj.removeAllRanges();
+
+            return returnRelativeRange;
+        }else{
+            return null;
+        }
+    }
+}
+
+function checkForDifferentNodes(childnodes){
+    for(var i = 0; i < childnodes.length ; i++){
+        if(childnodes[i].nodeName != '#text'){
+            return false;
+        }
+    }
+
+    return true;
+}

@@ -1,0 +1,22 @@
+.select2-selection{
+  display: flex !important;
+  align-items: center !important;
+  height: 35px !important;
+  border: 2px solid $font-color-grey !important;
+  border-radius: 0 !important;
+  background: none !important;
+
+
+  font-size: $font-size-2 !important;
+
+  &:focus {
+   outline: none !important;
+  }
+}
+.select2-selection__arrow{
+  height: 95% !important ;
+}
+/*
+.select2-selection__rendered{
+  padding: 5px !important;
+}*/

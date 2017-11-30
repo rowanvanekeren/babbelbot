@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/get-intent-data-wit', 'IntentController@getIntentData');
     Route::post('/get-intent-entity-data-wit', 'IntentController@getIntentEntityData');
+    Route::get('/get-all-entities', 'IntentController@getAllEntities');
 });
 
 

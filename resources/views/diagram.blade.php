@@ -3,6 +3,7 @@
 
 
 @section('content')
+
     <div class="flowchart-wrapper">
         <div id="flowchart-base" class="flowchart-base"> <div class="row modal-overlay hidden" ></div></div>
 
@@ -12,10 +13,50 @@
             <button class="danger-btn delete-link-button">Verwijder</button>
             <button class="main-btn exit-warning-box" >Annuleer</button>
         </div>
+        <div class="app-wrapper fast-entity-popup"  ng-controller='intentEntityController'  active-entity="toggleEntityPopup(data)" ng-init="initEntity()">
+            <div class="fast-entity-top">
+                <h3>@{{ (entityName)? entityName : 'Nieuwe entity' }}</h3>
+                <i class="fa fa-times " aria-hidden="true" ng-click="showEnitityPopup('close')"></i>
+
+            </div>
+            <div class="hidden">
+
+
+            <select class="default-select entity-select"  {{--ng-model="selectedEntity"--}}>
+                <option ng-repeat="entity in allEntities">@{{entity}}</option>
+
+            </select>
+            </div>
+            <div class="form-group">
+
+                <div class="input-wrapper ">
+
+                    <input id="" class="default-input inp-loading" type="text"
+                           name="entity-value"
+                           placeholder="Er is iets fout gegaan"  ng-model="entityValue"
+                           disabled>
+
+                    <i class="fa fa-repeat input-saving-overlay hidden"></i>
+                </div>
+
+            </div>
+            <div class="form-group delete-entity">
+
+                <div class="input-wrapper ">
+
+             <button class="danger-btn" ng-click="deleteEntity()" ng-show="entityName">Verwijder entity </button>
+             <button class="main-btn" ng-click="saveEntity()" ng-show="!entityName">Voeg entity toe</button>
+                </div>
+                <span> *vereist training</span>
+            </div>
+
+        </div>
+
         <div id="flowchart-popup-intent" ng-controller='intentTrainController' active-training="toggleTrainingPopup(data)" ng-show="showTrainingPopup">
+
             <div class="popup-wrapper " >
 
-               
+
                 <div class="popup-title">
                 <h2 id="intent-title" >Intent: @{{ intentValueData.value }}</h2>
                     <i class="fa fa-times " aria-hidden="true" ng-click="toggleTrainingPopup({intent: null, toggle: 'close'})"></i>
@@ -26,10 +67,13 @@
                     <div class="form-group" ng-repeat="intent in intentValueData.expressions">
 
                         <div class=" deletable-input">
-                            <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, answer.id)"></i>
-                            <div class="styled-input" id="intent_@{{ $index }}"  contenteditable="true" ng-mouseup="selectedIntentText($event)">@{{intent }}</div>
+
+                            <div class="styled-input" id="intent_@{{ $index }}"  {{--contenteditable="true"--}} ng-mouseup="selectedIntentText($event)" my-enter="saveIntentValue($element, this)">@{{intent }}</div>
                             <i class="fa fa-repeat input-saving-overlay hidden"></i>
                         </div>
+
+                        <button class="main-btn" ng-click="trainExpression($event)">Train</button>
+                        <button class="danger-btn"> <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"></i></button>
 
                     </div>
                 </div>
@@ -175,6 +219,8 @@
     <script src="{{asset('public/js/flowchart/jquery.panzoom.min.js')}}"></script>
     <script src="{{asset('public/js/flowchart/jquery.mousewheel.min.js')}}"></script>
     <script src="{{asset('public/js/flowchart/jquery.flowchart.js')}}"></script>
+    <script src="{{asset('public/js/addons/select2.min.js')}}"></script>
+
 @endsection
 
 @section('custom-scripts-after')

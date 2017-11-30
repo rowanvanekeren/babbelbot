@@ -8,7 +8,7 @@ $(document).ready(function() {
     var cx = $flowchart.width() / 2;
     var cy = $flowchart.height() / 2;
 
-    $flowchartPopupIntent.draggable({cancel : '.styled-input'});
+    $flowchartPopupIntent.draggable({cancel : '.styled-input, .fast-entity-popup'});
     $flowchartPopup.draggable();
 
 

@@ -17,6 +17,7 @@ mix.js('resources/assets/js/angular/main.js', 'public/js').
         'resources/assets/js/angular/controllers/dialogueController.js',
         'resources/assets/js/angular/controllers/intentController.js',
         'resources/assets/js/angular/controllers/intentTrainController.js',
+        'resources/assets/js/angular/controllers/intentEntityController.js',
     ], 'public/js/controllers.js').
     js('resources/assets/js/app.js', 'public/js').
     js(['resources/assets/js/dashboard.js'],'public/js').

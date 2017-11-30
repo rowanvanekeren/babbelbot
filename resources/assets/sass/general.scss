@@ -220,7 +220,18 @@ input[type=checkbox]{
   transition: 0.5s;
 
 }
+.default-select{
+  width: 100% ;
+  padding: 5px;
+  background: none;
+  border: 2px solid $font-color-grey;
 
+  font-size: $font-size-2;
+
+  &:focus {
+    outline: $main-color solid;
+  }
+}
 .input-saving-overlay {
   position: absolute;
   bottom: 0;

@@ -160,6 +160,19 @@ angular.module('botApp').directive('activeTraining', ['$rootScope', function ($r
     };
 }]);
 
+angular.module('botApp').directive('activeEntity', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'A',
+        link: function link($scope, element, attrs) {
+
+            $rootScope.$on('toggleIntentEntity', function (event, data) {
+                console.log('get a broadcast');
+                $scope.$eval(attrs.activeEntity, { $element: element, data: data });
+            });
+        }
+    };
+}]);
+
 angular.module('botApp').factory('shrinkLoading', function () {
     return {
         do: function _do(element, state) {

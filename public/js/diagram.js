@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 13:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(15);
 
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
@@ -86,7 +86,7 @@ $(document).ready(function () {
     var cx = $flowchart.width() / 2;
     var cy = $flowchart.height() / 2;
 
-    $flowchartPopupIntent.draggable({ cancel: '.styled-input' });
+    $flowchartPopupIntent.draggable({ cancel: '.styled-input, .fast-entity-popup' });
     $flowchartPopup.draggable();
 
     // Panzoom initialization...

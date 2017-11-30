@@ -19,6 +19,18 @@ class IntentController extends Controller
 
     }
 
+    function getAllEntities(Request $request){
+        $server_token = $request->session()->get('active_app')->server_token;
+        $all_entities = json_decode(witGetEntities($server_token), true);
+
+        if (($key = array_search('intent', $all_entities)) !== false) {
+            unset($all_entities[$key]);
+        }
+
+
+        return array_values($all_entities);
+    }
+
     function getIntentData(Request $request){
 
         $server_token = $request->session()->get('active_app')->server_token;
@@ -40,6 +52,7 @@ class IntentController extends Controller
             }
         }
     }
+
     function getStateIntent(Request $request){
         $stateIntent = StateIntent::where('state_id', $request->state_id)->with('stateIntentAnswers')->with('stateIntentData')->first();
 
