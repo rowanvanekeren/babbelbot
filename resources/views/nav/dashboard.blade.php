@@ -8,9 +8,9 @@
 </div>
 <div class="center-navigation" ng-controller="navController" ng-init="checkActiveApp()" active-app="changeActiveApp(data)">
     <ul>
-        <li>
+        <li ng-cloak>
             <a href="" class="apps-nav active"><i class="fa fa-list dash-icon" aria-hidden="true"></i> Apps</a>
-            <ul class="center-sub-nav">
+            <ul class="center-sub-nav" >
                 <li class="active-app-nav"><span>@{{activeApp ? activeApp : "Kies een app"}}<i class="fa fa-circle app-on-off "ng-class="(activeApp) ? 'active-app-color ' : 'inactive-app-color '" aria-hidden="true"></i></span></li>
 
                 <li class="sub-menu-seperator " ng-show="activeApp"><hr></li>

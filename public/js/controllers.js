@@ -675,6 +675,38 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             $scope.intentSearchResult = false;
         });
     };
+
+    $scope.saveKeywordLocal = function (currentElement, currentScope) {
+        var inputObject = {};
+        inputObject[currentElement.attr('name')] = currentElement.val();
+
+        shrinkLoading.do(currentElement, 'loading');
+        console.log($scope.intentData['state_intent_data']['name']);
+        var req = {
+            method: 'POST',
+            url: '../../save-keyword-local',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                keyword: $scope.intentData['state_intent_data']['name'],
+                state_id: $scope.activeStateID,
+                name: $scope.intentData['state_intent_data']['name']
+            }
+        };
+
+        $http(req).then(function (data) {
+            $scope.intentData['state_intent_data']['name'] = data.data.state_data.name;
+            //$scope.intentData['intent'] = data.data.intent;
+            $('#intent-title').trigger('changeOperatorTitle', [data.data.state_data.name, $scope.activeStateID, true]);
+            shrinkLoading.do(currentElement, 'success');
+            $scope.resetIntentSearch();
+        }).catch(function (data) {
+            shrinkLoading.do(currentElement, 'error');
+        });
+    };
+
     $scope.saveIntentLocal = function (inputObj, currentElement) {
 
         var req = {
@@ -746,7 +778,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             if (typeof data.data != 'undefined') {
                 $scope.intentID = typeof data.data.id != 'undefined' ? data.data.id : '';
-                $scope.typeSetter(data.data.type);
+                $scope.typeSetter(data.data['response_type']);
                 $scope.intentData.id;
             } else {
                 $scope.intentData = {};
@@ -828,6 +860,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.updateType = function () {
+        //response type
         var req = {
             method: 'POST',
             url: '../../update-state-type',
@@ -848,15 +881,15 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     $scope.typeChecker = function () {
         var type = 0;
         if ($scope.hasBackend) {
-            type = 14;
+            type = 5;
         } else if ($scope.hasIntentAnswers && $scope.hasQuickReplies) {
-            type = 13;
+            type = 4;
         } else if ($scope.hasIntentAnswers) {
-            type = 11;
+            type = 2;
         } else if ($scope.hasQuickReplies) {
-            type = 12;
+            type = 3;
         } else {
-            type = 10;
+            type = 1; //no answers;
         }
 
         return type;
@@ -865,29 +898,34 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     $scope.typeSetter = function (type) {
 
         switch (type) {
-            case 10:
+            case 1:
+                //no answers
                 $scope.hasIntentAnswers = false;
                 $scope.hasQuickReplies = false;
                 $scope.hasBackend = false;
                 break;
-            case 11:
+            case 2:
+                //intent
                 $scope.hasIntentAnswers = true;
                 $scope.hasQuickReplies = false;
                 $scope.hasBackend = false;
                 break;
-            case 12:
+            case 3:
+                //quickreplies
                 $scope.hasIntentAnswers = false;
                 $scope.hasQuickReplies = true;
                 $scope.hasBackend = false;
                 break;
 
-            case 13:
+            case 4:
+                // answers and quickreplies
                 $scope.hasIntentAnswers = true;
                 $scope.hasQuickReplies = true;
                 $scope.hasBackend = false;
                 break;
 
-            case 14:
+            case 5:
+                //backend
                 $scope.hasIntentAnswers = false;
                 $scope.hasQuickReplies = false;
                 $scope.hasBackend = true;
@@ -977,7 +1015,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 angular.module('botApp').controller("intentTrainController", function ($rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
 
     $scope.toggleTrainingPopup = function (data) {
-        console.log(data);
+
         if (data.toggle == 'open') {
             $scope.showTrainingPopup = true;
             $scope.getIntentDataWit(data.intent);
@@ -991,15 +1029,6 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
     };
 
     $scope.getEntity = function (event) {
-        console.log('get entity', event);
-        /* console.log($(event.currentTarget).offset());*/
-
-        //    $scope.showFastEntity = true;
-
-        /*    jQuery(jQuery('.fast-entity-popup')).offset({
-         top: ($(event.currentTarget).offset().top - 165),
-         left: ($(event.currentTarget).offset().left - 110)
-         });*/
 
         var relativeY = $(event.currentTarget).offset().top - 235;
         var relativeX = $(event.currentTarget).offset().left - 110;
@@ -1013,12 +1042,6 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
             value: value,
             element: event.currentTarget
         });
-
-        //jQuery(jQuery('.fast-entity-popup')).detach().appendTo($(event.currentTarget).parent());
-        // $('.fast-entity-popup').css({'position' :  'element(#intent_3)'});
-        //breakOverflow($('.fast-entity-popup'));
-
-        //$(event.currentElement).offset().top - $(window).scrollTop();
     };
 
     $scope.getIntentDataWit = function (intent) {
@@ -1036,10 +1059,8 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             $scope.intentValueData = data.data;
-            //  console.log($scope.intentValueData.expressions[0]);
-            //$scope.checkExpressionsForEntities(data.data.expressions);
         }).catch(function (data) {});
     };
     $scope.checkExpressionsForEntities = function (expressions) {
@@ -1051,6 +1072,7 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
             }.bind(this, keyExpression), 500);
         }
     };
+
     $scope.checkEntityInIntent = function (intentValue, index) {
         var req = {
             method: 'POST',
@@ -1066,8 +1088,6 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
 
         $http(req).then(function (data) {
 
-            console.log(data);
-
             var intentSelector = '#intent_' + index;
 
             $scope.updateIntentEntityHtml(data.data.entities, intentSelector);
@@ -1078,7 +1098,6 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
     };
     $scope.updateIntentEntityHtml = function (witData, domSelector) {
 
-        console.log(witData);
         if (typeof witData != 'undefined') {
 
             for (var key in witData) {
@@ -1094,8 +1113,7 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
 
                         if (typeof entityObj[entityKey]._body != 'undefined') {
                             var fullHtml = $(domSelector).html();
-                            console.log(fullHtml);
-                            var replaceHtml = fullHtml.replace(entityObj[entityKey]._body, "<span data-entity-name='" + key + "'  class='entity-span' ng-click='getEntity($event)'>" + entityObj[entityKey]._body + "</span>");
+                            var replaceHtml = fullHtml.replace(entityObj[entityKey]._body, "<span data-entity-name='" + key + "' data-last-index='" + entityObj[entityKey]._end + "'  data-first-index='" + entityObj[entityKey]._start + "'  class='entity-span' ng-click='getEntity($event)'>" + entityObj[entityKey]._body + "</span>");
 
                             $(domSelector).html(replaceHtml);
 
@@ -1145,16 +1163,58 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
         }
     };
     $scope.trainExpression = function (event) {
-        console.log($(event.currentTarget).parent().find('.styled-input').text());
+        var trainElement = $(event.target.parentElement).find('.styled-input');
+        var currentIntent = $scope.intentValueData.value;
 
+        var trainObject = $scope.convertSentenceToTrainObj(trainElement, currentIntent);
         //setLoadingButton(event.currentTarget, true, 'Train');
+
+
+        var req = {
+            method: 'POST',
+            url: '../../train-intent',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                train_object: trainObject
+            }
+        };
+
+        $http(req).then(function (data) {
+
+            console.log(data);
+        }).catch(function (data) {});
     };
 
-    $scope.convertSentenceToTrainObj = function () {};
-    /*  $('.styled-input').mouseup(function(){
-     console.log('i selected somthing');
-     GetSelection();
-     });*/
+    $scope.convertSentenceToTrainObj = function (trainElement, currentIntent) {
+
+        var allSpans = trainElement.find('span');
+
+        var trainObj = {
+            text: trainElement.text(),
+            entities: [{
+                entity: 'intent',
+                value: currentIntent
+            }]
+        };
+
+        if (allSpans.length > 0) {
+            for (var i = 0; i < allSpans.length; i++) {
+                var currentSpan = $(allSpans[i]);
+                trainObj.entities.push({
+                    entity: currentSpan.attr('data-entity-name'),
+                    start: parseInt(currentSpan.attr('data-first-index')),
+                    end: parseInt(currentSpan.attr('data-last-index')),
+                    value: currentSpan.text()
+                });
+            }
+            return trainObj;
+        } else {
+            return null;
+        }
+    };
 });
 function setLoadingButton(element, trueOrFalse, defaultText) {
     var icon = ' <i class="fa fa-repeat"></i>';
@@ -1164,25 +1224,6 @@ function setLoadingButton(element, trueOrFalse, defaultText) {
         angular.element(element).html(defaultText + icon);
     }
 }
-
-function GetSelection() {
-
-    if (window.getSelection) {
-        // all browsers, except IE before version 9
-        var selectionRange = window.getSelection();
-        // console.log(selectionRange.toString())
-        //  console.log('selectionRange', selectionRange);
-        return selectionRange;
-    } else {
-        if (document.selection.type == 'None') {
-            return "";
-        } else {
-            var textRange = document.selection.createRange();
-            // console.log('textRange',textRange);
-            return textRange;
-        }
-    }
-};
 
 function guidGenerator() {
     var S4 = function S4() {
@@ -1217,7 +1258,7 @@ function textSelection(tempClass, element) {
         var checkChilds = checkForDifferentNodes(selRange.cloneContents().childNodes);
 
         var selectedElement = getSelectionContainerElement(selObj);
-        console.log(checkChilds);
+
         if (selectedElement.nodeName == 'DIV' && checkChilds) {
             var newElement = document.createElement("span");
             newElement.className = 'entity-span span-dark ' + tempClass;
@@ -1234,7 +1275,7 @@ function textSelection(tempClass, element) {
             endOffset = startOffset + range.toString().length;
 
             var returnRelativeRange = { start: startOffset, end: endOffset };
-            console.log('check position', returnRelativeRange);
+
             selObj.removeAllRanges();
 
             return returnRelativeRange;
@@ -1280,7 +1321,6 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
         $scope.selectedEntity = $(".entity-select option:selected").text();
 
         if ($scope.selectedEntity) {
-            console.log($scope.selectedEntity);
 
             var element = $scope.currentSpan;
             $scope.entityName = $scope.selectedEntity;
@@ -1292,7 +1332,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
     };
     $scope.toggleEntityPopup = function (data) {
         $scope.selectedEntity = null;
-        console.log(data);
+
         if (data.toggle == 'open') {
             if (!$scope.popupIsOpen) {
                 $scope.showEnitityPopup('open');

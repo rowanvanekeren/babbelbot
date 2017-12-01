@@ -25,7 +25,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
 
 
         if($scope.selectedEntity){
-        console.log( $scope.selectedEntity);
+
 
         var element =  $scope.currentSpan;
         $scope.entityName =  $scope.selectedEntity;
@@ -37,7 +37,8 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
     }
     $scope.toggleEntityPopup = function (data) {
         $scope.selectedEntity = null;
-        console.log(data);
+
+
         if (data.toggle == 'open') {
             if (!$scope.popupIsOpen) {
                 $scope.showEnitityPopup('open');

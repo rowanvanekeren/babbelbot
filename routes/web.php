@@ -54,6 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/getAllStates', 'FlowChartController@getAllStates');
     Route::post('/deleteLinkOperator', 'FlowChartController@deleteLink');
 
+    /* keyword */
+    Route::post('/save-keyword-local', 'IntentController@saveKeywordLocal');
+
 
     /* intent */
     Route::post('/get-intent-wit', 'IntentController@getIntentWit');
@@ -68,6 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/get-intent-data-wit', 'IntentController@getIntentData');
     Route::post('/get-intent-entity-data-wit', 'IntentController@getIntentEntityData');
     Route::get('/get-all-entities', 'IntentController@getAllEntities');
+
+    /* train */
+    Route::post('/train-intent', 'IntentController@trainIntent');
+
 });
 
 

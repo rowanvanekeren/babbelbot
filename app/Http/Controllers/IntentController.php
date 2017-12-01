@@ -12,14 +12,16 @@ use Carbon\Carbon;
 
 class IntentController extends Controller
 {
-    function getIntentWit(Request $request){
+    function getIntentWit(Request $request)
+    {
 
         $server_token = $request->session()->get('active_app')->server_token;
-        return witGet($server_token,$request->user_input_intent );
+        return witGet($server_token, $request->user_input_intent);
 
     }
 
-    function getAllEntities(Request $request){
+    function getAllEntities(Request $request)
+    {
         $server_token = $request->session()->get('active_app')->server_token;
         $all_entities = json_decode(witGetEntities($server_token), true);
 
@@ -31,67 +33,73 @@ class IntentController extends Controller
         return array_values($all_entities);
     }
 
-    function getIntentData(Request $request){
+    function getIntentData(Request $request)
+    {
 
         $server_token = $request->session()->get('active_app')->server_token;
         $full_intent = json_decode(witGetIntent($server_token, $request->intent), true);
 
-        return $this->searchForIntentValue($full_intent['values'],  $request->intent);
+        return $this->searchForIntentValue($full_intent['values'], $request->intent);
     }
 
-    function getIntentEntityData(Request $request){
+    function getIntentEntityData(Request $request)
+    {
         $server_token = $request->session()->get('active_app')->server_token;
-        return witGetIntentWithEntities($server_token,$request->intent_value );
+        return witGetIntentWithEntities($server_token, $request->intent_value);
     }
 
-    function searchForIntentValue($intentValues, $user_intent){
+    function searchForIntentValue($intentValues, $user_intent)
+    {
 
-        foreach($intentValues as $key => $value){
-            if($value['value'] == $user_intent){
+        foreach ($intentValues as $key => $value) {
+            if ($value['value'] == $user_intent) {
                 return $value;
             }
         }
     }
 
-    function getStateIntent(Request $request){
+    function getStateIntent(Request $request)
+    {
         $stateIntent = StateIntent::where('state_id', $request->state_id)->with('stateIntentAnswers')->with('stateIntentData')->first();
 
         return $stateIntent;
     }
 
-    function saveIntentToState($state_id, $data){
+    function saveIntentToState($state_id, $data)
+    {
 
         $state_intent = StateIntent::updateOrCreate(
             ['state_id' => $state_id],
             $data
         );
 
-        if(isset($state_intent)){
+        if (isset($state_intent)) {
             return $state_intent;
-        }else{
+        } else {
             return null;
         }
 
 
-
     }
-/*
-    function saveIntentDataToIntent($intent_id, $data){
-        $state_intent_data = StateIntentData::updateOrCreate(
-            ['state_intents_id', $intent_id],
-            $data
-        );
 
-        return $state_intent_data;
-    }*/
+    /*
+        function saveIntentDataToIntent($intent_id, $data){
+            $state_intent_data = StateIntentData::updateOrCreate(
+                ['state_intents_id', $intent_id],
+                $data
+            );
 
-    function updateStateName($state_id, $name, $state_intents_id){
+            return $state_intent_data;
+        }*/
+
+    function updateStateName($state_id, $name, $state_intents_id)
+    {
         $state = StateData::where('state_id', $state_id)->first();
 
-        if(isset($name) && isset($state)){
+        if (isset($name) && isset($state)) {
 
             $state_intent_data = StateIntentData::updateOrCreate(
-                ['state_intents_id'=> $state_intents_id],
+                ['state_intents_id' => $state_intents_id],
                 ['name' => $name]
             );
 
@@ -100,43 +108,46 @@ class IntentController extends Controller
             $state->save();
 
             return $state;
-        }else{
+        } else {
             return null;
         }
 
     }
 
-    function saveAnswer(Request $request){
+    function saveAnswer(Request $request)
+    {
 
-       $stateIntent =  $this->saveIntentToState($request->state_id, array());
+        $stateIntent = $this->saveIntentToState($request->state_id, array());
 
-       $answer = StateIntentAnswer::updateOrCreate(
-           ['id'=> $request->id],
-           ['answer' => $request->answer,
-           'answer_type' => $request->answer_type,
-            'called_at' => Carbon::now(),
-            'state_intents_id'  => $stateIntent->id
-           ]
-       );
+        $answer = StateIntentAnswer::updateOrCreate(
+            ['id' => $request->id],
+            ['answer' => $request->answer,
+                'answer_type' => $request->answer_type,
+                'called_at' => Carbon::now(),
+                'state_intents_id' => $stateIntent->id
+            ]
+        );
 
         return $answer;
 
 
     }
 
-    public function deleteAnswer(Request $request){
-        if(isset( $request->answer_id)){
-            $answer = StateIntentAnswer::where('id' ,$request->answer_id )->first();
+    public function deleteAnswer(Request $request)
+    {
+        if (isset($request->answer_id)) {
+            $answer = StateIntentAnswer::where('id', $request->answer_id)->first();
 
             $answer->delete();
 
             return $answer;
-        }else{
+        } else {
             return null;
         }
     }
 
-    public function deleteActiveIntent(Request $request){
+    public function deleteActiveIntent(Request $request)
+    {
         $default_state_name = '(nog geen titel)';
         $intent = StateIntent::where('id', $request->intent_id)->first();
 
@@ -144,7 +155,7 @@ class IntentController extends Controller
 
         $intent->save();
 
-      //  $this->updateStateName($request->state_id, null , $request->intent_id);
+        //  $this->updateStateName($request->state_id, null , $request->intent_id);
 
         $intent['default_state_name'] = '(nog geen titel)';
         return $intent;
@@ -153,35 +164,79 @@ class IntentController extends Controller
     }
 
 
-
-    public function saveIntentLocal(Request $request){
+    public function saveIntentLocal(Request $request)
+    {
 
 
         $state_intent = $this->saveIntentToState($request->state_id, array(
             'state_id' => $request->state_id,
-            'intent'=> $request->intent,
+            'intent' => $request->intent,
 
         ));
 
-        if(isset($request->name)){
-           $state =   $this->updateStateName($request->state_id, $request->name, $state_intent->id);
-           $state_intent['state_data'] =  $state;
+        if (isset($request->name)) {
+            $state = $this->updateStateName($request->state_id, $request->name, $state_intent->id);
+            $state_intent['state_data'] = $state;
         }
 
         return $state_intent;
     }
 
-    public function updateStateType(Request $request){
+    public function saveKeywordLocal(Request $request)
+    {
+
+
+        $state_intent = $this->saveIntentToState($request->state_id, array(
+            'state_id' => $request->state_id,
+            'keyword' => $request->keyword,
+        ));
+
+        if (isset($request->name)) {
+            $state = $this->updateStateName($request->state_id, $request->name, $state_intent->id);
+            $state_intent['state_data'] = $state;
+        }
+
+        return $state_intent;
+    }
+
+    public function updateStateType(Request $request)
+    {
 
         $stateIntent = StateIntent::where('state_id', $request->state_id)->first();
 
-        $stateIntent->type = $request->type;
+        $stateIntent->response_type = $request->type;
 
         $stateIntent->save();
 
         return $stateIntent;
     }
 
+
+    public function trainIntent(Request $request)
+    {
+        $server_token = $request->session()->get('active_app')->server_token;
+
+
+        $data = array(
+            array(
+                "text" => "een vliegtuig van parijs naar rotterdam",
+                "entities" => array(
+                    array(
+                        "entity" => "intent",
+                        "value" => "flight_request"
+                    ),
+                    array(
+                        "entity" => "flight_from",
+                        "value" => "parijs",
+                        "start" => 18,
+                        "end" => 24
+                    )
+                )
+            )
+        );
+
+        return witTrainIntent($server_token, json_encode(array($request->train_object)));
+    }
 
 
 }

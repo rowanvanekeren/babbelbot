@@ -39,7 +39,8 @@ class FlowChartController extends Controller
 
         $stateIntent = new StateIntent();
         $stateIntent->state_id = $state->id;
-        $stateIntent->type = $request->type;
+        $stateIntent->intent_type = $request->type;
+        $stateIntent->response_type = 1;
 
         $stateIntent->save();
 

@@ -414,7 +414,7 @@ $(document).ready(function () {
         }
     });
 
-    function checkActiveTitle(intent, name, forceActive) {
+    function checkActiveTitle(intent, name, forceActive, intent_type) {
         if (typeof intent != 'undefined' && intent != '' && intent != null || forceActive) {
 
             return '<i class="fa fa-circle active-intent-color" aria-hidden="true"></i> ' + name;
@@ -438,12 +438,18 @@ $(document).ready(function () {
                 var links = JSON.parse(data[i].state_data.link_data);
             }
 
+            if (parseInt(data[i].state_intents.intent_type) == 1) {
+                var titleToCheck = data[i].state_intents.intent;
+            } else if (parseInt(data[i].state_intents.intent_type) == 2) {
+                var titleToCheck = data[i].state_intents.keyword;
+            }
             //console.log(JSON.parse(data[i].next_states));
             chartJson.operators[data[i].id] = {
                 top: data[i].state_data.top,
                 left: data[i].state_data.left,
                 properties: {
-                    title: checkActiveTitle(data[i].state_intents.intent, data[i].state_data.name),
+                    class: generateClass(parseInt(data[i].state_intents.intent_type)),
+                    title: checkActiveTitle(titleToCheck, data[i].state_data.name),
                     inputs: {
                         ins: {
                             label: 'Input (:i)',
@@ -500,6 +506,14 @@ $(document).ready(function () {
 
     function createLinkOperator(linkID, linkData) {
 
+        if (linkData.fromOperator == linkData.toOperator) {
+            setTimeout(function () {
+                $flowchart.flowchart('deleteLink', linkID);
+            }, 200);
+
+            return;
+        }
+
         var allLinks = getAllLinksFromOperator(linkData.fromOperator);
         var currentLink = linkData;
         currentLink['custom_link_id'] = linkID;
@@ -534,7 +548,7 @@ $(document).ready(function () {
                 top: $top,
                 left: $left,
                 title: $element.attr('data-default-text'),
-                type: $element.attr('data-intent-type')
+                type: $element.attr('data-intent-type') // intent_type
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -549,6 +563,7 @@ $(document).ready(function () {
                     left: resultData.left,
 
                     properties: {
+                        class: generateClass(parseInt($element.attr('data-intent-type'))),
                         title: "<i class='fa fa-circle inactive-intent-color' aria-hidden='true'></i> " + $element.attr('data-default-text'),
                         inputs: {
                             ins: {
@@ -568,6 +583,17 @@ $(document).ready(function () {
                 $flowchart.flowchart('createOperator', data.state_id, Newoperator);
             }
         });
+    }
+    function generateClass(type) {
+        console.log(type);
+
+        switch (type) {
+            case 1:
+                return 'state-type-intent';
+
+            case 2:
+                return 'state-type-keyword';
+        }
     }
 
     function updateOperatorPosition(operatorID, position) {

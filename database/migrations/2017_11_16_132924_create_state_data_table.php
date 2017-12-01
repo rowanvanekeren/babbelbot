@@ -20,6 +20,7 @@ class CreateStateDataTable extends Migration
             $table->string('left');
             $table->text('link_data')->nullable();
             $table->string('name');
+
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
             $table->foreign('state_id')->references('id')->on('states');

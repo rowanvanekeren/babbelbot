@@ -55,6 +55,39 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
         });
     };
+
+    $scope.saveKeywordLocal = function(currentElement, currentScope){
+        var inputObject = {};
+        inputObject[currentElement.attr('name')] = currentElement.val();
+
+        shrinkLoading.do(currentElement, 'loading');
+        console.log($scope.intentData['state_intent_data']['name']);
+        var req = {
+            method: 'POST',
+            url: '../../save-keyword-local',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                keyword:  $scope.intentData['state_intent_data']['name'],
+                state_id: $scope.activeStateID,
+                name:  $scope.intentData['state_intent_data']['name']
+            }
+        };
+
+        $http(req).then(function (data) {
+            $scope.intentData['state_intent_data']['name'] = data.data.state_data.name;
+            //$scope.intentData['intent'] = data.data.intent;
+            $('#intent-title').trigger('changeOperatorTitle', [data.data.state_data.name, $scope.activeStateID, true]);
+            shrinkLoading.do(currentElement, 'success');
+            $scope.resetIntentSearch();
+
+        }).catch(function (data) {
+            shrinkLoading.do(currentElement, 'error');
+        });
+    }
+
     $scope.saveIntentLocal = function (inputObj, currentElement) {
 
         var req = {
@@ -134,7 +167,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             if (typeof data.data != 'undefined') {
                 $scope.intentID = (typeof data.data.id != 'undefined') ? data.data.id : '';
-                $scope.typeSetter(data.data.type);
+                $scope.typeSetter(data.data['response_type']);
                 $scope.intentData.id
             }else{
                 $scope.intentData = {};
@@ -227,6 +260,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
 
     $scope.updateType = function () {
+        //response type
         var req = {
             method: 'POST',
             url: '../../update-state-type',
@@ -250,15 +284,15 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     $scope.typeChecker = function () {
         var type = 0;
         if ($scope.hasBackend) {
-            type = 14;
+            type = 5;
         } else if ($scope.hasIntentAnswers && $scope.hasQuickReplies) {
-            type = 13;
+            type = 4;
         } else if ($scope.hasIntentAnswers) {
-            type = 11;
+            type = 2;
         } else if ($scope.hasQuickReplies) {
-            type = 12;
+            type = 3;
         } else {
-            type = 10;
+            type = 1 //no answers;
         }
 
         return type;
@@ -267,29 +301,29 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     $scope.typeSetter = function (type) {
 
         switch (type) {
-            case 10 :
+            case 1 : //no answers
                 $scope.hasIntentAnswers = false;
                 $scope.hasQuickReplies = false;
                 $scope.hasBackend = false;
                 break;
-            case 11:
+            case 2: //intent
                 $scope.hasIntentAnswers = true;
                 $scope.hasQuickReplies = false;
                 $scope.hasBackend = false;
                 break;
-            case 12:
+            case 3: //quickreplies
                 $scope.hasIntentAnswers = false;
                 $scope.hasQuickReplies = true;
                 $scope.hasBackend = false;
                 break;
 
-            case 13:
+            case 4: // answers and quickreplies
                 $scope.hasIntentAnswers = true;
                 $scope.hasQuickReplies = true;
                 $scope.hasBackend = false;
                 break;
 
-            case 14:
+            case 5: //backend
                 $scope.hasIntentAnswers = false;
                 $scope.hasQuickReplies = false;
                 $scope.hasBackend = true;

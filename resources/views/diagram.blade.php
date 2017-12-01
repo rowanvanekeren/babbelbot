@@ -19,7 +19,7 @@
                 <i class="fa fa-times " aria-hidden="true" ng-click="showEnitityPopup('close')"></i>
 
             </div>
-            <div class="hidden">
+            <div class="entity-select-wrapper" ng-show="!entityName">
 
 
             <select class="default-select entity-select"  {{--ng-model="selectedEntity"--}}>
@@ -45,7 +45,7 @@
                 <div class="input-wrapper ">
 
              <button class="danger-btn" ng-click="deleteEntity()" ng-show="entityName">Verwijder entity </button>
-             <button class="main-btn" ng-click="saveEntity()" ng-show="!entityName">Voeg entity toe</button>
+             <button class="main-btn " ng-click="saveEntity()" ng-show="!entityName">Voeg entity toe</button>
                 </div>
                 <span> *vereist training</span>
             </div>
@@ -88,8 +88,9 @@
                 </div >
                     <hr>
 
-                <h3>Actieve intent:</h3>
-                <div class="current-active-intent">
+                <h3 ng-if="intentData.intent_type == 1">Actieve intent:</h3>
+                <div class="current-active-intent" ng-if="intentData.intent_type == 1">
+
                     <span>@{{ intentData.intent ? intentData.intent : 'geen actieve intent'  }}</span>
                     <div ng-show="intentData.intent">
                     <button class="main-btn" ng-click="getIntentData()">Trainen</button>
@@ -97,7 +98,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-if="intentData.intent_type == 1">
                     <h3>Gebruiker zegt:</h3>
                     <div class="input-wrapper ">
 
@@ -120,7 +121,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" >
+                <div class="form-group" ng-if="intentData.intent_type == 1">
                     <div class="found-intent" ng-show="!newIntent && intentSearchResult">
                         <span>@{{intentSearchValue}}</span>
                         <div>
@@ -137,6 +138,30 @@
 
                         <button class="main-btn">Nieuw</button>
                         <i class="fa fa-times " aria-hidden="true" ng-show="intentSearchResult" ng-click="newIntent = false"></i>
+                    </div>
+                </div>
+
+
+                <div class="form-group" ng-if="intentData.intent_type == 2">
+                    <h3>Sleutelwoord:</h3>
+                    <div class="input-wrapper ">
+
+                        <input id="" class="default-input inp-loading" type="text"
+                               name="user_input_intent"
+                               placeholder="sleutelwoord" ng-focus="growBack($event)"
+                               my-enter="saveKeywordLocal($element, this)" ng-model="intentData.state_intent_data.name">
+
+                        <i class="fa fa-repeat input-saving-overlay hidden"></i>
+
+
+                    </div>
+
+                    <div class="input-error">
+                        <div class="no-error" ng-repeat="error in dialogue.description.error"><i
+                                    class="fa fa-times " aria-hidden="true"></i> Dit is een input error verander
+                            my om een error weer te geven
+                        </div>
+
                     </div>
                 </div>
                 <div>
@@ -205,7 +230,8 @@
                 <div class="toggle-content-wrapper">
                 <div class="toggle-menu-close"><div><i class="fa fa-chevron-right" aria-hidden="true"></i></div></div>
                 <div class="toggle-menu-content">
-                <div class="draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="10" data-nb-inputs="1" data-nb-outputs="1">1 input &amp; 1 output</div>
+                <div class="draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="1" data-nb-inputs="1" data-nb-outputs="1">Intent</div>
+                <div class="draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="2" data-nb-inputs="1" data-nb-outputs="1">Sleutelwoord</div>
                 </div>
                 </div>
             </div>

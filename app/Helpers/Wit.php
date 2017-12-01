@@ -69,3 +69,21 @@ function witGetEntities($token){
 
     return $response;
 }
+
+function witTrainIntent($token, $trainObject){
+    $url = 'https://api.wit.ai/samples?v=20170307';
+    $authorization = "Authorization: Bearer " . $token;
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array($authorization,  'Content-Type: application/json'));
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $trainObject);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return $response;
+}
+

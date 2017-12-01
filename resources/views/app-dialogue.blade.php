@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container-fluid" ng-controller="dialogueController" ng-init="getDialogues()">
-        <div class="row modal-overlay" ng-show="showCreateDialogue || showDeleteDialogue"></div>
+        <div class="row modal-overlay" ng-show="showCreateDialogue || showDeleteDialogue" ng-cloak></div>
 
-        <div class="app-wrapper warning-box" ng-show="showDeleteDialogue">
+        <div class="app-wrapper warning-box" ng-show="showDeleteDialogue" ng-cloak>
             <h2>Weet je zeker dat je dit dialoog wilt verwijderen?</h2>
 
             <button class="danger-btn" ng-click="deleteDialogue($event, deleteID)">Verwijder</button>
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" ng-cloak>
             <div class="col-md-6 col-md-offset-3">
 
 
