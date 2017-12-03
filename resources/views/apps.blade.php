@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container-fluid" ng-controller="appController" ng-init="getUserApps()">
-        <div class="row modal-overlay" ng-show="showCreateApp || showDeleteApp" ng-cloak></div>
+        <div class="row modal-overlay" ng-show="showCreateApp || showDeleteApp"></div>
 
-        <div class="app-wrapper warning-box" ng-show="showDeleteApp" ng-cloak>
+        <div class="app-wrapper warning-box" ng-show="showDeleteApp">
             <h2>Weet je zeker dat je deze app wilt verwijderen?</h2>
 
             <button class="danger-btn" ng-click="deleteApp($event, deleteID)">Verwijder</button>
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="row" ng-cloak>
+        <div class="row">
             <div class="col-md-6 col-md-offset-3">
 
                 <div class="col-md-12 app-wrapper new-app" ng-show="showCreateApp"

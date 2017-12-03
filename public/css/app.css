@@ -66,6 +66,10 @@ input[type=checkbox]:focus {
   outline: none;
 }
 
+.lr-margin {
+  margin: 0 5px;
+}
+
 .hidden {
   display: none !important;
 }
@@ -1394,5 +1398,35 @@ input[type=checkbox]:focus {
   padding-left: 5px;
   color: #ff625d;
   cursor: pointer;
+}
+
+.standard-intent {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.standard-intent .standard-intent-info {
+  margin: 0 !important;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.standard-intent .standard-intent-info span {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  font-size: 16px;
+}
+
+.standard-intent .standard-intent-info .standard-intent-title {
+  font-weight: bold;
 }
 

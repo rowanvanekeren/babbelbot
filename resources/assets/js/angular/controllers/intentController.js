@@ -56,6 +56,46 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         });
     };
 
+    $scope.addNewIntent = function(intentValue, intentExpression ){
+
+     
+        var intentObj = {
+            value: intentValue,
+            expressions : [intentExpression]
+        };
+
+        var req = {
+            method: 'POST',
+            url: '../../add-intent-wit',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                new_intent : intentObj
+            }
+        };
+
+        $http(req).then(function (data) {
+            console.log(data);
+
+            $scope.intentData['state_intent_data']['name'] = intentExpression;
+            $scope.intentData['intent'] = intentValue;
+            $scope.intentSearchValue = intentValue;
+           /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
+            $scope.resetIntentSearch();*/
+            if(!$scope.$$phase) {
+                $scope.$apply()
+            }
+
+            $scope.saveIntentLocal();
+
+
+        }).catch(function (data) {
+
+        });
+    };
+
     $scope.saveKeywordLocal = function(currentElement, currentScope){
         var inputObject = {};
         inputObject[currentElement.attr('name')] = currentElement.val();
@@ -111,6 +151,9 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             $('#intent-title').trigger('changeOperatorTitle', [data.data.state_data.name, $scope.activeStateID, true]);
             $scope.resetIntentSearch();
 
+            if(!$scope.$$phase) {
+                $scope.$apply()
+            }
         }).catch(function (data) {
 
         });

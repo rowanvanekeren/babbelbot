@@ -1,0 +1,16 @@
+.standard-intent{
+  display:inline-flex;
+  align-items: center;
+  .standard-intent-info{
+    margin: 0 !important;
+    flex:2;
+    display:flex;
+    span{
+      flex:2 ;
+      font-size: $font-size-2;
+    }
+    .standard-intent-title{
+      font-weight: bold;
+    }
+  }
+}

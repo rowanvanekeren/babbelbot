@@ -56,7 +56,9 @@ input[type=checkbox]{
   position: relative;
   cursor: pointer;
 }
-
+.lr-margin{
+  margin: 0 5px;
+}
 .hidden {
   display: none !important;
 

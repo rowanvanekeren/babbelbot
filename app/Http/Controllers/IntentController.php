@@ -217,26 +217,13 @@ class IntentController extends Controller
         $server_token = $request->session()->get('active_app')->server_token;
 
 
-        $data = array(
-            array(
-                "text" => "een vliegtuig van parijs naar rotterdam",
-                "entities" => array(
-                    array(
-                        "entity" => "intent",
-                        "value" => "flight_request"
-                    ),
-                    array(
-                        "entity" => "flight_from",
-                        "value" => "parijs",
-                        "start" => 18,
-                        "end" => 24
-                    )
-                )
-            )
-        );
 
         return witTrainIntent($server_token, json_encode(array($request->train_object)));
     }
 
+    public function addWitIntent(Request $request){
+        $server_token = $request->session()->get('active_app')->server_token;
 
+        return witAddIntent($server_token, json_encode($request->new_intent));
+    }
 }
