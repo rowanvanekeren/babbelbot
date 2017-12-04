@@ -116,7 +116,7 @@ class IntentController extends Controller
 
     function saveAnswer(Request $request)
     {
-
+        //if no intent create one else get with id
         $stateIntent = $this->saveIntentToState($request->state_id, array());
 
         $answer = StateIntentAnswer::updateOrCreate(

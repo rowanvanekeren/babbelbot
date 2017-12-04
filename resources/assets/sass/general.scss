@@ -336,3 +336,8 @@ input[type=checkbox]{
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+.no-animate {
+  -webkit-transition: none !important;
+  transition: none !important;
+}

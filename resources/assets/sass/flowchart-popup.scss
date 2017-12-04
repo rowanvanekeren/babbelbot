@@ -1,4 +1,8 @@
 #flowchart-popup, #flowchart-popup-intent{
+  &.small-popup{
+    height: auto !important;
+    top: 25%;
+  }
   width: 500px;
   height:600px;
   background: #fff;

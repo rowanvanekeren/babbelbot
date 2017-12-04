@@ -21,7 +21,7 @@ class CreateAppsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -19,7 +19,7 @@ class CreateStateIntentDataTable extends Migration
             $table->integer('state_intents_id')->unsigned()->nullable();
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
-            $table->foreign('state_intents_id')->references('id')->on('state_intents');
+            $table->foreign('state_intents_id')->references('id')->on('state_intents')->onDelete('cascade');
         });
     }
 

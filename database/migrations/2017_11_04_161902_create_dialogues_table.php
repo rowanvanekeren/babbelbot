@@ -20,7 +20,7 @@ class CreateDialoguesTable extends Migration
             $table->integer('app_id')->unsigned();
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
-            $table->foreign('app_id')->references('id')->on('apps');
+            $table->foreign('app_id')->references('id')->on('apps')->onDelete('cascade');
         });
     }
 

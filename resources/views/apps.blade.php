@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <div class="container-fluid" ng-controller="appController" ng-init="getUserApps()">
+    <div class="container-fluid" ng-controller="appController" ng-init="getUserApps()" ng-cloak>
         <div class="row modal-overlay" ng-show="showCreateApp || showDeleteApp"></div>
 
         <div class="app-wrapper warning-box" ng-show="showDeleteApp">

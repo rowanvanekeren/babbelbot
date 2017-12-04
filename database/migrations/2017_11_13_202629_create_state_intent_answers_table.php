@@ -21,7 +21,7 @@ class CreateStateIntentAnswersTable extends Migration
             $table->tinyInteger('answer_type')->default(1); /* 1 intent, 2 quickreply */
             $table->timestamps();
             $table->integer('state_intents_id')->unsigned()->nullable();
-            $table->foreign('state_intents_id')->references('id')->on('state_intents');
+            $table->foreign('state_intents_id')->references('id')->on('state_intents')->onDelete('cascade');
         });
     }
 

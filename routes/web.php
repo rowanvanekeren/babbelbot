@@ -47,9 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/standaard-antwoorden', function () {
         return view('standard-answer');
     });
-    /*flowchart test */
 
-    Route::post('/testFlowChart', 'FlowChartController@test');
+    /*flowchart */
     Route::post('/createState', 'FlowChartController@createState');
     Route::post('/createStateLink', 'FlowChartController@createStateLink');
     Route::post('/updateOperatorPosition', 'FlowChartController@updatePosition');
@@ -79,6 +78,18 @@ Route::group(['middleware' => 'auth'], function () {
 
     /* train */
     Route::post('/train-intent', 'IntentController@trainIntent');
+
+
+    /* standard intent */
+
+     Route::post('/add-standard-intent-wit', 'StandardIntentController@addStandardWitIntent');
+     Route::post('/add-new-standard', 'StandardIntentController@createStandard');
+     Route::get('/get-all-standard-intents', 'StandardIntentController@getAllIntents');
+     Route::post('/save-standard-intent', 'StandardIntentController@saveIntent');
+     Route::post('/delete-standard-intent', 'StandardIntentController@deleteIntent');
+     Route::post('/save-standard-intent-answer', 'StandardIntentController@saveIntentAnswer');
+     Route::post('/delete-standard-intent-answer', 'StandardIntentController@deleteIntentAnswer');
+
 
 });
 

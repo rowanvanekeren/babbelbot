@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="flowchart-wrapper">
+    <div class="flowchart-wrapper" ng-cloak>
         <div id="flowchart-base" class="flowchart-base"> <div class="row modal-overlay hidden" ></div></div>
 
         <div class="app-wrapper warning-box delete-link hidden">
@@ -14,7 +14,10 @@
             <button class="main-btn exit-warning-box" >Annuleer</button>
         </div>
 
-        @include('popup/intent')
+
+        @include('popup/intentEntity')
+        @include('popup/intentTrain')
+        @include('popup.intent-state')
 
         <div id="flowchart-menu" class="flowchart-menu">
 

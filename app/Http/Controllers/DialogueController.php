@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Intent;
 use Illuminate\Http\Request;
 use Validator;
 use App\Dialogue;
@@ -57,6 +58,9 @@ class DialogueController extends Controller
         $this->validate($request,[
             'id' => 'required'
         ]);
+
+
+
 
         $dialogue = Dialogue::where('id', $request->id);
 

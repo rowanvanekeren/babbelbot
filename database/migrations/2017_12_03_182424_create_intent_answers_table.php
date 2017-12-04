@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStatesTable extends Migration
+class CreateIntentAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('states', function (Blueprint $table) {
+        Schema::create('intent_answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('dialogue_id')->unsigned();
-            $table->string('next_states')->nullable();
-            $table->tinyInteger('start_state')->default(0);
-
+            $table->string('answer');
             $table->tinyInteger('active')->default(1);
+            $table->dateTime('called_at');
             $table->timestamps();
-            $table->foreign('dialogue_id')->references('id')->on('dialogues')->onDelete('cascade');
+            $table->integer('intent_id')->unsigned()->nullable();
+            $table->foreign('intent_id')->references('id')->on('intents')->onDelete('cascade');
         });
     }
 
@@ -32,6 +31,6 @@ class CreateStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('states');
+        Schema::dropIfExists('intent_answers');
     }
 }

@@ -403,6 +403,11 @@ input[type=checkbox]:focus {
   display: none !important;
 }
 
+.no-animate {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
 .navbar {
   width: 100%;
   padding: 10px;
@@ -1171,6 +1176,12 @@ input[type=checkbox]:focus {
   padding: 15px;
 }
 
+#flowchart-popup.small-popup,
+#flowchart-popup-intent.small-popup {
+  height: auto !important;
+  top: 25%;
+}
+
 #flowchart-popup input,
 #flowchart-popup-intent input {
   width: 100%;
@@ -1400,7 +1411,8 @@ input[type=checkbox]:focus {
   cursor: pointer;
 }
 
-.standard-intent {
+.standard-intent .intent-top-section {
+  width: 100%;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -1409,7 +1421,7 @@ input[type=checkbox]:focus {
           align-items: center;
 }
 
-.standard-intent .standard-intent-info {
+.standard-intent .intent-top-section .standard-intent-info {
   margin: 0 !important;
   -webkit-box-flex: 2;
       -ms-flex: 2;
@@ -1419,14 +1431,105 @@ input[type=checkbox]:focus {
   display: flex;
 }
 
-.standard-intent .standard-intent-info span {
+.standard-intent .intent-top-section .standard-intent-info span {
   -webkit-box-flex: 2;
       -ms-flex: 2;
           flex: 2;
   font-size: 16px;
 }
 
-.standard-intent .standard-intent-info .standard-intent-title {
+.standard-intent .intent-top-section .standard-intent-info .standard-intent-title {
   font-weight: bold;
+}
+
+.standard-intent .intent-answer-section {
+  width: 100%;
+}
+
+.standard-intent .intent-answer-section .answers {
+  overflow: hidden;
+  -webkit-transition: max-height 0.5s ease;
+  transition: max-height 0.5s ease;
+  max-height: 0;
+}
+
+.standard-intent .intent-answer-section .answers-open {
+  max-height: 2000px;
+}
+
+.standard-intent hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.standard-intent .toggle-answers {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.intent-answer-input input {
+  width: 100%;
+}
+
+.intent-top-section {
+  padding: 5px;
+  border: 1px solid #d7d7d7;
+  background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(rgba(101, 0, 0, 0)));
+  background: linear-gradient(to bottom, #eeeeee 0%, rgba(101, 0, 0, 0) 100%);
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.intent-top-section:hover {
+  -webkit-box-shadow: inset 0 0 10px #d7d7d7;
+          box-shadow: inset 0 0 10px #d7d7d7;
+}
+
+.intent-top-section:active {
+  -webkit-box-shadow: inset 0 0 10px #4ca78c;
+          box-shadow: inset 0 0 10px #4ca78c;
+}
+
+.delete-intent-wrapper {
+  width: 100%;
+  text-align: right;
+  margin-bottom: 5px;
+}
+
+.delete-intent-wrapper i {
+  color: #ff625d;
+}
+
+.search-intent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.search-intent input {
+  width: 100%;
+  padding-right: 25px !important;
+  overflow: hidden;
+}
+
+.search-intent .search-intent-icon {
+  position: absolute;
+  right: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
