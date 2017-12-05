@@ -1161,6 +1161,11 @@ input[type=checkbox]:focus {
   background: orange;
 }
 
+.start_state .flowchart-operator-title {
+  background: #393939;
+  color: white;
+}
+
 #flowchart-popup,
 #flowchart-popup-intent {
   width: 500px;

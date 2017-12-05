@@ -1088,7 +1088,7 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
 
         var req = {
             method: 'POST',
-            url: '../../get-intent-data-wit',
+            url: defaultURL + '/get-intent-data-wit',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/
@@ -1116,7 +1116,7 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
     $scope.checkEntityInIntent = function (intentValue, index) {
         var req = {
             method: 'POST',
-            url: '../../get-intent-entity-data-wit',
+            url: defaultURL + '/get-intent-entity-data-wit',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/
@@ -1202,17 +1202,36 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
             });
         }
     };
-    $scope.trainExpression = function (event) {
-        var trainElement = $(event.target.parentElement).find('.styled-input');
-        var currentIntent = $scope.intentValueData.value;
 
-        var trainObject = $scope.convertSentenceToTrainObj(trainElement, currentIntent);
+    $scope.addExpressionToIntent = function (currentElement, currentScope) {
+        shrinkLoading.do(currentElement, 'loading');
+
+        var trainObj = {
+            text: currentScope.newExpression,
+            entities: [{
+                entity: 'intent',
+                value: $scope.intentValueData.value
+            }]
+        };
+
+        $scope.trainExpression(null, currentElement, trainObj);
+    };
+
+    $scope.trainExpression = function (event, currentElement, singleExpressionObj) {
+        if (!currentElement && !singleExpressionObj) {
+            var trainElement = $(event.target.parentElement).find('.styled-input');
+            var currentIntent = $scope.intentValueData.value;
+            var trainObject = $scope.convertSentenceToTrainObj(trainElement, currentIntent);
+        } else {
+            var trainObject = singleExpressionObj;
+        }
+
         //setLoadingButton(event.currentTarget, true, 'Train');
 
 
         var req = {
             method: 'POST',
-            url: '../../train-intent',
+            url: defaultURL + '/train-intent',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/
@@ -1223,6 +1242,13 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
         };
 
         $http(req).then(function (data) {
+            if (currentElement && data.data.sent == true) {
+
+                setTimeout(function () {
+                    $scope.getIntentDataWit($scope.intentValueData.value);
+                    shrinkLoading.do(currentElement, 'success');
+                }, 1500);
+            }
 
             console.log(data);
         }).catch(function (data) {});
@@ -1415,7 +1441,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
     $scope.getAllEntities = function () {
         var req = {
             method: 'GET',
-            url: '../../get-all-entities',
+            url: defaultURL + '/get-all-entities',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/
@@ -1442,7 +1468,7 @@ $(document).ready(function () {
 angular.module('botApp').controller("standardIntentController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
     var $flowchartPopup = $('#flowchart-popup');
     var $flowchartPopupIntent = $('#flowchart-popup-intent');
-    $flowchartPopupIntent.draggable({ cancel: '.styled-input, .fast-entity-popup' });
+    $flowchartPopupIntent.draggable({ cancel: '.styled-input, .fast-entity-popup, .new-expression-wrapper' });
     $flowchartPopup.draggable();
 
     $scope.toggleAnswers = function (id, event) {
@@ -1688,8 +1714,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
             // $('#intent-title').trigger('changeOperatorTitle', [ $scope.intentData.state_intent_data.name, $scope.activeStateID]);
         }).catch(function (data) {});
     };
-
-    $scope.deleteIntent = function (intent) {};
 
     $scope.growBack = function (event) {
         var inpElemClass = '.input-wrapper input';

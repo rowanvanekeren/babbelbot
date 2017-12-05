@@ -24,9 +24,12 @@ class FlowChartController extends Controller
     function createState(Request $request)
     {
         $dialogue_id = $request->session()->get('active_dialogue')->id;
-
+        $dialogue_states_count = State::where('dialogue_id', $dialogue_id)->count();
         $state = new State();
         $state->dialogue_id = $dialogue_id;
+        if($dialogue_states_count == 0){
+            $state->start_state = 1;
+        }
         $state->save();
 
         $stateData = new StateData();
@@ -44,6 +47,9 @@ class FlowChartController extends Controller
 
         $stateIntent->save();
 
+        if( $state->start_state == 1){
+            $stateData['start_state'] = 1;
+        }
 
         return $stateData;
     }

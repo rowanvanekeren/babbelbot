@@ -31,7 +31,7 @@
             <script>
 
                 /* routes */
-
+                var defaultURL = '{{url("/")}}';
                 var ajaxAppSessionURL = '{{url("/check-app-session")}}';
             </script>
 <!-- Scripts -->

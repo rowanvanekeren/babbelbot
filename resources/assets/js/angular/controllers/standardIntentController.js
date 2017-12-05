@@ -1,7 +1,7 @@
 angular.module('botApp').controller("standardIntentController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
     var $flowchartPopup = $('#flowchart-popup');
     var $flowchartPopupIntent = $('#flowchart-popup-intent');
-    $flowchartPopupIntent.draggable({cancel : '.styled-input, .fast-entity-popup'});
+    $flowchartPopupIntent.draggable({cancel : '.styled-input, .fast-entity-popup, .new-expression-wrapper'});
     $flowchartPopup.draggable();
 
     $scope.toggleAnswers = function (id, event) {
@@ -283,9 +283,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
             });
     }
 
-    $scope.deleteIntent = function(intent){
 
-    }
 
 
     $scope.growBack = function (event) {

@@ -8,6 +8,30 @@
             <i class="fa fa-times " aria-hidden="true" ng-click="toggleTrainingPopup({intent: null, toggle: 'close'})"></i>
         </div>
         <hr>
+        <div class="new-intent-expression">
+            <div class="form-group" >
+                <h3>Voeg zin toe:</h3>
+                <div class="input-wrapper new-expression-wrapper">
+
+                    <input id="" class="default-input inp-loading" type="text"
+                           name="user_input_intent"
+                           placeholder="Als gebruiker zegt..." ng-focus="growBack($event)"
+                           my-enter="addExpressionToIntent($element, this)" ng-model="newExpression">
+
+                    <i class="fa fa-repeat input-saving-overlay hidden"></i>
+
+
+                </div>
+
+                <div class="input-error">
+                    <div class="no-error" ng-repeat="error in dialogue.description.error"><i
+                                class="fa fa-times " aria-hidden="true"></i> Dit is een input error verander
+                        my om een error weer te geven
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <span ng-show="intentValueData.expressions" ng-click="checkExpressionsForEntities(intentValueData.expressions)">Kijk voor data parameters</span>
         <div class="intent-content">
             <div class="form-group" ng-repeat="intent in intentValueData.expressions">

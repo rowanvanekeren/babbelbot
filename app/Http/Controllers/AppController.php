@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\App;
-
+use Cache;
 class AppController extends Controller
 {
     public function create(Request $request){

@@ -89,7 +89,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
     $scope.getAllEntities = function (){
         var req = {
             method: 'GET',
-            url: '../../get-all-entities',
+            url: defaultURL + '/get-all-entities',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/

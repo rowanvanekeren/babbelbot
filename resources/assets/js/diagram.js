@@ -8,7 +8,7 @@ $(document).ready(function() {
     var cx = $flowchart.width() / 2;
     var cy = $flowchart.height() / 2;
 
-    $flowchartPopupIntent.draggable({cancel : '.styled-input, .fast-entity-popup'});
+    $flowchartPopupIntent.draggable({cancel : '.styled-input, .fast-entity-popup, .new-expression-wrapper'});
     $flowchartPopup.draggable();
 
 
@@ -410,7 +410,7 @@ $(document).ready(function() {
                 top: data[i].state_data.top,
                 left: data[i].state_data.left,
                 properties: {
-                        class:  generateClass(parseInt(data[i].state_intents.intent_type)),
+                        class:  generateClass(parseInt(data[i].state_intents.intent_type), data[i]),
                         title: checkActiveTitle(titleToCheck, data[i].state_data.name),
                     inputs: {
                         ins: {
@@ -538,7 +538,7 @@ $(document).ready(function() {
                     left: resultData.left,
 
                     properties: {
-                        class: generateClass(parseInt($element.attr('data-intent-type'))),
+                        class: generateClass(parseInt($element.attr('data-intent-type')), data),
                         title: "<i class='fa fa-circle inactive-intent-color' aria-hidden='true'></i> " + $element.attr('data-default-text'),
                         inputs: {
                             ins: {
@@ -562,11 +562,19 @@ $(document).ready(function() {
 
 
     }
-    function generateClass(type){
+    function generateClass(type, data){
         console.log(type);
 
        switch(type){
            case 1 :
+
+               if(data){
+                   if( data.hasOwnProperty('start_state')){
+                       if(data.start_state == 1){
+                           return 'state-type-intent start_state';
+                       }
+                   }
+               }
                return 'state-type-intent';
 
            case 2 :
