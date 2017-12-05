@@ -17,7 +17,7 @@
             <span>@{{ intentData.intent ? intentData.intent : 'geen actieve intent'  }}</span>
             <div ng-show="intentData.intent">
                 <button class="main-btn" ng-click="getIntentData()">Trainen</button>
-                <i class="fa fa-times " aria-hidden="true" ng-click="removeActiveIntent()"></i>
+                <i class="fa fa-times " aria-hidden="true" ng-click="removeActiveIntent(intentData.id)"></i>
             </div>
         </div>
 

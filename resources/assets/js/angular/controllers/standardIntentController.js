@@ -258,8 +258,29 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         $scope.currentIntent =  $scope.intentSearchValue;
     };
 
-    $scope.removeActiveIntent= function(){
-        $scope.currentIntent = false;
+    $scope.removeActiveIntent= function(intentID){
+            var req = {
+                method: 'POST',
+                url: '../delete-active-standard-intent',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+                },
+                data: {
+                    intent_id: intentID
+
+                }
+            };
+
+            $http(req).then(function (data) {
+                console.log(data);
+
+                $scope.intentData.intent = null;
+                // $scope.intentData.state_intent_data.name = data.data.default_state_name;
+               // $('#intent-title').trigger('changeOperatorTitle', [ $scope.intentData.state_intent_data.name, $scope.activeStateID]);
+            }).catch(function (data) {
+
+            });
     }
 
     $scope.deleteIntent = function(intent){

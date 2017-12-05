@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
      Route::post('/delete-standard-intent', 'StandardIntentController@deleteIntent');
      Route::post('/save-standard-intent-answer', 'StandardIntentController@saveIntentAnswer');
      Route::post('/delete-standard-intent-answer', 'StandardIntentController@deleteIntentAnswer');
+     Route::post('/delete-active-standard-intent', 'StandardIntentController@deleteActiveIntent');
 
 
 });

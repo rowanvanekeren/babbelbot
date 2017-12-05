@@ -79,6 +79,24 @@ class StandardIntentController extends Controller
 
         return $answer;
     }
+
+    public function deleteActiveIntent(Request $request)
+    {
+
+        $intent = Intent::where('id', $request->intent_id)->first();
+
+        $intent->intent = '';
+
+        $intent->save();
+
+        //  $this->updateStateName($request->state_id, null , $request->intent_id);
+
+
+        return $intent;
+
+
+    }
+
     public function saveIntentAnswer(Request $request){
 
 
