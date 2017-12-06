@@ -23,6 +23,7 @@ class AppController extends Controller
         $app->access_token = $request->access_token;
         $app->server_token = $request->server_token;
         $app->user_id = $user_id;
+        $app->unique_id = uniqid();
         $app->active = 1;
 
         $app->save();

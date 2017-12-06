@@ -9,6 +9,7 @@ use App\Dialogue;
 
 class DialogueController extends Controller
 {
+
     public function create(Request $request){
         $this->validate($request,[
             'title' => 'required|max:255',
@@ -78,4 +79,8 @@ class DialogueController extends Controller
 
         return  $request->session()->get('active_dialogue');
     }
+
+
+
+
 }

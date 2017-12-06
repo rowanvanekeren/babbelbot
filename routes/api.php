@@ -17,6 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['middleware' => ['sessions']], function () {
-    Route::get('/test', 'Api\FacebookController@getTest');
-    Route::post('/test', 'Api\FacebookController@responseTest');
+    Route::get('/test/{id}', 'Api\FacebookController@getTest');
+    Route::post('/test/{id}', 'Api\FacebookController@responseTest');
 });

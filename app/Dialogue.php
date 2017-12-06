@@ -21,4 +21,8 @@ class Dialogue extends Model
         return $this->hasMany( 'App\State' );
     }
 
+    public function startState(){
+        return $this->hasOne( 'App\State' )->where('start_state' , 1)->with('stateIntents');
+    }
+
 }

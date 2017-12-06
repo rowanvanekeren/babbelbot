@@ -22,7 +22,7 @@
         "psr-4": {
             "App\\": "app/"
         },
-        "files" : ["app/Helpers/Wit.php"]
+        "files" : ["app/Helpers/Wit.php", "app/Helpers/Bot.php", "app/Helpers/Log/Botlog.php"]
     },
     "autoload-dev": {
         "psr-4": {
