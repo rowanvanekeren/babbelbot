@@ -45,32 +45,15 @@ class FacebookController extends Controller
        $fbuser_id = $data["entry"][0]["messaging"][0]["sender"]["id"];
        $cache_id = $fbuser_id .'_'. $id;
 
-
-
-       /* init cache if not exist */
-     /* $expiresAt = Carbon::now()->addMinutes(10);
-      Cache::add($cache_id, array(), $expiresAt);*/
-
-
-
        /* do conversation */
-      $text = $data["entry"][0]["messaging"][0]["message"]["text"];
-
-      //$answers = processRequest($cache_id, $id, $text, 'facebook');
+       $text = $data["entry"][0]["messaging"][0]["message"]["text"];
 
        $this->typingOn($fbuser_id);
 
        handleRequest($cache_id, $id, $text , 'facebook', function($data) use ($cache_id, $id,$text, $fbuser_id){
 
-        $answers  =  processRequest($cache_id,$id,$text , 'facebook', $data);
-
-
-            $this->sendResponse($fbuser_id, $answers['answers'][0]['answer']);
-
-
-
-
-
+            $answers  =  processRequest($cache_id,$id,$text , 'facebook', $data);
+            $this->sendResponse($fbuser_id, $answers['answers'][0]['answer'], isset($answers['quick_replies']) ? $answers['quick_replies'] : null);
 
        });
 
@@ -107,10 +90,7 @@ class FacebookController extends Controller
           "recipient" => [
               "id" => $recipientId
           ],
-          "message" => [
-              "text" => $messageText
-            /*  "quick_replies" => [ ['content_type' => 'text', 'title' => "test"]]*/
-          ]
+          "message" => $this->renderMessageData($messageText, $quickReplies)
       ];
       $ch = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . $access_token);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -118,20 +98,34 @@ class FacebookController extends Controller
       curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
       curl_setopt($ch, CURLOPT_POST, true);
       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($messageData));
-      curl_exec($ch);
+      $response = curl_exec($ch);
+       bot_log($response);
       curl_close($ch);
 
    }
 
-    private function makeQuickReplyObject($quickReplies){
-        $returnObj = array();
+    private function renderMessageData($messageText = null, $quickReplies = null){
 
-        if(isset($quickReplies) && !empty($quickReplies)){
+        $messageData = array();
+        if(isset($quickReplies) && !empty($quickReplies) && count($quickReplies) >= 1){
+            $quickRepliesReturn = array();
             foreach($quickReplies as $key => $value){
-                array_push($returnObj, array('content_type' => 'text', 'title' => $value['answer']));
+                array_push($quickRepliesReturn, array('content_type' => 'text', 'title' => $value['answer'], 'payload' => $value['answer'] ));
             }
+            if(isset($messageText)){
+                $messageData['text'] = $messageText;
+            }else{
+                $messageData['text'] = 'Kies een optie';
+            }
+            $messageData['quick_replies'] = $quickRepliesReturn;
+            bot_log($messageData);
+            return $messageData;
+        }else if(isset($messageText)){
+            $messageData['text'] = $messageText;
+            return $messageData;
+        }else{
+            $messageData['text'] = 'error';
+            return $messageData;
         }
-
-        return $returnObj;
     }
 }

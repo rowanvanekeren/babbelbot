@@ -17,11 +17,11 @@ class Controller extends BaseController
 
         //die(searchStartState(2,'flight_request'));
        // die(searchNextStates('["1", "5"]', 'tell_joke', 'teeest'));
-      // $question = 'vertel mij een mop';
-       $question = 'ik wil een hond';
+       $question = 'vertel mij een mop';
+      // $question = 'ik wil een hond';
       // $question = 'ok';
-       handleRequest('testest', '5a27fa1a61876',$question , 'facebook', function($data) use ($question){
-         die(json_encode(processRequest('testest', '5a27fa1a61876',$question , 'facebook', $data)));
-       });
+   /*   handleRequest('testest', '5a27fa1a61876',$question , 'facebook', function($data) use ($question){
+        die(json_encode(processRequest('testest', '5a27fa1a61876',$question , 'facebook', $data)));
+    });*/
     }
 }

@@ -196,8 +196,15 @@ function searchStandardAnswer($app_id, $intent){
     $intent = App\Intent::where('app_id',$app_id)->where('intent', $intent)->with('intentAnswers')->first();
 
     if(isset($intent)){
-        if(isset($intent['intentAnswers'])){
-            $rendered_answers = renderAnswers(array('answers' => $intent['intentAnswers']));
+        if(isset($intent['intentAnswers']) && !empty($intent['intentAnswers']) && isset($intent['intentAnswers'][0])){
+
+            //make array from answers
+            $answerArray = array();
+            foreach($intent['intentAnswers'] as $key => $value){
+                    array_push($answerArray, $value);
+            }
+
+            $rendered_answers = renderAnswers(array('answers' => $answerArray));
 
             if(isset($rendered_answers)){
                 return $rendered_answers;
