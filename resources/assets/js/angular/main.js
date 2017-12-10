@@ -1,7 +1,19 @@
 /**
  * Created by Rowan on 4-11-2017.
  */
-var botApp = angular.module('botApp', ['ngCookies', 'ngAnimate']);
+var botApp = angular.module('botApp', ['ngCookies', 'ngAnimate', 'ngTagsInput']);
+
+
+
+botApp.config(function(tagsInputConfigProvider) {
+    tagsInputConfigProvider
+        .setDefaults('tagsInput', {
+            placeholder: 'Voeg meer toe',
+            minLength: 2,
+
+        })
+});
+
 
 // this is our directive
 angular.module('botApp').directive('scrolly', function () {

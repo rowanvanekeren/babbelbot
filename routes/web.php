@@ -58,7 +58,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     /* intent */
-            /* post */
     Route::post('/get-intent-wit', 'IntentController@getIntentWit');
     Route::post('/save-intent-local-wit', 'IntentController@saveIntentToState');
     Route::post('/save-intent-local', 'IntentController@saveIntentLocal');
@@ -71,8 +70,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/get-intent-entity-data-wit', 'IntentController@getIntentEntityData');
     Route::post('/add-intent-wit', 'IntentController@addWitIntent');
 
-            /* get */
+    /* entities */
     Route::get('/get-all-entities', 'IntentController@getAllEntities');
+    Route::post('/get-all-values-entity', 'EntityController@getAllValuesEntity');
 
     /* train */
     Route::post('/train-intent', 'IntentController@trainIntent');
@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth'], function () {
      Route::get('/dashboard/standaard-antwoorden', function () {
         return view('standard-answer');
      });
+
      Route::post('/add-standard-intent-wit', 'StandardIntentController@addStandardWitIntent');
      Route::post('/add-new-standard', 'StandardIntentController@createStandard');
      Route::get('/get-all-standard-intents', 'StandardIntentController@getAllIntents');

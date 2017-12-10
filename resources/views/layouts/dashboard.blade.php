@@ -16,6 +16,7 @@
     <link href="{{ asset('public/css/jquery.flowchart.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/addons/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/addons/ng-tags-input.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 
 </head>
@@ -40,6 +41,7 @@
     <script src="{{asset('public/js/angular/angular.min.js')}}"></script>
     <script src="{{asset('public/js/angular/angular-animate.min.js')}}"></script>
     <script src="{{asset('public/js/angular/angular-cookies.min.js')}}"></script>
+    <script src="{{asset('public/js/addons/ng-tags-input.js')}}"></script>
     <script src="{{asset('public/js/main.js')}}"></script>
     <script src="{{asset('public/js/controllers.js')}}"></script>
    {{-- <script src="{{ asset('public/js/dashboard.js') }}"></script>--}}

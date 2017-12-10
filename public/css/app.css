@@ -1538,3 +1538,11 @@ input[type=checkbox]:focus {
   display: flex;
 }
 
+.new-entity {
+  z-index: 50;
+}
+
+.new-entity input {
+  width: 100%;
+}
+
