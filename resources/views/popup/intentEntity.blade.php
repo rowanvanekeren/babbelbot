@@ -8,6 +8,7 @@
 
 
         <select class="default-select entity-select"  {{--ng-model="selectedEntity"--}}>
+            <option value="" disabled selected>Selecteer entity</option>
             <option ng-repeat="entity in allEntities">@{{entity}}</option>
 
         </select>

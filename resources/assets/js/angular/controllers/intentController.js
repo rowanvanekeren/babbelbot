@@ -58,7 +58,10 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.addNewIntent = function(intentValue, intentExpression ){
 
-     
+        console.log(intentValue);
+        console.log(intentExpression);
+
+
         var intentObj = {
             value: intentValue,
             expressions : [intentExpression]

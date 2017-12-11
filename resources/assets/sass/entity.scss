@@ -9,3 +9,25 @@
 #input-tags{
 
 }
+.entity-values-title{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.selected-entity{
+  margin-top: 5px;
+  background: $font-color-subtile-white;
+  padding: 5px;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.exit-new-entity-value{
+  text-align: right;
+  color: $main-error-red;
+}
+
+.new-entity-value{
+  z-index: 50;
+}

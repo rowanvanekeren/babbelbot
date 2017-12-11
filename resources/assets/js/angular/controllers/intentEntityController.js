@@ -106,9 +106,10 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
 
         });
     }
+
+    $(document).ready(function() {
+        $('.entity-select').select2();
+    });
 });
 
 
-$(document).ready(function() {
-    $('.entity-select').select2();
-});

@@ -218,7 +218,9 @@ input[type=checkbox]{
   position: relative;
   width: auto;
 
-
+  input{
+    width: 100%;
+  }
   transition: 0.5s;
 
 }
@@ -340,4 +342,12 @@ input[type=checkbox]{
 .no-animate {
   -webkit-transition: none !important;
   transition: none !important;
+}
+
+.input-replace-loading{
+  height: 15px;
+  width: 100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }

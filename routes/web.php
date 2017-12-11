@@ -73,6 +73,9 @@ Route::group(['middleware' => 'auth'], function () {
     /* entities */
     Route::get('/get-all-entities', 'IntentController@getAllEntities');
     Route::post('/get-all-values-entity', 'EntityController@getAllValuesEntity');
+    Route::post('/add-keyword-expression', 'EntityController@addKeywordExpression');
+    Route::post('/add-entity', 'EntityController@addEntity');
+    Route::post('/add-entity-value', 'EntityController@addEntityValue');
 
     /* train */
     Route::post('/train-intent', 'IntentController@trainIntent');

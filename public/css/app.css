@@ -258,6 +258,10 @@ input[type=checkbox]:focus {
   transition: 0.5s;
 }
 
+.input-wrapper input {
+  width: 100%;
+}
+
 .default-select {
   width: 100%;
   padding: 5px;
@@ -406,6 +410,20 @@ input[type=checkbox]:focus {
 .no-animate {
   -webkit-transition: none !important;
   transition: none !important;
+}
+
+.input-replace-loading {
+  height: 15px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .navbar {
@@ -818,6 +836,11 @@ input[type=checkbox]:focus {
 .select2-selection:focus {
   outline: none !important;
 }
+
+/*.select2-container{
+  width: 100% !important;
+
+}*/
 
 .select2-selection__arrow {
   height: 95% !important;
@@ -1544,5 +1567,41 @@ input[type=checkbox]:focus {
 
 .new-entity input {
   width: 100%;
+}
+
+.entity-values-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.selected-entity {
+  margin-top: 5px;
+  background: #e1e1e1;
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.exit-new-entity-value {
+  text-align: right;
+  color: #ff625d;
+}
+
+.new-entity-value {
+  z-index: 50;
 }
 

@@ -126,7 +126,24 @@ function witAddKeywordEntityValue($token,$entity, $addObject){
     curl_setopt($curl, CURLOPT_HTTPHEADER, array($authorization,  'Content-Type: application/json'));
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $addObject);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($addObject));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return $response;
+}
+
+function witAddEntityExpression($token, $entity, $value, $addObject){
+    $url = 'https://api.wit.ai/entities/'. $entity . '/values/' . $value  . '/expressions?v=20170307';
+    $authorization = "Authorization: Bearer " . $token;
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array($authorization,  'Content-Type: application/json'));
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($addObject));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
 
     $response = curl_exec($curl);
@@ -151,4 +168,23 @@ function witAddIntent($token, $addObject){
 
     return $response;
 }
+
+
+function witAddEntity($token, $addObj){
+    $url = 'https://api.wit.ai/entities?v=20170307';
+    $authorization = "Authorization: Bearer " . $token;
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array($authorization,  'Content-Type: application/json'));
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($addObj));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return $response;
+}
+
 

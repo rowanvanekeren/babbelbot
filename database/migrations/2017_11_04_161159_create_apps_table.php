@@ -17,6 +17,10 @@ class CreateAppsTable extends Migration
             $table->increments('id');
             $table->string('title')->unique();
             $table->string('unique_id');
+            $table->string('fb_access_token')->nullable();
+            $table->string('fb_verify_token')->nullable();
+            $table->string('webhook')->nullable();
+            $table->string('unique_id');
             $table->string('access_token');
             $table->string('server_token');
             $table->integer('user_id')->unsigned();
