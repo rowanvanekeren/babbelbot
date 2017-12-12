@@ -67,7 +67,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inp-dev-token">
-                                    Wit.ai developers token
+                                    Wit.ai server token
                                 </label>
 
                                 <div class="input-wrapper see-password-input disable-shrink">
@@ -128,17 +128,12 @@
                                             class="fa fa-times " aria-hidden="true"></i> Dit is een input error verander
                                     my om een error weer te geven
                                 </div>
-                                <div class="no-error"><i class="fa fa-times " aria-hidden="true"></i> Dit is een input
-                                    error verander my om een error weer te geven
-                                </div>
-                                <div class="no-error"><i class="fa fa-times " aria-hidden="true"></i> Dit is een input
-                                    error verander my om een error weer te geven
-                                </div>
+
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Wit.ai developers token
+                                Wit.ai server token
                             </label>
 
                             <div class="input-wrapper see-password-input">
@@ -151,8 +146,42 @@
                             </div>
                         </div>
                     </div>
+                    <div class="app-embed-section" ng-class="{'open': openEmbed}">
+                        <hr>
+                        <div>
+                            <h3>Facebook</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-dev-token">
+                                Facebook verify token
+                            </label>
+
+                            <div class="input-wrapper see-password-input">
+                                <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                <input id="inp-dev-token" class="default-input " type="password" name="fb_verify_token"
+                                       ng-model="app.fb_verify_token" my-enter="inputEnter($element, this)"
+                                       ng-focus="growBack($event)">
+
+                                <i class="fa fa-repeat input-saving-overlay hidden"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-dev-token">
+                                Facebook access token
+                            </label>
+
+                            <div class="input-wrapper see-password-input">
+                                <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                <input id="inp-dev-token" class="default-input " type="password" name="fb_access_token"
+                                       ng-model="app.fb_access_token" my-enter="inputEnter($element, this)"
+                                       ng-focus="growBack($event)">
+
+                                <i class="fa fa-repeat input-saving-overlay hidden"></i>
+                            </div>
+                        </div>
+                    </div>
                     <div class="app-footer-section">
-                        <button class="main-btn">Embedden</button>
+                        <button class="main-btn" ng-click="openEmbed = !openEmbed">Embedden</button>
                         <button class="main-btn" ng-click="selectApp(app)">Selecteer</button>
                     </div>
 

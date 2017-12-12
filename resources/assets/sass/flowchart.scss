@@ -6,7 +6,7 @@
 
   .toggle-menu{
     float:right;
-
+    cursor:pointer;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -22,13 +22,14 @@
     z-index: 14;
     position: absolute;
     height: 80px;
-    left: -300px;
+    left: -173px;
     top: 0;
     overflow:hidden;
 
   }
 
   .toggle-menu-close{
+    cursor: pointer;
     display:block;
     height: 80px;
     width: 20px;
@@ -49,7 +50,7 @@
   }
 .toggle-content-wrapper{
   position: relative;
-  width:300px;
+  width:auto;
   left: 0;
   transition: 0.2s;
   &.toggle-animation{
@@ -59,9 +60,9 @@
   .toggle-menu-content{
     padding: 5px;
     display:block;
-    float:left;
+    float:right;
     height: 80px;
-    width: calc(100% - 20px);
+    width: auto;
     background: #fff;
 
 
@@ -87,4 +88,28 @@
     background: #393939;
     color:white;
   }
+}
+
+.drag-intent, .drag-keyword{
+  height: 70px;
+  width: 70px;
+  font-size: $font-size-2;
+  font-weight: bold;
+  display:inline-flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+
+}
+
+.drag-intent{
+  border: 2px solid #373737;
+  background: #373737;
+  color: #fff;
+}
+
+.drag-keyword{
+  border: 2px solid #ffbc45;
+  background: #ffbc45;
+  color: #fff;
 }

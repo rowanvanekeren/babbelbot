@@ -16,7 +16,7 @@
                 <li class="sub-menu-seperator " ng-show="activeApp"><hr></li>
                 <li class="" ng-show="activeApp"><a href="{{ url('./dashboard/dialogue') }}"><i class="fa fa-comments" aria-hidden="true"></i>Dialogen</a></li>
                 <li class="" ng-show="activeApp"><a href="{{ url('./dashboard/standaard-antwoorden') }}"><i class="fa fa-comment" aria-hidden="true"></i>Standaard antwoorden</a></li>
-                <li class="" ng-show="activeApp"><a href=""><i class="fa fa-book" aria-hidden="true"></i> Entities</a></li>
+                <li class="" ng-show="activeApp"><a href="{{ url('./dashboard/entities') }}"><i class="fa fa-book" aria-hidden="true"></i> Entities</a></li>
             </ul>
         </li>
         <li>

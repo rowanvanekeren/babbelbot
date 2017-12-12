@@ -60,6 +60,16 @@
   }
 }
 
+.app-embed-section{
+  max-height: 0;
+  overflow:hidden;
+  transition: 0.2s;
+  &.open{
+    max-height: 1200px;
+  }
+}
+
+
 @keyframes rotate-infinite-linear {
   0% {
     -ms-transform: rotate(0deg); /* IE 9 */

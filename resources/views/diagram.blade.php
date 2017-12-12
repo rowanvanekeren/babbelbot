@@ -26,8 +26,8 @@
                 <div class="toggle-content-wrapper">
                 <div class="toggle-menu-close"><div><i class="fa fa-chevron-right" aria-hidden="true"></i></div></div>
                 <div class="toggle-menu-content">
-                <div class="draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="1" data-nb-inputs="1" data-nb-outputs="1">Intent</div>
-                <div class="draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="2" data-nb-inputs="1" data-nb-outputs="1">Sleutelwoord</div>
+                <div class="drag-intent draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="1" data-nb-inputs="1" data-nb-outputs="1">AI</div>
+                <div class="drag-keyword draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="2" data-nb-inputs="1" data-nb-outputs="1"><i class="fa fa-key" aria-hidden="true"></i></div>
                 </div>
                 </div>
             </div>

@@ -2,15 +2,20 @@
 
 @section('content')
     <div class="container-fluid" ng-controller="entityController" ng-init="toggleInit()" ng-cloak>
-        <div class="row modal-overlay" ng-show="showCreateEntity || showDeleteEntity || showNewEntityValue "></div>
+        <div class="row modal-overlay" ng-show="showCreateEntity || showDeleteEntity || showNewEntityValue || showDeleteEntityValue"></div>
 
         <div class="app-wrapper warning-box" ng-show="showDeleteEntity">
             <h2>Weet je zeker dat je deze entity wilt verwijderen?</h2>
 
-            <button class="danger-btn" ng-click="deleteApp($event, deleteID)">Verwijder</button>
-            <button class="main-btn" ng-click="showDeleteApp = false">Annuleer</button>
+            <button class="danger-btn" ng-click="deleteEntity($event, entityData.name)">Verwijder</button>
+            <button class="main-btn" ng-click="showDeleteEntity = false">Annuleer</button>
         </div>
+        <div class="app-wrapper warning-box" ng-show="showDeleteEntityValue">
+            <h2>Weet je zeker dat je deze entity waarde wilt verwijderen?</h2>
 
+            <button class="danger-btn" ng-click="deleteEntityValue()">Verwijder</button>
+            <button class="main-btn" ng-click="showDeleteEntityValue = false">Annuleer</button>
+        </div>
         <div class="row top-row-navigation">
             <div class="col-md-6 col-md-offset-3 align-right">
 
@@ -96,7 +101,7 @@
 
                     <div class="selected-entity" ng-show="entityData.name">
                         <h3>@{{ entityData.name }}</h3>
-                        <button class="danger-btn"><i class="fa fa-trash-o"></i></button>
+                        <button class="danger-btn" ng-click="showDeleteEntity = true"><i class="fa fa-trash-o"></i></button>
                     </div>
                 </div>
             </div>
@@ -116,6 +121,10 @@
 
                 <div class="col-md-12 app-wrapper " ng-show="(!entityData.values || entityData.values.length < 1 ) && !showNewEntityValue">
                     <h3>Geen resultaten</h3>
+                </div>
+
+                <div class="col-md-12 app-wrapper " ng-if="entityData.lookups.length < 1">
+                    <h3>Zorg ervoor dat je eerst je entity traint via het intent popup bij 'standaard antwoorden' of 'dialogen -> flowchart'</h3>
                 </div>
             </div>
 
@@ -178,7 +187,7 @@
                         <div class="input-wrapper disable-shrink">
                             <h3>@{{ value.value }}</h3>
                         </div>
-                            <span ng-click="newEntityTrigger(newApp)"><i class="fa fa-times "
+                            <span ng-click="toggleDeleteEntityValue(value, $index)"><i class="fa fa-times "
                                                                          aria-hidden="true"></i></span>
 
 

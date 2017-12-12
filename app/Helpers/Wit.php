@@ -187,4 +187,36 @@ function witAddEntity($token, $addObj){
     return $response;
 }
 
+function witDeleteEntity($token, $entity){
+    $url = 'https://api.wit.ai/entities/' . $entity .  '?v=20170307';
+    $authorization = "Authorization: Bearer " . $token;
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array($authorization));
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return $response;
+}
+
+function witDeleteEntityValue($token, $entity, $value){
+    $url = 'https://api.wit.ai/entities/' . $entity .  '/values/'. $value . '?v=20170307';
+    $authorization = "Authorization: Bearer " . $token;
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array($authorization));
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return $response;
+}
+
 

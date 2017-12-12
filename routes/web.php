@@ -76,6 +76,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/add-keyword-expression', 'EntityController@addKeywordExpression');
     Route::post('/add-entity', 'EntityController@addEntity');
     Route::post('/add-entity-value', 'EntityController@addEntityValue');
+    Route::post('/delete-entity', 'EntityController@deleteEntity');
+    Route::post('/delete-entity-value', 'EntityController@deleteEntityValue');
 
     /* train */
     Route::post('/train-intent', 'IntentController@trainIntent');

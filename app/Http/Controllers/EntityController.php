@@ -35,4 +35,16 @@ class EntityController extends Controller
 
         return witAddKeywordEntityValue($server_token,$request->entity, $request->valueObject);
     }
+
+    public function deleteEntity(Request $request){
+        $server_token = $request->session()->get('active_app')->server_token;
+
+        return witDeleteEntity($server_token,$request->entity);
+    }
+
+    public function deleteEntityValue(Request $request){
+        $server_token = $request->session()->get('active_app')->server_token;
+
+        return witDeleteEntityValue($server_token,$request->entity, $request->value);
+    }
 }

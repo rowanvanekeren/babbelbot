@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\App;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
@@ -11,11 +12,11 @@ class FacebookController extends Controller
 {
    public function getTest($id, Request $request){
 
-       bot_log($request->all());
-       bot_log($id);
+      $app = App::where('unique_id', $id)->first();
       $verify_token = "babbelbot_account_chatbot_preview";
+
       if ($request->input("hub_mode") === "subscribe"
-          && $request->input("hub_verify_token") === $verify_token) {
+          && $request->input("hub_verify_token") === $app->fb_verify_token) {
          return response($request->input("hub_challenge"), 200);
       }
 
@@ -48,12 +49,19 @@ class FacebookController extends Controller
        /* do conversation */
        $text = $data["entry"][0]["messaging"][0]["message"]["text"];
 
-       $this->typingOn($fbuser_id);
+       $cacheObj = getOrInitCache($cache_id, $id, 'facebook');
+       bot_log($cache_id);
+       if(isset($cacheObj['app'])){
+           $fb_access_token = $cacheObj['app']['fb_access_token'];
+       }else{
+           return;
+       }
+       $this->typingOn($fb_access_token, $fbuser_id);
 
-       handleRequest($cache_id, $id, $text , 'facebook', function($data) use ($cache_id, $id,$text, $fbuser_id){
+       handleRequest($cache_id, $id, $text , 'facebook', function($data) use ($cache_id, $id,$text, $fbuser_id, $fb_access_token){
 
             $answers  =  processRequest($cache_id,$id,$text , 'facebook', $data);
-            $this->sendResponse($fbuser_id, $answers['answers'][0]['answer'], isset($answers['quick_replies']) ? $answers['quick_replies'] : null);
+            $this->sendResponse($fb_access_token, $fbuser_id, $answers['answers'][0]['answer'], isset($answers['quick_replies']) ? $answers['quick_replies'] : null);
 
        });
 
@@ -62,8 +70,10 @@ class FacebookController extends Controller
      // return response()->json($backtoUser, 200);
    }
 
-   private function typingOn($recipientId){
-      $access_token = "EAABvn3DtMZAMBADU76lghPDgoW2lCYPUOGcWZAX1ypvNJ8Nfm43Rh5jZC23KBJmbHQc6iZCROcJRsDt8C7AfkVyukFKpLIn6cukPj2zZBwKHFROArIZB3SRTcZCLHeR5Y6zMnmRV4qAzY4EPHBZB0LBPvAz3L6zZC9LuZBL4f6119bc0VjaJznHrKx";
+   private function typingOn($fb_access_token, $recipientId){
+
+      $access_token = $fb_access_token;
+     // $access_token = "EAABvn3DtMZAMBADU76lghPDgoW2lCYPUOGcWZAX1ypvNJ8Nfm43Rh5jZC23KBJmbHQc6iZCROcJRsDt8C7AfkVyukFKpLIn6cukPj2zZBwKHFROArIZB3SRTcZCLHeR5Y6zMnmRV4qAzY4EPHBZB0LBPvAz3L6zZC9LuZBL4f6119bc0VjaJznHrKx";
 
       $messageData = [
           "recipient" => [
@@ -82,9 +92,10 @@ class FacebookController extends Controller
       curl_close($ch);
    }
 
-   private function sendResponse($recipientId, $messageText = null, $quickReplies = null)
+   private function sendResponse($fb_access_token, $recipientId, $messageText = null, $quickReplies = null)
    {
-      $access_token = "EAABvn3DtMZAMBADU76lghPDgoW2lCYPUOGcWZAX1ypvNJ8Nfm43Rh5jZC23KBJmbHQc6iZCROcJRsDt8C7AfkVyukFKpLIn6cukPj2zZBwKHFROArIZB3SRTcZCLHeR5Y6zMnmRV4qAzY4EPHBZB0LBPvAz3L6zZC9LuZBL4f6119bc0VjaJznHrKx";
+     $access_token = $fb_access_token;
+    //  $access_token = "EAABvn3DtMZAMBADU76lghPDgoW2lCYPUOGcWZAX1ypvNJ8Nfm43Rh5jZC23KBJmbHQc6iZCROcJRsDt8C7AfkVyukFKpLIn6cukPj2zZBwKHFROArIZB3SRTcZCLHeR5Y6zMnmRV4qAzY4EPHBZB0LBPvAz3L6zZC9LuZBL4f6119bc0VjaJznHrKx";
 
       $messageData = [
           "recipient" => [

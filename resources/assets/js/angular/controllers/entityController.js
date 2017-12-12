@@ -69,11 +69,86 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         console.log(entityValue.value);
         console.log(data.text);
 
-        if (lookups.indexOf('keywords') > -1) {
+      /*  if (lookups.indexOf('keywords') > -1) {*/
             $scope.addKeywordSynonym(entityData.name, entityValue.value, data.text, entityValue);
-        }
+      /*  }*/
     };
 
+    $scope.toggleDeleteEntityValue = function(value, index){
+       $scope.showDeleteEntityValue = true;
+       $scope.deleteValue = value;
+        $scope.deleteValueIndex = index;
+    };
+
+    $scope.deleteEntityValue = function(){
+
+        if(!$scope.deleteValue.value){
+            return;
+        }
+
+
+
+        var req = {
+            method: 'POST',
+            url: defaultURL + '/delete-entity-value',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                entity: $scope.entityData.name,
+                value: $scope.deleteValue.value
+            }
+        };
+
+        $http(req).then(function (data) {
+            console.log(data);
+            //  $scope.entityData = data.data;
+            if (data.status == 200) {
+
+                $scope.entityData.values.splice($scope.deleteValueIndex, 1);
+                $scope.deleteValueIndex = null;
+                $scope.deleteValue = null;
+                $scope.showDeleteEntityValue = false;
+            }
+
+        }).catch(function (data) {
+
+        });
+    };
+    $scope.deleteEntity = function(event, entityID){
+
+
+
+        if(!entityID){
+            return;
+        }
+
+        var req = {
+            method: 'POST',
+            url: defaultURL + '/delete-entity',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                entity: entityID
+            }
+        };
+
+        $http(req).then(function (data) {
+            console.log(data);
+            //  $scope.entityData = data.data;
+            if (data.status == 200) {
+                $scope.getAllEntities();
+                $scope.entityData = null;
+                $scope.showDeleteEntity = false;
+            }
+
+        }).catch(function (data) {
+
+        });
+    }
     $scope.storeNewEntity = function (entity, type) {
 
         console.log(entity);

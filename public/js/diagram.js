@@ -384,6 +384,10 @@ $(document).ready(function () {
         $('.toggle-content-wrapper').toggleClass('toggle-animation');
     });
 
+    $('.toggle-menu-close').click(function () {
+        $('.toggle-content-wrapper').toggleClass('toggle-animation');
+    });
+
     $('#intent-title').on('changeOperatorTitle', function (event, name, operatorID, forceActive) {
         forceActive = forceActive || false;
 
