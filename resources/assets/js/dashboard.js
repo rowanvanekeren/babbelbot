@@ -2,7 +2,7 @@ setTimeout(function(){
 
 $(document).ready(function () {
 
-    passwordHint();
+  //  passwordHint();
 
     testFunction();
 

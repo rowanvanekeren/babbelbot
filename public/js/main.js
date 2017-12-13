@@ -126,10 +126,24 @@ angular.module('botApp').directive('myEnter', function () {
 
 angular.module('botApp').directive('myRepeatDirective', function () {
     return function (scope, element, attrs) {
-        if (scope.$last) {}
+        if (scope.$last) {
+            passwordHint();
+        }
     };
 });
-
+function passwordHint() {
+    var passwordIcon = '.see-password-input>i';
+    $(passwordIcon).click(function (e) {
+        console.log('eye clicked');
+        $(this).parent().children('input').focus();
+        if ($(this).parent().children('input').attr('type') == 'text') {
+            $(this).parent().children('input').attr('type', 'password');
+        } else if ($(this).parent().children('input').attr('type') == 'password') {
+            $(this).parent().children('input').attr('type', 'text');
+        }
+        $(this).toggleClass('fa-eye-slash');
+    });
+}
 /*angular.module('botApp').directive('navActiveApp', function() {
  return {
  restrict: 'A',

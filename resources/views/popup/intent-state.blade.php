@@ -99,7 +99,7 @@
                 <div class="input-wrapper">
 
                     <input id="inp-access-token" class="default-input inp-loading" type="text"
-                           my-enter="inputEnter($element, this)" placeholder="Voer actie in">
+                           my-enter="addAction($element, this,intentData.action)" placeholder="Voer actie in" ng-model="intentData.action">
                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                 </div>
 

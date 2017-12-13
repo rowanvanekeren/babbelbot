@@ -292,7 +292,34 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             shrinkLoading.do(currentElement, 'error');
         });
     };
+    $scope.addAction = function(currentElement, currentModel, value){
 
+        console.log(currentElement);
+        console.log(currentModel);
+        console.log(currentModel.intentData.action);
+        shrinkLoading.do(currentElement, 'loading');
+
+        var req = {
+            method: 'POST',
+            url: '../../add-intent-action',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                state_id: $scope.activeStateID,
+                intent_id: currentModel.intentID,
+                action: currentModel.intentData.action
+
+            }
+        };
+
+        $http(req).then(function (data) {
+            shrinkLoading.do(currentElement, 'success');
+        }).catch(function (data) {
+            shrinkLoading.do(currentElement, 'error');
+        });
+    }
     $scope.addAnswer = function(){
         if(typeof $scope.intentData.state_intent_answers == 'undefined' || $scope.intentData.state_intent_answers == ''){
             $scope.intentData['state_intent_answers'] = [];

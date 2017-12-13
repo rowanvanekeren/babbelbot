@@ -50,7 +50,7 @@ class FacebookController extends Controller
        $text = $data["entry"][0]["messaging"][0]["message"]["text"];
 
        $cacheObj = getOrInitCache($cache_id, $id, 'facebook');
-       bot_log($cache_id);
+
        if(isset($cacheObj['app'])){
            $fb_access_token = $cacheObj['app']['fb_access_token'];
        }else{
@@ -110,7 +110,7 @@ class FacebookController extends Controller
       curl_setopt($ch, CURLOPT_POST, true);
       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($messageData));
       $response = curl_exec($ch);
-       bot_log($response);
+
       curl_close($ch);
 
    }
@@ -129,7 +129,7 @@ class FacebookController extends Controller
                 $messageData['text'] = 'Kies een optie';
             }
             $messageData['quick_replies'] = $quickRepliesReturn;
-            bot_log($messageData);
+
             return $messageData;
         }else if(isset($messageText)){
             $messageData['text'] = $messageText;

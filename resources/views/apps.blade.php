@@ -145,6 +145,21 @@
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
                             </div>
                         </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="inp-dev-token">
+                                Backend webhook
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <input id="inp-webhook" class="default-input " type="text" name="webhook"
+                                       ng-model="app.webhook" my-enter="inputEnter($element, this)"
+                                       ng-focus="growBack($event)">
+
+                                <i class="fa fa-repeat input-saving-overlay hidden"></i>
+                            </div>
+                        </div>
                     </div>
                     <div class="app-embed-section" ng-class="{'open': openEmbed}">
                         <hr>

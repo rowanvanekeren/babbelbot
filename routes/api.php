@@ -19,4 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['sessions']], function () {
     Route::get('/test/{id}', 'Api\FacebookController@getTest');
     Route::post('/test/{id}', 'Api\FacebookController@responseTest');
+
+
+    /*custom webhook */
+    Route::post('/webhook', 'Api\WebhookController@processWebhook');
+
 });

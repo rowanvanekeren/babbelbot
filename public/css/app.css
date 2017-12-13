@@ -234,7 +234,7 @@ input[type=checkbox]:focus {
 
 .see-password-input input,
 .deletable-input input {
-  padding-right: 25px;
+  padding-right: 25px !important;
 }
 
 .see-password-input .input-trash-icon:hover,

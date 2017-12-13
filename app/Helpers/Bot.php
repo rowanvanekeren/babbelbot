@@ -20,6 +20,7 @@ function processRequest($cache_id, $unique_id, $user_input, $botDriver = 'defaul
                 'dialogue_id' : 1
                 'state' : stateobject,
                 'app' : appObject,
+                'data' : requestObject,
                 'driver' : facebook or normal,
                 'parameters' : {param1 : 1, param2: 2}
             }*/
@@ -37,12 +38,22 @@ function processRequest($cache_id, $unique_id, $user_input, $botDriver = 'defaul
 
     $wit_data = json_decode($wit_data, true);
 
+    updateCache($cache_id, 'data', array(
+        'wit_data' => $wit_data,
+        'user_input' => $user_input
+    ));
+
     if(isset($wit_data['entities']['intent'])){
         $wit_intent = $wit_data['entities']['intent'][0]['value'];
     }else{
         $wit_intent = null;
     }
 
+    /* data for responsetype backend */
+    $backend_data = array(
+        'wit_data' => $wit_data,
+        'user_input' => $user_input
+        );
 
     //1. check if has dialogue
     if(isset($cacheObj['dialogue_id']) && !empty($cacheObj['dialogue_id']) && !empty($cacheObj['app'])){
@@ -123,7 +134,7 @@ function searchStartState($cache_id, $app_id, $intent)
                     if ($value['startState']['stateIntents']['intent'] == $intent) {
 
 
-                        $answers = getStateIntentAnswers($value['startState']['stateIntents']['id'],
+                        $answers = getStateIntentAnswers($cache_id,$value['startState']['stateIntents']['id'],
                         $value['startState']['stateIntents']['response_type']);
 
                         updateCache($cache_id, 'dialogue_id', $value['startState']['dialogue_id']);
@@ -154,7 +165,7 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
 
                 if($value1->stateIntents->intent_type == 2 && strtolower($value1->stateIntents->keyword) == strtolower($user_input)){
 
-                    $answers = getStateIntentAnswers($value1->stateIntents['id'], $value1->stateIntents['response_type']);
+                    $answers = getStateIntentAnswers($cache_id,$value1->stateIntents['id'], $value1->stateIntents['response_type']);
 
                     $renderd_answers = renderAnswers($answers);
 
@@ -175,7 +186,7 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
 
             if(isset($value2->stateIntents)){
                 if($value2->stateIntents->intent_type == 1 && $value2->stateIntents->intent == $intent){
-                    $answers = getStateIntentAnswers($value2->stateIntents['id'], $value2->stateIntents['response_type']);
+                    $answers = getStateIntentAnswers($cache_id,$value2->stateIntents['id'], $value2->stateIntents['response_type']);
                     $renderd_answers = renderAnswers($answers);
 
                     updateCache($cache_id, 'dialogue_id', $value2['dialogue_id']);
@@ -259,7 +270,7 @@ function updateCache($cache_id, $key, $value){
     }
 }
 
-function getStateIntentAnswers($intent_id, $response_type){
+function getStateIntentAnswers($cache_id, $intent_id, $response_type){
     if(isset($intent_id) && isset($response_type)){
         $answers = \App\StateIntentAnswer::where('state_intents_id', $intent_id)->get();
 
@@ -267,8 +278,15 @@ function getStateIntentAnswers($intent_id, $response_type){
         if(isset($response_type) && isset($answers)){
 
             switch($response_type){
+
                 case 5 : //send to backend
-                    return null; // for the moment
+
+                    $cache_object = Cache::get($cache_id);
+/*
+                    return array(
+                         'answers' => array(array('answer'=>'test'))
+                    );*/
+                    return processBackendResponse($cache_object, $intent_id);
                 case 4 : //quickReplies and normal messages
 
                     return array(
@@ -367,6 +385,68 @@ function keyCacheObjectExist($cacheObject, $key)
         }
     } else {
         return false;
+    }
+}
+
+function processBackendResponse($cacheObject, $intent_id){
+
+    $intent = \App\StateIntent::where('id', $intent_id)->first();
+    bot_log('tot hier 1');
+
+        if(!isset($cacheObject) || !isset($intent)) {
+            return null;
+        }
+
+        if(!isset($cacheObject['app']['webhook']) || empty($cacheObject['app']['webhook']) || empty($cacheObject['data'])){
+            return null;
+        }
+
+    bot_log('tot hier 2');
+    $webhookURL = $cacheObject['app']['webhook'];
+
+
+
+    $webhookObject = array(
+        'user_input' => $cacheObject['data']['user_input'],
+        'wit_data' => $cacheObject['data']['wit_data'],
+        'action' => $intent->action
+    );
+
+    //bot_log(sendBackendRequest($webhookURL, $webhookObject);
+
+    return sendBackendRequest($webhookURL, $webhookObject);
+
+
+
+}
+
+function sendBackendRequest($url, $addObj){
+    $curl = curl_init($url);
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($addObj));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
+    $response = curl_exec($curl);
+    curl_close($curl);
+    bot_log($response);
+
+    $decoded_response =  json_decode($response, true);
+
+    if(isset($decoded_response['answers']) || isset($decoded_response['quick_replies'])){
+        if(isset($decoded_response['answers'][0]['answer']) || isset($decoded_response['quick_replies'][0]['answer'])){
+           try{
+               return $decoded_response;
+           }catch(Exception $e){
+               return null;
+           }
+
+        }else{
+            return null;
+        }
+    }else{
+        return null;
     }
 }
 

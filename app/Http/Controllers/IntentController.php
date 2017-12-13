@@ -133,6 +133,11 @@ class IntentController extends Controller
 
     }
 
+    function addIntentAction(Request $request){
+        $stateIntent = $this->saveIntentToState($request->state_id, array('action' => $request->action));
+
+        return $stateIntent;
+    }
     public function deleteAnswer(Request $request)
     {
         if (isset($request->answer_id)) {
