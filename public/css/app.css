@@ -1194,7 +1194,11 @@ input[type=checkbox]:focus {
 }
 
 .state-type-keyword .flowchart-operator-title {
-  background: orange;
+  background: #ffdb71;
+}
+
+.state-type-free-input .flowchart-operator-title {
+  background: #afd6ff;
 }
 
 .start_state .flowchart-operator-title {

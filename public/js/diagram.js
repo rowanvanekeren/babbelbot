@@ -82,7 +82,7 @@ $(document).ready(function () {
     var $flowchartPopupIntent = $('#flowchart-popup-intent');
     var $flowchart = $('#flowchart-base');
     var $container = $flowchart.parent();
-
+    var startIntent = null;
     var cx = $flowchart.width() / 2;
     var cy = $flowchart.height() / 2;
 
@@ -109,127 +109,6 @@ $(document).ready(function () {
             focal: e
         });
     });
-
-    var data = {
-        operators: {
-            operator_89: {
-                top: '4640',
-                left: '4460',
-                properties: {
-                    title: '1 input & 1 output',
-                    inputs: {
-                        ins: {
-                            label: 'Input (:i)',
-                            multiple: true
-                        }
-                    },
-                    outputs: {
-                        outs: {
-                            label: 'Output (:i)',
-                            multiple: true
-                        }
-                    }
-                }
-            },
-            operator_90: {
-                top: '4640',
-                left: '5380',
-                properties: {
-                    title: '1 input & 1 output',
-                    inputs: {
-                        ins: {
-                            label: 'Input (:i)',
-                            multiple: true
-                        }
-                    },
-                    outputs: {
-                        outs: {
-                            label: 'Output (:i)',
-                            multiple: true
-                        }
-                    }
-                }
-            },
-            operator_91: {
-                top: '4901.5',
-                left: '5387.5',
-                properties: {
-                    title: '1 input & 1 output',
-                    inputs: {
-                        ins: {
-                            label: 'Input (:i)',
-                            multiple: true
-                        }
-                    },
-                    outputs: {
-                        outs: {
-                            label: 'Output (:i)',
-                            multiple: true
-                        }
-                    }
-                }
-            },
-            operator_92: {
-                top: '5060',
-                left: '5020',
-                properties: {
-                    title: '1 input & 1 output',
-                    inputs: {
-                        ins: {
-                            label: 'Input (:i)',
-                            multiple: true
-                        }
-                    },
-                    outputs: {
-                        outs: {
-                            label: 'Output (:i)',
-                            multiple: true
-                        }
-                    }
-                }
-            }
-        },
-        links: {
-            link_0: {
-                fromOperator: 'operator_89',
-                fromConnector: 'outs',
-                fromSubConnector: '0',
-                toOperator: 'operator_90',
-                toConnector: 'ins',
-                toSubConnector: '0',
-                custom_link_id: '0'
-            },
-            link_1: {
-                fromOperator: 'operator_89',
-                fromConnector: 'outs',
-                fromSubConnector: '1',
-                toOperator: 'operator_91',
-                toConnector: 'ins',
-                toSubConnector: '0',
-                custom_link_id: '1'
-            },
-            link_2: {
-                fromOperator: 'operator_89',
-                fromConnector: 'outs',
-                fromSubConnector: '2',
-                toOperator: 'operator_92',
-                toConnector: 'ins',
-                toSubConnector: '0',
-                custom_link_id: '2'
-            },
-            link_3: {
-                fromOperator: 'operator_92',
-                fromConnector: 'outs',
-                fromSubConnector: '0',
-                toOperator: 'operator_91',
-                toConnector: 'ins',
-                toSubConnector: '1',
-                custom_link_id: '3'
-            }
-
-        },
-        operatorTypes: {}
-    };
 
     // Apply the plugin on a standard, empty div...
 
@@ -391,9 +270,15 @@ $(document).ready(function () {
     $('#intent-title').on('changeOperatorTitle', function (event, name, operatorID, forceActive) {
         forceActive = forceActive || false;
 
-        console.log('test trigger ' + name + ' ' + operatorID);
-
         $flowchart.flowchart('setOperatorTitle', operatorID, checkActiveTitle(null, name, forceActive));
+    });
+
+    $(document).on('changeOperatorClass', function (event, intentType, operatorID) {
+
+        $flowchart.flowchart('removeClassOperator', operatorID, generateClass(1, null));
+        $flowchart.flowchart('removeClassOperator', operatorID, generateClass(2, null));
+        $flowchart.flowchart('removeClassOperator', operatorID, generateClass(3, null));
+        $flowchart.flowchart('addClassOperator', operatorID, generateClass(intentType, null));
     });
 
     $.ajax({
@@ -446,6 +331,8 @@ $(document).ready(function () {
                 var titleToCheck = data[i].state_intents.intent;
             } else if (parseInt(data[i].state_intents.intent_type) == 2) {
                 var titleToCheck = data[i].state_intents.keyword;
+            } else if (parseInt(data[i].state_intents.intent_type) == 3) {
+                var titleToCheck = data[i].state_intents.parameter;
             }
             //console.log(JSON.parse(data[i].next_states));
             chartJson.operators[data[i].id] = {
@@ -469,6 +356,13 @@ $(document).ready(function () {
                     }
                 }
             };
+
+            if (data[i].hasOwnProperty('start_state')) {
+                if (data[i].start_state == 1) {
+                    delete chartJson.operators[data[i].id]['properties']['inputs'];
+                }
+            }
+
             if (typeof links != 'undefined' && links != '' && links != null) {
                 for (var a = 0; a < links.length; a++) {
                     chartJson.links[links[a].custom_link_id] = {
@@ -584,6 +478,13 @@ $(document).ready(function () {
                         }
                     }
                 };
+
+                if (resultData.hasOwnProperty('start_state')) {
+                    if (resultData.start_state == 1) {
+                        delete Newoperator['properties']['inputs'];
+                    }
+                }
+
                 $flowchart.flowchart('createOperator', data.state_id, Newoperator);
             }
         });
@@ -597,6 +498,7 @@ $(document).ready(function () {
                 if (data) {
                     if (data.hasOwnProperty('start_state')) {
                         if (data.start_state == 1) {
+                            startIntent = data.id;
                             return 'state-type-intent start_state';
                         }
                     }
@@ -605,6 +507,8 @@ $(document).ready(function () {
 
             case 2:
                 return 'state-type-keyword';
+            case 3:
+                return 'state-type-free-input';
         }
     }
 

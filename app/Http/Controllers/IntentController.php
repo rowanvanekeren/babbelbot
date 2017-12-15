@@ -60,7 +60,18 @@ class IntentController extends Controller
 
     function getStateIntent(Request $request)
     {
+        //need to check if is start_state
+        $state = State::where('id', $request->state_id)->first();
+
+        //seperate db call otherwise query to long
         $stateIntent = StateIntent::where('state_id', $request->state_id)->with('stateIntentAnswers')->with('stateIntentData')->first();
+
+
+        if(isset($state->start_state)){
+            if($state->start_state == 1){
+                $stateIntent['start_state'] = $state->start_state;
+            }
+        }
 
         return $stateIntent;
     }
@@ -82,18 +93,10 @@ class IntentController extends Controller
 
     }
 
-    /*
-        function saveIntentDataToIntent($intent_id, $data){
-            $state_intent_data = StateIntentData::updateOrCreate(
-                ['state_intents_id', $intent_id],
-                $data
-            );
 
-            return $state_intent_data;
-        }*/
-
-    function updateStateName($state_id, $name, $state_intents_id)
+    function updateStateName($state_id, $name, $state_intents_id, $reset = false)
     {
+
         $state = StateData::where('state_id', $state_id)->first();
 
         if (isset($name) && isset($state)) {
@@ -103,7 +106,12 @@ class IntentController extends Controller
                 ['name' => $name]
             );
 
-            $state->name = $name;
+            if($reset == true){
+                $state->name = '(nog geen titel)';
+            }else{
+                $state->name = $name;
+            }
+
 
             $state->save();
 
@@ -199,11 +207,27 @@ class IntentController extends Controller
         if (isset($request->name)) {
             $state = $this->updateStateName($request->state_id, $request->name, $state_intent->id);
             $state_intent['state_data'] = $state;
+
+
         }
 
         return $state_intent;
     }
+    public function saveParameterLocal(Request $request){
 
+        $state_intent = $this->saveIntentToState($request->state_id, array(
+            'state_id' => $request->state_id,
+            'parameter' => $request->parameter,
+        ));
+
+
+        if (isset($request->name)) {
+            $state = $this->updateStateName($request->state_id, $request->name, $state_intent->id);
+            $state_intent['state_data'] = $state;
+        }
+
+        return $state_intent;
+    }
     public function updateStateType(Request $request)
     {
 
@@ -215,6 +239,26 @@ class IntentController extends Controller
 
         return $stateIntent;
     }
+
+    public function updateStateIntentType(Request $request)
+    {
+
+        $stateIntent = StateIntent::where('state_id', $request->state_id)->first();
+
+
+
+        $state = $this->updateStateName($request->state_id, '', $stateIntent->id, true);
+
+        $stateIntent->intent = null;
+        $stateIntent->keyword = null;
+        $stateIntent->parameter = null;
+        $stateIntent->intent_type = $request->type;
+
+        $stateIntent->save();
+
+        return $state;
+    }
+
 
 
     public function trainIntent(Request $request)

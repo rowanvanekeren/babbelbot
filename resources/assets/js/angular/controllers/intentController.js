@@ -100,11 +100,11 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.saveKeywordLocal = function(currentElement, currentScope){
-        var inputObject = {};
-        inputObject[currentElement.attr('name')] = currentElement.val();
+       // var inputObject = {};
+      //  inputObject[currentElement.attr('name')] = currentElement.val();
 
         shrinkLoading.do(currentElement, 'loading');
-        console.log($scope.intentData['state_intent_data']['name']);
+
         var req = {
             method: 'POST',
             url: '../../save-keyword-local',
@@ -113,20 +113,25 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/
             },
             data: {
-                keyword:  $scope.intentData['state_intent_data']['name'],
+                keyword:  $scope.intentData['keyword'],
                 state_id: $scope.activeStateID,
-                name:  $scope.intentData['state_intent_data']['name']
+                name:  $scope.intentData['keyword']
             }
         };
 
         $http(req).then(function (data) {
-            $scope.intentData['state_intent_data']['name'] = data.data.state_data.name;
+            console.log($scope.intentData);
+        /*    if(typeof $scope.intentData['state_intent_data'] =='undefined'){
+                $scope.intentData['state_intent_data'] = {};
+            }
+            $scope.intentData['state_intent_data']['name'] = data.data.keyword;*/
             //$scope.intentData['intent'] = data.data.intent;
-            $('#intent-title').trigger('changeOperatorTitle', [data.data.state_data.name, $scope.activeStateID, true]);
+            $('#intent-title').trigger('changeOperatorTitle', [data.data.keyword, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
             $scope.resetIntentSearch();
 
         }).catch(function (data) {
+            console.log(data);
             shrinkLoading.do(currentElement, 'error');
         });
     }
@@ -165,7 +170,9 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.popupOpen = function (state_id) {
 
+
         $scope.activeStateID = state_id;
+        $scope.renderIntentOptions();
         $scope.getIntentState(state_id);
     };
 
@@ -174,8 +181,22 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         $rootScope.$emit("toggleIntentTraining", {intent: null, toggle: 'close'});
     };
 
+    $scope.renderIntentOptions = function(){
+        $scope.intentTypeOptions = [
+            {
+                id: 1, value: 'Intentie'
+            },
+            {
+                id: 2, value: 'Exact woord'
+            },
+            {
+                id: 3, value: 'Vrije input'
+            }
+        ]
+    };
 
     $scope.getIntentState = function (stateID) {
+        $scope.intentData = null;
         var req = {
             method: 'POST',
             url: '../../get-state-intent',
@@ -200,6 +221,39 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         $scope.intentSearchValue = null;
         $scope.intentSearchConf = null;
     }
+
+    $scope.saveParameterLocal = function(currentElement, currentScope){
+        // var inputObject = {};
+        //  inputObject[currentElement.attr('name')] = currentElement.val();
+
+        shrinkLoading.do(currentElement, 'loading');
+
+        var req = {
+            method: 'POST',
+            url: '../../save-parameter-local',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                parameter:  $scope.intentData['parameter'],
+                state_id: $scope.activeStateID,
+                name:  $scope.intentData['parameter']
+            }
+        };
+
+        $http(req).then(function (data) {
+            console.log($scope.intentData);
+
+            $('#intent-title').trigger('changeOperatorTitle', [data.data.parameter, $scope.activeStateID, true]);
+            shrinkLoading.do(currentElement, 'success');
+            $scope.resetIntentSearch();
+
+        }).catch(function (data) {
+            console.log(data);
+            shrinkLoading.do(currentElement, 'error');
+        });
+    }
     $scope.updateFullPopUp = function (data, openOrClose) {
         console.log(data);
 
@@ -214,7 +268,8 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             if (typeof data.data != 'undefined') {
                 $scope.intentID = (typeof data.data.id != 'undefined') ? data.data.id : '';
                 $scope.typeSetter(data.data['response_type']);
-                $scope.intentData.id
+                $scope.intentData.id;
+                $scope.selectedIntentType = $scope.intentData.intent_type;
             }else{
                 $scope.intentData = {};
             }
@@ -330,7 +385,33 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             answer_type : 1
         })
     };
+    $scope.updateIntentType = function(state_id, type){
 
+        $scope.intentData= null;
+        var req = {
+            method: 'POST',
+            url: '../../update-state-intent-type',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                type: type,
+                state_id: state_id
+            }
+        };
+
+        $http(req).then(function (data) {
+           if(data.status == 200){
+               console.log(data);
+               $(document).trigger('changeOperatorClass', [ type, $scope.activeStateID]);
+               $('#intent-title').trigger('changeOperatorTitle', [data.data.name, $scope.activeStateID]);
+               $scope.getIntentState(state_id);
+           }
+        }).catch(function (data) {
+            console.log(data);
+        });
+    };
 
     $scope.updateType = function () {
         //response type

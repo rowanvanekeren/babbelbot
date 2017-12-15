@@ -46,6 +46,9 @@
                 <button class="danger-btn"> <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"></i></button>
 
             </div>
+            <div class="col-md-12 apps-loading" ng-show="!intentValueData.expressions">
+                <i class="fa fa-spinner" aria-hidden="true"></i>
+            </div>
         </div>
     </div>
 </div>

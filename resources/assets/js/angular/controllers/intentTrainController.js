@@ -3,7 +3,9 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
     $scope.toggleTrainingPopup = function (data) {
 
         if (data.toggle == 'open') {
+            $scope.intentValueData = null;
             $scope.showTrainingPopup = true;
+
             $scope.getIntentDataWit(data.intent);
         } else if (data.toggle == 'close') {
             $scope.showTrainingPopup = false;

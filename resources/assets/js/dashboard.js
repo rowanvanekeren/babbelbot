@@ -4,7 +4,7 @@ $(document).ready(function () {
 
   //  passwordHint();
 
-    testFunction();
+  //  testFunction();
 
 //end of document ready function
 });

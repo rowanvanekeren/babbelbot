@@ -17,7 +17,7 @@
 
         @include('popup/intentEntity')
         @include('popup/intentTrain')
-        @include('popup.intent-state')
+        @include('popup.intent-state-select')
 
         <div id="flowchart-menu" class="flowchart-menu">
 

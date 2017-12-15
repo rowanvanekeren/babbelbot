@@ -57,6 +57,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/save-keyword-local', 'IntentController@saveKeywordLocal');
 
 
+    /* FreeInput (parameter) */
+    Route::post('/save-parameter-local', 'IntentController@saveParameterLocal');
+
+
+
     /* intent */
     Route::post('/get-intent-wit', 'IntentController@getIntentWit');
     Route::post('/save-intent-local-wit', 'IntentController@saveIntentToState');
@@ -70,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/get-intent-entity-data-wit', 'IntentController@getIntentEntityData');
     Route::post('/add-intent-wit', 'IntentController@addWitIntent');
     Route::post('/add-intent-action', 'IntentController@addIntentAction');
+    Route::post('/update-state-intent-type', 'IntentController@updateStateIntentType');
 
     /* entities */
     Route::get('/get-all-entities', 'IntentController@getAllEntities');

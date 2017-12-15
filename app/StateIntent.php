@@ -9,7 +9,7 @@ class StateIntent extends Model
     protected $table = 'state_intents';
 
     protected $fillable = [
-        'state_id', 'intent', 'action','response_type', 'intent_type' , 'active', 'keyword'
+        'state_id', 'intent', 'action','response_type', 'intent_type' , 'active', 'keyword', 'parameter'
     ];
 
 

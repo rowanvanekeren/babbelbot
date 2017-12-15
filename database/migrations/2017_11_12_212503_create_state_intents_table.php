@@ -19,6 +19,7 @@ class CreateStateIntentsTable extends Migration
             $table->string('intent')->nullable();
             $table->string('action')->nullable();
             $table->string('entity')->nullable();
+            $table->string('parameter')->nullable();
             $table->string('keyword')->nullable();
             $table->tinyInteger('intent_type');
             $table->tinyInteger('response_type'); // freetext
