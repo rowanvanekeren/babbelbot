@@ -27,7 +27,7 @@ class FlowChartController extends Controller
         $dialogue_states_count = State::where('dialogue_id', $dialogue_id)->count();
         $state = new State();
         $state->dialogue_id = $dialogue_id;
-        if($dialogue_states_count == 0){
+        if ($dialogue_states_count == 0) {
             $state->start_state = 1;
         }
         $state->save();
@@ -47,7 +47,7 @@ class FlowChartController extends Controller
 
         $stateIntent->save();
 
-        if( $state->start_state == 1){
+        if ($state->start_state == 1) {
             $stateData['start_state'] = 1;
         }
 
@@ -62,10 +62,10 @@ class FlowChartController extends Controller
     function createStateLink(Request $request)
     {
 
-       // return $request->link_data;
+        // return $request->link_data;
         $stateData = StateData::where('state_id', $request->parent_id)->first();
 
-        $this->updateNexStatesState($request->parent_id , $request->link_data);
+        $state_links = $this->updateNexStatesState($request->parent_id, $request->link_data);
 
         $stateData->link_data = json_encode($request->link_data);
 
@@ -77,14 +77,61 @@ class FlowChartController extends Controller
 
     }
 
-    function updateNexStatesState($state_id, $links){
+    function deleteAllLinksState(Request $request)
+    {
+        $deleted_links = array();
+        if (!empty($request->links) && isset($request->state_id)) {
+            $delete_state_id = $request->state_id;
+            $links = $request->links;
+            $totalLinks = count($links);
+
+            if ($totalLinks > 0) {
+                foreach ($links as $key => $value) {
+
+                    $current_state_id = $value['fromOperator'];
+
+                    if (intval($current_state_id) != intval($delete_state_id)) {
+                        $other_state = StateData::where('state_id', intval($current_state_id))->first();
+
+                        if (!empty($other_state)) {
+                            if (isset($other_state->link_data)) {
+                                if (!empty(json_decode($other_state->link_data, true))) {
+
+                                    $other_state_links = json_decode($other_state->link_data, true);
+
+                                    foreach ($other_state_links as $key2 => $value2) {
+                                        if (intval($value2['toOperator']) == intval($delete_state_id)) {
+                                            array_push($deleted_links, $other_state_links[$key2]);
+                                            unset($other_state_links[$key2]);
+                                        }
+                                    }
+
+                                    $other_state_links = array_values($other_state_links);
+                                    $other_state->link_data = json_encode($other_state_links);
+                                    $other_state->save();
+
+                                    $updated_state = $this->updateNexStatesState($other_state->state_id, $other_state_links);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+        return $deleted_links;
+
+    }
+
+    function updateNexStatesState($state_id, $links)
+    {
 
         $state = State::where('id', $state_id)->first();
         $formatLinks = array();
 
 
-        foreach($links as $key => $link){
-        array_push($formatLinks, $link['toOperator']);
+        foreach ($links as $key => $link) {
+            array_push($formatLinks, $link['toOperator']);
 
         }
 
@@ -93,6 +140,8 @@ class FlowChartController extends Controller
         $state->next_states = json_encode($formatLinks);
 
         $state->save();
+
+        return $state;
     }
 
     function updatePosition(Request $request)
@@ -114,25 +163,32 @@ class FlowChartController extends Controller
 
     }
 
-    function deleteState()
+    function deleteState(Request $request)
     {
+        $state = State::where('id' , $request->state_id)->first();
 
+        if(isset($state)){
+            $state->delete();
+        }
+
+        return $state;
     }
 
 
-    public function deleteLink(Request $request){
+    public function deleteLink(Request $request)
+    {
         $stateData = stateData::where('state_id', $request->state_id)->first();
 
-        if(isset($stateData->link_data)){
-            $link_data = json_decode($stateData->link_data,true);
+        if (isset($stateData->link_data)) {
+            $link_data = json_decode($stateData->link_data, true);
 
-            foreach($link_data as $key => $value){
-                if($value['custom_link_id'] == $request->custom_link_id){
+            foreach ($link_data as $key => $value) {
+                if ($value['custom_link_id'] == $request->custom_link_id) {
                     unset($link_data[$key]);
                 }
             }
 
-            $new_link_data =  array_values($link_data);
+            $new_link_data = array_values($link_data);
 
             $stateData->link_data = json_encode($new_link_data);
 

@@ -223,6 +223,12 @@ $(document).ready(function() {
         $flowchart.flowchart('addClassOperator', operatorID , generateClass(intentType, null));
     });
 
+    $(document).on('deleteState',function(event, state_id){
+          var links =  getAllLinksFromAndToState(state_id);
+
+          deleteAllLinksFromState(links, state_id);
+    });
+
 
 
 
@@ -252,6 +258,60 @@ $(document).ready(function() {
         }
     });
 
+    function deleteAllLinksFromState(links, state_id){
+
+        $.ajax({
+            url: '../../deleteAllLinksState',
+            type: 'post',
+            data: {
+                links: links,
+                state_id: state_id
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            success: function (data) {
+                deleteState(state_id);
+            }
+        });
+    }
+
+    function deleteState(state_id){
+
+        $.ajax({
+            url: '../../deleteState',
+            type: 'post',
+            data: {
+
+                state_id: state_id
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            success: function (data) {
+                $flowchart.flowchart('deleteOperator', state_id);
+            }
+        });
+    }
+    function getAllLinksFromAndToState(state_id){
+        var completeData = $flowchart.flowchart('getData');
+
+        var completeLinks = completeData.links;
+        var links = [];
+
+
+        for (var key in completeLinks) {
+            if(completeLinks[key].fromOperator == state_id || completeLinks[key].toOperator == state_id){
+                completeLinks[key]['custom_link_id'] = key;
+                links.push(completeLinks[key]);
+            }
+        }
+
+
+        return links;
+    }
     function checkActiveTitle(intent, name, forceActive, intent_type){
         if((typeof  intent != 'undefined' &&
                     intent!= '' &&

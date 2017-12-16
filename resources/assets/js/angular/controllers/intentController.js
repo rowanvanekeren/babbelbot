@@ -21,6 +21,28 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         });
     };
 
+    $scope.deleteState = function(state_id){
+        $(document).trigger('deleteState',[state_id]);
+
+/*        var req = {
+            method: 'POST',
+            url: '../../delete-state',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /!* 'Content-Type': 'application/x-www-form-urlencoded'*!/
+            },
+            data: {
+                state_id : state_id
+            }
+        };
+
+        $http(req).then(function (data) {
+
+        }).catch(function (data) {
+
+        });*/
+    };
+
     $scope.getAvailableIntent = function (inputObj, currentElement) {
         var req = {
             method: 'POST',

@@ -6,6 +6,9 @@
 
     <div class="popup-wrapper">
         <div class="popup-title">
+            <button class="button-red"><i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
+                       ng-click="deleteState(activeStateID)"></i>
+            </button>
             <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">Titel: @{{ intentData.state_intent_data.name }}</h2>
             <i class="fa fa-times " aria-hidden="true" ng-click="popupClose()"></i>
         </div >

@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/updateOperatorPosition', 'FlowChartController@updatePosition');
     Route::post('/getAllStates', 'FlowChartController@getAllStates');
     Route::post('/deleteLinkOperator', 'FlowChartController@deleteLink');
+    Route::post('/deleteAllLinksState', 'FlowChartController@deleteAllLinksState');
+    Route::post('/deleteState', 'FlowChartController@deleteState');
 
     /* keyword */
     Route::post('/save-keyword-local', 'IntentController@saveKeywordLocal');
