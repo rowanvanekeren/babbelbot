@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/check-app-session', 'SessionController@checkActiveApp');
 
     Route::group(['middleware' => 'checkapp'] ,function() {
-        Route::get('/dashboard/dialogue', function () {
+        Route::get('/dashboard/dialogen', function () {
             return view('app-dialogue');
         });
 
@@ -115,7 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-Route::get('/dashboard/dialogue/diagram', function () {
+Route::get('/dashboard/dialogen/diagram', function () {
     return view('diagram');
 });
 

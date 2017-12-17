@@ -5,13 +5,20 @@
 @section('content')
 
     <div class="flowchart-wrapper" ng-cloak>
-        <div id="flowchart-base" class="flowchart-base"> <div class="row modal-overlay hidden" ></div></div>
-
+        <div id="flowchart-base" class="flowchart-base"> </div>
+        <div class="row modal-overlay hidden" ></div>
         <div class="app-wrapper warning-box delete-link hidden">
             <h2>Weet je zeker dat je deze link wilt verwijderen?</h2>
 
             <button class="danger-btn delete-link-button">Verwijder</button>
             <button class="main-btn exit-warning-box" >Annuleer</button>
+        </div>
+
+        <div class="app-wrapper warning-box delete-state hidden">
+            <h2>Weet je zeker dat je dit blok wilt verwijderen?</h2>
+
+            <button class="danger-btn delete-state-button">Verwijder</button>
+            <button class="main-btn exit-delete-state" >Annuleer</button>
         </div>
 
 

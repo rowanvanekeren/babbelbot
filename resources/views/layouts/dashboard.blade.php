@@ -17,6 +17,7 @@
     <link href="{{ asset('public/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/addons/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/addons/ng-tags-input.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/angular-tooltips.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 
 </head>
@@ -30,8 +31,8 @@
             </div>
 
             <script>
-
                 /* routes */
+                var currentPath = '{{ Request::path() }}';
                 var defaultURL = '{{url("/")}}';
                 var ajaxAppSessionURL = '{{url("/check-app-session")}}';
             </script>
@@ -41,6 +42,7 @@
     <script src="{{asset('public/js/angular/angular.min.js')}}"></script>
     <script src="{{asset('public/js/angular/angular-animate.min.js')}}"></script>
     <script src="{{asset('public/js/angular/angular-cookies.min.js')}}"></script>
+    <script src="{{asset('public/js/angular/angular-tooltips.min.js')}}"></script>
     <script src="{{asset('public/js/addons/ng-tags-input.js')}}"></script>
     <script src="{{asset('public/js/main.js')}}"></script>
     <script src="{{asset('public/js/controllers.js')}}"></script>

@@ -92,6 +92,10 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
     /*  $scope.changeActiveApp = function(){
      console.log('broadcasted to navcontroller');
      }*/
+    $scope.navInit = function () {
+        $scope.checkActiveApp();
+        $scope.createBreadCrumbs();
+    };
     $scope.checkActiveApp = function () {
         var req = {
             method: 'GET',
@@ -108,6 +112,7 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
             console.log(data);
 
             $scope.activeApp = data.data.title;
+            $scope.createBreadCrumbs();
         }).catch(function (data) {});
     };
 
@@ -115,6 +120,33 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
         console.log(data);
 
         $scope.activeApp = data.title;
+    };
+
+    $scope.createBreadCrumbs = function () {
+        $scope.rawBreadCrumbs = currentPath.split('/');
+
+        $scope.breadCrumbs = [];
+        var rawRenderedCrumbs = [];
+        for (var i = 0; i < $scope.rawBreadCrumbs.length; i++) {
+            rawRenderedCrumbs.push($scope.rawBreadCrumbs[i]);
+            var currentCrumb = rawRenderedCrumbs;
+            console.log($scope.rawBreadCrumbs[i]);
+            $scope.breadCrumbs.push({
+                href: defaultURL + '/' + currentCrumb.join('/'),
+                text: $scope.rawBreadCrumbs[i]
+            });
+
+            if ($scope.rawBreadCrumbs[i].toLowerCase() == 'dashboard') {
+                if (typeof $scope.activeApp != 'undefined') {
+                    $scope.breadCrumbs.push({
+                        href: defaultURL + '/' + currentCrumb.join('/'),
+                        text: $scope.activeApp
+                    });
+                }
+            }
+        }
+        console.log($scope.breadCrumbs);
+        console.log($scope.activeApp);
     };
 });
 
@@ -615,7 +647,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
             console.log(data);
             // $rootScope.$emit("toggleApp", data.data);
 
-            window.location = './dialogue/diagram';
+            window.location = './dialogen/diagram';
         }).catch(function (data) {});
     };
 });
@@ -645,28 +677,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             //  shrinkLoading.do(currentElement, 'error');
         });
-    };
-
-    $scope.deleteState = function (state_id) {
-        $(document).trigger('deleteState', [state_id]);
-
-        /*        var req = {
-                    method: 'POST',
-                    url: '../../delete-state',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        /!* 'Content-Type': 'application/x-www-form-urlencoded'*!/
-                    },
-                    data: {
-                        state_id : state_id
-                    }
-                };
-        
-                $http(req).then(function (data) {
-        
-                }).catch(function (data) {
-        
-                });*/
     };
 
     $scope.getAvailableIntent = function (inputObj, currentElement) {
@@ -815,6 +825,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         $rootScope.$emit("toggleIntentTraining", { intent: null, toggle: 'close' });
     };
 
+    /* TODO make better way of rendering options */
     $scope.renderIntentOptions = function () {
         $scope.intentTypeOptions = [{
             id: 1, value: 'Intentie'
@@ -1175,6 +1186,31 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.getIntentData = function () {
         $rootScope.$emit("toggleIntentTraining", { intent: $scope.intentData.intent, toggle: 'open' });
+    };
+
+    /* jQuery required because modal is not in controller; TODO: better option required */
+    $scope.toggleDelete = function (toggleEvent) {
+        if (toggleEvent) {
+            $('.delete-state').removeClass('hidden');
+            $('.modal-overlay').removeClass('hidden');
+        } else {
+            $('.delete-state').addClass('hidden');
+            $('.modal-overlay').addClass('hidden');
+        }
+    };
+
+    $('.delete-state-button').click(function () {
+        $scope.deleteState($scope.activeStateID);
+    });
+
+    $('.exit-delete-state').click(function () {
+        $scope.toggleDelete(false);
+    });
+    $scope.deleteState = function (state_id) {
+        $(document).trigger('deleteState', [state_id]);
+        setTimeout(function () {
+            $scope.toggleDelete(false);
+        }, 500);
     };
 });
 

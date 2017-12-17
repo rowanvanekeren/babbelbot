@@ -21,27 +21,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         });
     };
 
-    $scope.deleteState = function(state_id){
-        $(document).trigger('deleteState',[state_id]);
-
-/*        var req = {
-            method: 'POST',
-            url: '../../delete-state',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                /!* 'Content-Type': 'application/x-www-form-urlencoded'*!/
-            },
-            data: {
-                state_id : state_id
-            }
-        };
-
-        $http(req).then(function (data) {
-
-        }).catch(function (data) {
-
-        });*/
-    };
 
     $scope.getAvailableIntent = function (inputObj, currentElement) {
         var req = {
@@ -203,6 +182,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         $rootScope.$emit("toggleIntentTraining", {intent: null, toggle: 'close'});
     };
 
+    /* TODO make better way of rendering options */
     $scope.renderIntentOptions = function(){
         $scope.intentTypeOptions = [
             {
@@ -593,5 +573,32 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
 
     }
+
+    /* jQuery required because modal is not in controller; TODO: better option required */
+    $scope.toggleDelete = function(toggleEvent){
+        if(toggleEvent){
+            $('.delete-state').removeClass('hidden');
+            $('.modal-overlay').removeClass('hidden');
+        }else{
+            $('.delete-state').addClass('hidden');
+            $('.modal-overlay').addClass('hidden');
+        }
+    };
+
+
+    $('.delete-state-button').click(function(){
+        $scope.deleteState($scope.activeStateID);
+    });
+
+    $('.exit-delete-state').click(function(){
+        $scope.toggleDelete(false);
+    });
+    $scope.deleteState = function(state_id){
+        $(document).trigger('deleteState',[state_id]);
+        setTimeout(function(){
+            $scope.toggleDelete(false);
+        },500);
+
+    };
 });
 

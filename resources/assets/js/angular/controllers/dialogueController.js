@@ -231,7 +231,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
             console.log(data);
            // $rootScope.$emit("toggleApp", data.data);
 
-            window.location ='./dialogue/diagram';
+            window.location ='./dialogen/diagram';
 
         }).catch(function (data) {
 

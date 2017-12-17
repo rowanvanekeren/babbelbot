@@ -1,7 +1,7 @@
 /**
  * Created by Rowan on 4-11-2017.
  */
-var botApp = angular.module('botApp', ['ngCookies', 'ngAnimate', 'ngTagsInput']);
+var botApp = angular.module('botApp', ['720kb.tooltips','ngCookies', 'ngAnimate', 'ngTagsInput']);
 
 
 

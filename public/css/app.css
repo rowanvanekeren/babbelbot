@@ -350,6 +350,8 @@ input[type=checkbox]:focus {
   width: 100%;
   height: 100%;
   z-index: 50;
+  top: 0;
+  left: 0;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -608,12 +610,12 @@ input[type=checkbox]:focus {
 }
 
 .top-breadcrumbs li i {
-  font-size: 15px;
+  font-size: 8px;
   font-weight: 100;
 }
 
 .top-breadcrumbs li a {
-  font-size: 30px;
+  font-size: 18px;
   color: #a4aab6;
 }
 
@@ -850,6 +852,10 @@ input[type=checkbox]:focus {
 .select2-selection__rendered{
   padding: 5px !important;
 }*/
+
+.wide-tooltip {
+  min-width: 300px;
+}
 
 .home-bg {
   min-height: 100vh;

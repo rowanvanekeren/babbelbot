@@ -184,6 +184,7 @@ $(document).ready(function () {
             $('.delete-link').addClass('hidden');
         }
     }
+
     $flowchart.parent().siblings('.delete_selected_button').click(function () {
         $flowchart.flowchart('deleteSelected');
     });

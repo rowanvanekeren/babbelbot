@@ -1,3 +1,4 @@
+<div class="main-navigation-wrapper" ng-controller="navController" ng-init="navInit()">
 <div class="left-navigation">
 <div class="top-info-bar">
     <a id="nav-logo" href="/"><img src="{{asset('public/img/logo/babbelbot-logo.png')}}" alt="babbelbot logo"></a>
@@ -6,20 +7,21 @@
 <div class="location-navigation">
 
 </div>
-<div class="center-navigation" ng-controller="navController" ng-init="checkActiveApp()" active-app="changeActiveApp(data)">
+<div class="center-navigation"  active-app="changeActiveApp(data)">
     <ul>
         <li ng-cloak>
-            <a href="{{ url('./dashboard') }}" class="apps-nav active"><i class="fa fa-list dash-icon" aria-hidden="true"></i> Apps</a>
+            <a href="{{ url('./dashboard') }}" class="apps-nav {{ Request::path() == 'dashboard' ? 'active' : '' }}"><i class="fa fa-list dash-icon" aria-hidden="true"></i> Apps</a>
             <ul class="center-sub-nav" >
                 <li class="active-app-nav"><span>@{{activeApp ? activeApp : "Kies een app"}}<i class="fa fa-circle app-on-off "ng-class="(activeApp) ? 'active-app-color ' : 'inactive-app-color '" aria-hidden="true"></i></span></li>
 
                 <li class="sub-menu-seperator " ng-show="activeApp"><hr></li>
-                <li class="" ng-show="activeApp"><a href="{{ url('./dashboard/dialogue') }}"><i class="fa fa-comments" aria-hidden="true"></i>Dialogen</a></li>
-                <li class="" ng-show="activeApp"><a href="{{ url('./dashboard/standaard-antwoorden') }}"><i class="fa fa-comment" aria-hidden="true"></i>Standaard antwoorden</a></li>
-                <li class="" ng-show="activeApp"><a href="{{ url('./dashboard/entities') }}"><i class="fa fa-book" aria-hidden="true"></i> Entities</a></li>
+                <li  ng-show="activeApp"><a class="{{ Request::path() == 'dashboard/dialogen' ? 'active' : '' }}" href="{{ url('./dashboard/dialogen') }}"><i class="fa fa-comments" aria-hidden="true"></i>Dialogen</a></li>
+                <li  ng-show="activeApp"><a class="{{ Request::path() == 'dashboard/standaard-antwoorden' ? 'active' : '' }}" href="{{ url('./dashboard/standaard-antwoorden') }}"><i class="fa fa-comment" aria-hidden="true"></i>Standaard antwoorden</a></li>
+                <li  ng-show="activeApp"><a class="{{ Request::path() == 'dashboard/entities' ? 'active' : '' }}" href="{{ url('./dashboard/entities') }}"><i class="fa fa-book" aria-hidden="true"></i> Entities</a></li>
             </ul>
         </li>
         <li>
+
             <a href=""><i class="fa fa-question dash-icon" aria-hidden="true"></i> Help</a>
         </li>
     </ul>
@@ -29,18 +31,13 @@
 </div>
 </div>
 
-<div class="top-navigation">
-<ul class="top-breadcrumbs">
-    <li>
-        <a href="">Apps</a>
+<div class="top-navigation" >
+<ul class="top-breadcrumbs" ng-cloak>
+    <li ng-repeat="crumb in breadCrumbs">
+       <a href="@{{ crumb.href }}">@{{ crumb.text }} </a>
+        <i class="fa fa-chevron-right" aria-hidden="true" ng-if="!$last"></i>
+    </li>
 
-    </li>
-    <li>
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-    </li>
-    <li>
-        <a href="">Test</a>
-    </li>
 </ul>
 <ul class="top-user">
         <li class="top-user-li active-user">
@@ -53,4 +50,5 @@
            <a href=""> <i class="fa fa-cog" aria-hidden="true"></i></a>
         </li>
 </ul>
+</div>
 </div>

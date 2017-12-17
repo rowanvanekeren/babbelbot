@@ -116,6 +116,8 @@ $(document).ready(function() {
         }
 
     }
+
+
     $flowchart.parent().siblings('.delete_selected_button').click(function() {
         $flowchart.flowchart('deleteSelected');
     });

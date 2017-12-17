@@ -6,9 +6,7 @@
 
     <div class="popup-wrapper">
         <div class="popup-title">
-            <button class="button-red"><i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
-                       ng-click="deleteState(activeStateID)"></i>
-            </button>
+
             <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">Titel: @{{ intentData.state_intent_data.name }}</h2>
             <i class="fa fa-times " aria-hidden="true" ng-click="popupClose()"></i>
         </div >
@@ -97,6 +95,10 @@
             <div class='span-option'>
                 <span ng-click="addQuickReply()">  voeg toe </span>
             </div>
+        </div>
+        <div class="footer-options">
+            <button class="danger-btn" ng-click="toggleDelete(true)">Verwijderen
+            </button>
         </div>
         <div class="col-md-12 apps-loading" ng-show="!intentData">
             <i class="fa fa-spinner" aria-hidden="true"></i>

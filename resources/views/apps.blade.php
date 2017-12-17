@@ -112,8 +112,10 @@
                     </div>
                     <div class="app-center-section">
                         <div class="form-group">
-                            <label for="inp-access-token">
-                                Wit.ai access token
+                            <label for="inp-access-token"  >
+                                Wit.ai access token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-smart="true" tooltip-class="wide-tooltip" tooltip-template="Deze token kun je verkrijgen
+                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
+                            settings de tokens kunt verkrijgen"></i>
                             </label>
 
                             <div class="input-wrapper see-password-input">
@@ -133,7 +135,9 @@
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Wit.ai server token
+                                Wit.ai server token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-smart="true" tooltip-class="wide-tooltip" tooltip-template="Deze token kun je verkrijgen
+                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
+                            settings de tokens kunt verkrijgen"></i>
                             </label>
 
                             <div class="input-wrapper see-password-input">
@@ -148,7 +152,7 @@
                         <hr>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Backend webhook
+                                Backend webhook <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-smart="true" tooltip-class="wide-tooltip" tooltip-template="Wanneer je bij dialogen een antwoord selecteerd met optie 'backend' dan zal babbelbot een 'post request' sturen naar deze url. Meer info hierover vindt je in de Help sectie"></i>
                             </label>
 
                             <div class="input-wrapper">
@@ -168,7 +172,9 @@
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Facebook verify token
+                                Facebook verify token <i class="fa fa-info-circle" aria-hidden="true"
+                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                         tooltip-template="Wanneer je bij facebook moet connecteren met een webhook zal facebook vragen om een 'verify token', dit is een token die je zelf mag verzinnen maar bij zowel facebook als babbelbot het zelfde moeten zijn"></i>
                             </label>
 
                             <div class="input-wrapper see-password-input">
@@ -182,7 +188,9 @@
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Facebook access token
+                                Facebook access token <i class="fa fa-info-circle" aria-hidden="true"
+                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                         tooltip-template="Wanneer je bij facebook pagina hebt aangemaakt zul je bij de developers pagina een access token kunnen vinden. Deze kun je in dit veld plakken"></i>
                             </label>
 
                             <div class="input-wrapper see-password-input">
