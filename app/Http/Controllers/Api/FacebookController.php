@@ -10,7 +10,7 @@ use Cache;
 use Carbon\Carbon;
 class FacebookController extends Controller
 {
-   public function getTest($id, Request $request){
+   public function verifyFacebook($id, Request $request){
 
       $app = App::where('unique_id', $id)->first();
       $verify_token = "babbelbot_account_chatbot_preview";
@@ -37,7 +37,7 @@ class FacebookController extends Controller
 
 
    }
-   public function responseTest($id, Request $request){
+   public function responseFacebook($id, Request $request){
 
        /* facebook return */
        $data = $request->all();

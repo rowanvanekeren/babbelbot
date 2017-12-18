@@ -17,61 +17,20 @@
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<div class="home-bg" style="background-image: url('{{asset('public/img/background/home-background4.jpg')}}')">
-    <div class="container home-header">
-        <div class="row">
+<div class="home-bg-full" style="background-image: url('{{asset('public/img/background/home-background4.jpg')}}')">
+    <div class="container">
+        <div class="row home-auth-image">
+            <div class="col-md-4 col-md-offset-4">
+                <a href="{{url('/')}}"> <img src="{{asset('public/img/logo/babbelbot-logo.png')}}"></a>
 
-            @include('nav.main')
+            </div>
         </div>
         <div class="row">
             @yield('content')
         </div>
     </div>
-</div>
-<div class="content-2">
-    <div class="container">
-        <div class="row">
-            @yield('content-2')
-        </div>
-    </div>
-</div>
+ </div>
 
-<div class="content-3">
-    <div class="container">
-        <div class="row">
-            @yield('content-3')
-        </div>
-    </div>
-
-</div>
-
-<div class="content-4">
-    <div class="container">
-        <div class="row">
-            @yield('content-4')
-        </div>
-    </div>
-
-</div>
-
-
-<div class="content-5">
-    <div class="container">
-        <div class="row">
-            @yield('content-5')
-        </div>
-    </div>
-
-</div>
-
-<div class="content-footer">
-    <div class="container">
-        <div class="row">
-            @yield('content-footer')
-        </div>
-    </div>
-
-</div>
 <!-- Scripts -->
 <script src="{{asset('public/js/jquery-3.2.1.min.js')}}"></script>
 <script src="{{asset('public/js/addons/typed.min.js')}}"></script>

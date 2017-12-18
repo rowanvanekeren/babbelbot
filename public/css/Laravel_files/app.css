@@ -437,26 +437,6 @@ input[type=checkbox]:focus {
   z-index: 3;
 }
 
-.logout-red a {
-  color: #ff625d !important;
-  border: 2px solid #ff625d !important;
-}
-
-.logged-in-user {
-  color: #4ca78c;
-  color: #4ca78c;
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.vertical-seperator {
-  height: 100%;
-  margin: 0 15px;
-  color: #4ca78c;
-  background: #4ca78c;
-}
-
 .navbar-inner {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -828,7 +808,6 @@ input[type=checkbox]:focus {
   }
 
   .top-info-bar #nav-bars {
-    color: #4ca78c;
     display: block !important;
   }
 
@@ -879,59 +858,30 @@ input[type=checkbox]:focus {
 }
 
 .home-bg {
-  min-height: 85vh;
-}
-
-.home-bg-full {
   min-height: 100vh;
-}
-
-.home-auth-image {
-  margin-top: 10%;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.home-auth-image img {
-  width: 80%;
-}
-
-.content-2 {
-  background: #f0f0f0;
-  padding-bottom: 40px;
-}
-
-.home-title-wrapper {
-  height: 100%;
-  margin-top: 10%;
 }
 
 .home-cta-section {
   width: 100%;
-  margin-top: 20px;
   text-align: center;
 }
 
 .home-title {
   position: relative;
-  color: #ffffff;
-  text-align: center;
-  font-size: 60px;
+  color: #dbdbdb;
+  font-size: 80px;
   line-height: 70px;
   width: 100%;
-  text-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
 }
 
 .home-cta {
   position: relative;
   font-weight: 600;
-  font-size: 15px;
-  color: #fff;
+  font-size: 25px;
+  color: #dbdbdb;
   border: 4px solid #4ca78c;
   background-color: #4ca78c;
-  padding: 10px;
-  -webkit-box-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
-          box-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
+  padding: 15px;
 }
 
 .home-cta:hover {
@@ -1029,277 +979,29 @@ input[type=checkbox]:focus {
   border-radius: 30px;
 }
 
-.chat-examples {
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-  margin: 15px 0;
-  margin-top: -55px;
-  top: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  z-index: 500;
-}
-
-.chat-examples > div {
-  -webkit-box-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
-          box-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
-  margin: 0 5px;
-  width: 100%;
-  height: 300px;
-  border: 2px solid #4ca78c;
-  background: #fff;
-  overflow: hidden;
-}
-
-.chat-examples .chat-bottom {
-  width: 100%;
-  height: 35px;
-  background: #fff;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-top: 2px solid #4ca78c;
-  padding: 5px;
-}
-
-.chat-examples .middel-chat {
-  margin-top: -35px;
-}
-
-.chat-examples .chat-title {
-  height: 35px;
-  position: relative;
-  z-index: 40;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: #fff;
-  padding: 5px;
-  font-size: 15px;
-  background: #4ca78c;
-}
-
-.chat-examples .chat-box {
-  position: relative;
-  z-index: 35;
-  width: 100%;
-  padding: 5px;
-  height: 225px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.chat-examples .chat-box-inner {
-  -ms-flex-item-align: end;
-      align-self: flex-end;
-  width: 100%;
-}
-
-.chat-examples .chat-row {
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.chat-examples .chat-user {
-  float: right;
-  border-radius: 10px 10px 0 10px;
-  background-color: #4ca78c;
-}
-
-.chat-examples .chat-user p {
-  padding: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  color: #fff;
-}
-
-.chat-examples .chat-bot {
-  float: left;
-  border-radius: 0 10px 10px 10px;
-  background-color: rgba(24, 83, 85, 0.88);
-}
-
-.chat-examples .chat-bot p {
-  padding: 10px;
-  padding-right: 30px;
-  padding-left: 30px;
-  color: #fff;
-}
-
-.hide-examples {
-  opacity: 0;
-  top: 50px;
-}
-
-.content-3 {
-  margin: 30px 0;
-}
-
-.content-3-title {
-  padding: 80px 0;
-  color: #4ca78c;
-  font-size: 30px;
-  text-align: center;
-}
-
-.information-witai {
-  -webkit-transition: 1s;
-  transition: 1s;
-  -webkit-transition-delay: 0.5s;
-          transition-delay: 0.5s;
-  position: relative;
-}
-
-.information-witai img {
-  max-width: 300px;
-}
-
-.information-witai:last-child {
-  margin-top: 30px;
-}
-
-.information-witai .text-section {
-  background: #f0f0f0;
-}
-
-.information-witai > div {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  min-height: 300px;
-}
-
-.information-witai p,
-.information-witai h3 {
-  padding: 0 50px;
-}
-
-.fade-in {
-  opacity: 0;
-}
-
-.content-4 {
-  background: #4ca78c;
-  padding: 100px 0;
-  text-align: center;
-  color: #fff;
-}
-
-.content-4 .content-4-title {
-  line-height: 40px;
-  font-size: 30px;
-  text-align: center;
-}
-
-.content-5 {
-  padding: 100px 0;
-}
-
-.benefits > div > div {
-  text-align: center;
-}
-
-.benefits > div img {
-  margin: 15px 0;
-  width: 50px;
-}
-
-.content-footer {
-  padding: 80px 0;
-  background: #353535;
-  text-align: center;
-  color: #dcdcdc;
-}
-
-/* Medium Devices, Desktops */
-
-@media only screen and (max-width: 768px) {
-  .chat-examples {
-    display: block;
-  }
-
-  .chat-examples .middel-chat {
-    margin-top: 0;
-  }
-
-  .chat-examples > div {
-    margin-left: 0;
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 15px !important;
-  }
-}
-
-.login-wrapper,
-.registration-wrapper {
+.login-wrapper {
   -webkit-box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.3);
           box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 50;
   background: #fff;
-  float: left;
+  min-height: 400px;
 }
 
-.login-wrapper label,
-.registration-wrapper label {
+.login-wrapper label {
   width: 100%;
 }
 
-.login-wrapper hr,
-.registration-wrapper hr {
-  margin: 5px 0;
-}
-
-.login-wrapper .forget-pw,
-.registration-wrapper .forget-pw {
-  text-align: center;
-}
-
-.login-wrapper .panel-body,
-.registration-wrapper .panel-body {
-  float: left;
-  margin: 15px 0;
-}
-
-.login-wrapper .form-group,
-.registration-wrapper .form-group {
+.login-wrapper .form-group {
   position: relative;
-  float: left;
-  width: 100%;
 }
 
-.login-wrapper .main-btn,
-.registration-wrapper .main-btn {
-  width: 100%;
-}
-
-.login-wrapper .or-facebook,
-.registration-wrapper .or-facebook {
+.login-wrapper .or-facebook {
   text-align: center;
+  margin: 10px 0;
 }
 
-.login-wrapper .input-icon,
-.registration-wrapper .input-icon {
+.login-wrapper .input-icon {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1309,8 +1011,7 @@ input[type=checkbox]:focus {
           align-items: center;
 }
 
-.login-wrapper .input-icon i,
-.registration-wrapper .input-icon i {
+.login-wrapper .input-icon i {
   color: #a4aab6;
   font-size: 16px;
   position: absolute;
@@ -1319,10 +1020,7 @@ input[type=checkbox]:focus {
 
 .login-wrapper input[type=text],
 .login-wrapper input[type=email],
-.login-wrapper input[type=password],
-.registration-wrapper input[type=text],
-.registration-wrapper input[type=email],
-.registration-wrapper input[type=password] {
+.login-wrapper input[type=password] {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
   width: 100%;
   background: none;
@@ -1334,15 +1032,11 @@ input[type=checkbox]:focus {
 
 .login-wrapper input[type=text]:focus,
 .login-wrapper input[type=email]:focus,
-.login-wrapper input[type=password]:focus,
-.registration-wrapper input[type=text]:focus,
-.registration-wrapper input[type=email]:focus,
-.registration-wrapper input[type=password]:focus {
+.login-wrapper input[type=password]:focus {
   outline: #4ca78c solid;
 }
 
-.login-wrapper .panel-heading,
-.registration-wrapper .panel-heading {
+.login-wrapper .panel-heading {
   background: #4ca78c;
   font-size: 30px;
   padding: 10px;
@@ -1354,8 +1048,6 @@ input[type=checkbox]:focus {
 }
 
 .fb-btn {
-  width: 100%;
-  display: block;
   background: #3b5998;
   color: #fff;
   font-size: 16px;

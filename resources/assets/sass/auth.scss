@@ -1,0 +1,100 @@
+.login-wrapper, .registration-wrapper{
+
+  box-shadow: 4px 8px 15px  rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 50;
+  background: #fff;
+  float:left;
+  label{
+    width: 100%;
+  }
+  hr{
+    margin: 5px 0;
+  }
+.forget-pw{
+  text-align: center;
+}
+  .panel-body{
+    float:left;
+    margin: 15px 0;
+  }
+ .form-group{
+   &:last-child{
+
+
+   }
+   &:first-child{
+
+   }
+  position: relative;
+
+   float:left;
+   width: 100%;
+ }
+
+  .main-btn{
+    width: 100%;
+
+  }
+  .or-facebook{
+    text-align: center;
+
+  }
+  .input-icon{
+    position: relative;
+    display:flex;
+    align-items: center;
+
+
+    i{
+      color:$font-color-grey;
+     // font-weight: bold;
+      font-size: $font-size-2;
+
+      position:absolute;
+      left: 7.5px;
+    }
+  }
+  input[type=text], input[type=email], input[type=password]{
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+    width: 100%;
+    background: none;
+    border: 2px solid $font-color-grey;
+    padding: 5px;
+    padding-left: 25px;
+    font-size: $font-size-2;
+
+    &:focus {
+
+      outline: $main-color solid;
+    }
+  }
+  .panel-heading{
+    background: $main-color;
+    font-size: 30px;
+    padding: 10px;
+    color: #fff;
+  }
+}
+.facebook-wrapper{
+  text-align: center;
+}
+
+.fb-btn{
+  width:100%;
+  display:block;
+
+  background: #3b5998;
+  color: #fff;
+  font-size: $font-size-2;
+  border: 2px solid #3b5998;
+  padding: 5px 10px;
+  transition: color 0.5s, background-color 0.5s;
+  i {
+    display: inline-block;
+  }
+  &:hover {
+    background: none;
+    color: #3b5998;
+  }
+}

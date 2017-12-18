@@ -17,6 +17,13 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => 'auth'], function () {
+
+    /* logout */
+    Route::get('/logout', 'Auth\LoginController@logout');
+
+
+
+    /* apps */
     Route::post('/create-app', 'AppController@create');
     Route::post('/update-app', 'AppController@update');
     Route::post('/delete-app', 'AppController@delete');

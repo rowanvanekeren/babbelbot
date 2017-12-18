@@ -17,10 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['middleware' => ['sessions']], function () {
-    Route::get('/test/{id}', 'Api\FacebookController@getTest');
-    Route::post('/test/{id}', 'Api\FacebookController@responseTest');
+    Route::get('/facebook/{id}', 'Api\FacebookController@verifyFacebook');
+    Route::post('/facebook/{id}', 'Api\FacebookController@responseFacebook');
 
-
+    Route::get('/chatbot/{id}', 'Api\FacebookController@verifyFacebook');
+    Route::post('/chatbot/{id}', 'Api\FacebookController@responseFacebook');
     /*custom webhook */
     Route::post('/webhook', 'Api\WebhookController@processWebhook');
 

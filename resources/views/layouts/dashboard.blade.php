@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="botApp" lang="{{ app()->getLocale() }}">
+<html ng-app="botApp" lang="nl">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +8,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Babbelbot') }}</title>
 
+
+    <link rel="icon" type="image/png" href="{{asset('public/img/favicon/favicon-babbelbot.png')}}" />
     <!-- Styles -->
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/jquery-ui.min.css') }}" rel="stylesheet">

@@ -5,8 +5,28 @@
   padding-bottom: 40px;
   position: relative;
   z-index: 3;
-}
 
+}
+.logout-red{
+  a{
+    color: $main-error-red !important;
+    border:2px solid $main-error-red !important;
+  }
+
+}
+.logged-in-user{
+  color: $main-color;
+  color: $main-color;
+  font-size: $font-size-1;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.vertical-seperator{
+  height:100%;
+  margin: 0 15px;
+  color: $main-color;
+  background: $main-color;
+}
 .navbar-inner{
 
   display: flex;

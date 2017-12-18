@@ -1,37 +1,61 @@
 
 .home-bg{
 
+  min-height: 85vh;
+}
+.home-bg-full{
   min-height: 100vh;
 }
 
-.home-left{
+.home-auth-image{
+  margin-top: 10%;
+  margin-bottom: 15px;
+  text-align: center;
+
+ img{
+   width: 80%;
+ }
 
 }
 
+
+.content-2{
+  background: #f0f0f0;
+  padding-bottom: 40px;
+}
+.home-left{
+
+}
+.home-title-wrapper{
+  height: 100%;
+  margin-top: 10%;
+}
 .home-cta-section{
   width: 100%;
+  margin-top: 20px;
   text-align: center;
 }
 
 .home-title{
   position: relative;
-  color: #dbdbdb;
-  font-size: 80px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 60px;
   line-height: 70px;
   width: 100%;
-  //text-shadow: 8px 8px 10px #393939;
+  text-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
 
 }
 
 .home-cta{
   position: relative;
   font-weight: 600;
-  font-size: 25px;
-  color:  #dbdbdb;
+  font-size: 15px;
+  color:  #fff;
   border:4px solid $main-color;
   background-color: $main-color;
-  padding: 15px;
-
+  padding: 10px;
+  box-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
 
   &:hover{
 
@@ -110,6 +134,200 @@
       padding: 15px;
       margin-top: 15px;
       border-radius: 30px;
+    }
+  }
+}
+
+.chat-examples{
+  transition: 0.5s;
+  margin: 15px 0;
+  margin-top: -55px;
+  top:0;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+
+  z-index: 500;
+  > div{
+
+    box-shadow: 8px 8px 10px rgba(57, 57, 57, 0.7);
+    margin: 0 5px;
+    width: 100%;
+    height: 300px;
+    border: 2px solid $main-color;
+    background: #fff;
+    overflow:hidden;
+  }
+  .chat-bottom{
+   // position:absolute; bottom:0;
+
+    width: 100%;
+    height: 35px;
+    background: #fff;
+    display:flex;
+    align-items: center;
+    border-top: 2px solid $main-color;
+    padding:5px;
+
+  }
+  .middel-chat{
+    margin-top: -35px;
+  }
+  .chat-title{
+    height: 35px;
+    position: relative;
+    z-index: 40;
+    display:flex;
+    align-items: center;
+    color:#fff;
+    padding: 5px;
+    font-size: 15px;
+    background: $main-color;
+  }
+  .chat-box{
+    position: relative;
+    z-index: 35;
+    width: 100%;
+    padding: 5px; height: 225px;
+    display:flex;
+  }
+  .chat-box-inner{
+    align-self: flex-end;
+    width:100%;
+  }
+  .chat-row{
+
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: 10px;
+
+  }
+  .chat-user{
+    float:right;
+    border-radius: 10px 10px 0 10px;
+    p{
+      padding: 10px;
+      padding-left: 30px;
+      padding-right: 30px;
+      color: #fff;
+    }
+    background-color: rgba(76, 167, 140, 1);
+  }
+  .chat-bot{
+    float: left;
+    border-radius: 0 10px 10px 10px;
+    p{
+      padding: 10px;
+      padding-right: 30px;
+      padding-left: 30px;
+      color: #fff;
+    }
+    background-color: rgba(24, 83, 85, 0.88);
+
+
+  }
+}
+
+.hide-examples{
+  opacity: 0;
+  top: 50px;
+}
+.content-3{
+margin: 30px 0;
+}
+.content-3-title{
+ // background: #f0f0f0;
+  padding: 80px 0 ;
+  color:$main-color;
+  font-size: 30px;
+  text-align: center;
+}
+
+.information-witai{
+  transition: 1s;
+  transition-delay: 0.5s;
+  position: relative;
+
+  img{
+    max-width: 300px;
+  }
+  &:last-child{
+    margin-top: 30px;
+  }
+  .text-section{
+    background: #f0f0f0;
+  }
+
+  > div{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+  }
+
+  p, h3{
+    padding: 0 50px;
+  }
+}
+.fade-in{
+  opacity: 0;
+
+}
+
+
+.content-4{
+
+  .content-4-title{
+    // background: #f0f0f0;
+
+    line-height: 40px;
+    font-size: 30px;
+    text-align: center;
+  }
+  background: $main-color;
+  padding: 100px 0;
+  text-align: center;
+  color:#fff;
+}
+.content-5{
+  padding: 100px 0;
+}
+.benefits{
+  >div{
+    >div{
+     text-align: center;
+
+    }
+
+    img{
+      margin: 15px 0;
+      width: 50px;
+    }
+  }
+}
+
+.content-footer{
+  padding: 80px 0 ;
+  background: #353535;
+  text-align: center;
+  color: #dcdcdc;
+}
+
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 768px) {
+  .chat-examples{
+
+    display:block;
+    .middel-chat{
+      margin-top: 0
+    }
+
+    > div{
+      margin-left: 0;
+      width: 100%;
+      margin-top: 0 ;
+      margin-bottom: 15px !important;
     }
   }
 }
