@@ -1231,6 +1231,13 @@ input[type=checkbox]:focus {
   color: #dcdcdc;
 }
 
+.chatbox-placement {
+  position: absolute;
+  width: 250px;
+  bottom: 0px;
+  right: 25px;
+}
+
 /* Medium Devices, Desktops */
 
 @media only screen and (max-width: 768px) {

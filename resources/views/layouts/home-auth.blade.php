@@ -10,10 +10,11 @@
 
     <title>{{ config('app.name', 'Babbelbot') }}</title>
 
-    <link rel="icon" type="image/png" href="{{asset('public/img/favicon/favicon-babbelbot.png')}}" />
+    <link rel="icon" type="image/png" href="{{asset('public/img/favicon/favicon-babbelbot.png')}}"/>
     <!-- Styles -->
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/babbelbot.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -28,12 +29,73 @@
         <div class="row">
             @yield('content')
         </div>
+
+        <div class="row">
+            <div class="chatbox-placement">
+                <div id="babbelbot-test">
+
+
+                </div>
+
+
+{{--                <dump>
+                    <div id="bb-chatbox-title">Test title</div>
+                    <div id="bb-chatbox-inner">
+                        <div id="bb-chatbox-conversation">
+                            <div id="bb-chatbox-conversation-inner">
+                                <div class="bb-chat-row">
+                                    <div class="bb-chatbot-sender"><span>Babbelbot</span> 14.45</div>
+                                    <div style="clear:both"></div>
+                                    <div class="bb-chatbot">test bot</div>
+                                    <div style="clear:both"></div>
+                                </div>
+                                <div class="bb-chat-row">
+                                    <div class="bb-user-sender"> 14.45 <span>Jij</span></div>
+                                    <div style="clear:both"></div>
+                                    <div class="bb-user">test bot</div>
+                                    <div style="clear:both"></div>
+                                </div>
+                                <div class="bb-chat-row">
+                                    <div class="bb-chatbot-sender"><span>Babbelbot</span> 14.45</div>
+                                    <div style="clear:both"></div>
+                                    <div class="bb-chatbot">test bot</div>
+                                    <div style="clear:both"></div>
+                                </div>
+                                <div class="bb-chat-row">
+                                    <div class="bb-chatbot-sender"><span>Babbelbot</span> 14.45</div>
+                                    <div style="clear:both"></div>
+                                    <div class="bb-chatbot">test bot</div>
+                                    <div style="clear:both"></div>
+                                </div>
+                                <div class="bb-chat-row">
+                                    <div class="bb-user-sender"> 14.45 <span>Jij</span></div>
+                                    <div style="clear:both"></div>
+                                    <div class="bb-user">test bot</div>
+                                    <div style="clear:both"></div>
+                                </div>
+                                <div class="bb-chat-row">
+                                    <div class="bb-chatbot-sender"><span>Babbelbot</span> 14.45</div>
+                                    <div style="clear:both"></div>
+                                    <div class="bb-chatbot">test bot</div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bb-chatbox-input">
+                            <textarea placeholder="Typ hier je bericht"> </textarea>
+                        </div>
+                    </div>
+                </dump>--}}
+            </div>
+        </div>
     </div>
- </div>
+</div>
 
 <!-- Scripts -->
 <script src="{{asset('public/js/jquery-3.2.1.min.js')}}"></script>
 <script src="{{asset('public/js/addons/typed.min.js')}}"></script>
+<script src="{{asset('public/js/addons/babbelbot.js')}}"></script>
+<script src="{{asset('public/js/babbelbot-chatbot.js')}}"></script>
 <script src="{{ asset('public/js/app.js') }}"></script>
 </body>
 </html>

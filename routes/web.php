@@ -128,10 +128,12 @@ Route::get('/dashboard/dialogen/diagram', function () {
 
 Auth::routes();
 
+
+
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');

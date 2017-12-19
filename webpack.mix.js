@@ -24,4 +24,5 @@ mix.js('resources/assets/js/angular/main.js', 'public/js').
     js('resources/assets/js/app.js', 'public/js').
     js(['resources/assets/js/dashboard.js'],'public/js').
     js(['resources/assets/js/diagram.js'],'public/js').
+    js(['resources/assets/js/babbelbot-chatbot.js'],'public/js').
     sass('resources/assets/sass/app.scss', 'public/css');

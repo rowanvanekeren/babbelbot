@@ -4,5 +4,6 @@
     "/css/app.css": "/css/app.css",
     "/js/diagram.js": "/js/diagram.js",
     "/js/dashboard.js": "/js/dashboard.js",
+    "/js/babbelbot-chatbot.js": "/js/babbelbot-chatbot.js",
     "/js/app.js": "/js/app.js"
 }

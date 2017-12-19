@@ -16,13 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::group(['middleware' => ['sessions']], function () {
+
     Route::get('/facebook/{id}', 'Api\FacebookController@verifyFacebook');
     Route::post('/facebook/{id}', 'Api\FacebookController@responseFacebook');
 
-    Route::get('/chatbot/{id}', 'Api\FacebookController@verifyFacebook');
-    Route::post('/chatbot/{id}', 'Api\FacebookController@responseFacebook');
+    Route::get('/chatbot/{id}', 'Api\DefaultChatbotController@verifyDefault');
+    Route::post('/chatbot/{id}', 'Api\DefaultChatbotController@responseDefault');
     /*custom webhook */
     Route::post('/webhook', 'Api\WebhookController@processWebhook');
 
-});
