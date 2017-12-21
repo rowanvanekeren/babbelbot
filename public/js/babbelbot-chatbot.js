@@ -60,25 +60,25 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 18:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(19);
+module.exports = __webpack_require__(20);
 
 
 /***/ }),
 
-/***/ 19:
+/***/ 20:
 /***/ (function(module, exports) {
 
 
 $('#babbelbot-test').babbelbot({
-    babbelbotUrl: 'https://babbelbot.be/api/chatbot/5a3055672d531',
+    babbelbotUrl: 'https://babbelbot.be/api/chatbot/5a3b983061fb7',
     accessToken: 'IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI'
 });
 

@@ -31,12 +31,6 @@
         </div>
 
         <div class="row">
-            <div class="chatbox-placement">
-                <div id="babbelbot-test">
-
-
-                </div>
-
 
 {{--                <dump>
                     <div id="bb-chatbox-title">Test title</div>
@@ -86,7 +80,7 @@
                         </div>
                     </div>
                 </dump>--}}
-            </div>
+
         </div>
     </div>
 </div>

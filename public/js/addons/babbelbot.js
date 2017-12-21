@@ -8,6 +8,7 @@
     }
 })(function ($) {
     $.fn.babbelbot = function (options) {
+
         var bStylesheetExists = false;
         var currentUser = null;
         $('link').each(function () {
@@ -20,10 +21,12 @@
             throw Error("Missing babbelbot.css please include it in the header");
         }
 
-        jQuery(this).attr("id", "bb-main");
+        //jQuery(this).attr("id", "bb-main");
+        jQuery(this).empty();
+
         var mainBot = jQuery(this);
 
-
+        mainBot.css('position', 'relative');
 
         var settings = $.extend({
             accessToken : '',

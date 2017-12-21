@@ -1894,6 +1894,11 @@ input[type=checkbox]:focus {
   cursor: pointer;
 }
 
+.standard-intent.standard-error-intent h3 {
+  text-align: center;
+  color: #ff625d;
+}
+
 .standard-intent .intent-top-section {
   width: 100%;
   display: -webkit-inline-box;

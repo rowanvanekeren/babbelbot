@@ -9,7 +9,7 @@ class Intent extends Model
     protected $table = 'intents';
 
     protected $fillable = [
-        'app_id', 'intent', 'action' , 'active'
+        'app_id', 'intent', 'action', 'intent_type', 'active'
     ];
 
 

@@ -100,6 +100,14 @@ function processRequest($cache_id, $unique_id, $user_input, $botDriver = 'defaul
         }
     }
 
+    //4. there is no standard intent get standard error message
+    if (!isset($standard_intent) && !empty($cacheObj['app'])) {
+        $standard_error_message = getStandardErrorMessage($cacheObj['app']['id']);
+        if (isset($standard_error_message)) {
+            return $standard_error_message;
+        }
+    }
+
     return array('answers' => array(array('answer' => 'error')));
 
 
@@ -164,13 +172,14 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
 
                     $answers = getStateIntentAnswers($cache_id, $value1->stateIntents['id'], $value1->stateIntents['response_type']);
 
+                    if(isset($answers)){
                     $renderd_answers = renderAnswers($answers);
 
                     updateCache($cache_id, 'dialogue_id', $value1['dialogue_id']);
                     updateCache($cache_id, 'state', $value1);
 
                     return $renderd_answers;
-
+                    }
 
                 }
             }
@@ -182,12 +191,14 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
                 if (isset($value2->stateIntents)) {
                     if ($value2->stateIntents->intent_type == 1 && $value2->stateIntents->intent == $intent) {
                         $answers = getStateIntentAnswers($cache_id, $value2->stateIntents['id'], $value2->stateIntents['response_type']);
-                        $renderd_answers = renderAnswers($answers);
 
+                        if(isset($answers)){
+                        $renderd_answers = renderAnswers($answers);
                         updateCache($cache_id, 'dialogue_id', $value2['dialogue_id']);
                         updateCache($cache_id, 'state', $value2);
 
                         return $renderd_answers;
+                        }
                     }
                 }
             }
@@ -200,20 +211,24 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
                 if ($value3->stateIntents->intent_type == 3) {
 
                     $answers = getStateIntentAnswers($cache_id, $value3->stateIntents['id'], $value3->stateIntents['response_type']);
-                    $renderd_answers = renderAnswers($answers);
 
-                    updateCache($cache_id, 'dialogue_id', $value3['dialogue_id']);
-                    updateCache($cache_id, 'state', $value3);
-                    if (isset($value3->stateIntents->parameter)) {
-                        if ($value3->stateIntents->parameter != '' || $value3->stateIntents->parameter != null) {
-                            bot_log('ik ga een parameter toevoegen');
-                            updateCache($cache_id, 'parameters', array($value3->stateIntents->parameter => $user_input));
+                    if(isset($answers)) {
+                        $renderd_answers = renderAnswers($answers);
+
+                        updateCache($cache_id, 'dialogue_id', $value3['dialogue_id']);
+                        updateCache($cache_id, 'state', $value3);
+                        if (isset($value3->stateIntents->parameter)) {
+                            if ($value3->stateIntents->parameter != '' || $value3->stateIntents->parameter != null) {
+
+                                updateCache($cache_id, 'parameters', array($value3->stateIntents->parameter => $user_input));
+                            }
+
                         }
-
+                        return $renderd_answers;
                     }
 
 
-                    return $renderd_answers;
+
                 }
             }
         }
@@ -226,7 +241,7 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
 
 function searchStandardAnswer($app_id, $intent)
 {
-    $intent = App\Intent::where('app_id', $app_id)->where('intent', $intent)->with('intentAnswers')->first();
+    $intent = App\Intent::where('app_id', $app_id)->where('intent', $intent)->where('intent_type', 1)->with('intentAnswers')->first();
 
     if (isset($intent)) {
         if (isset($intent['intentAnswers']) && !empty($intent['intentAnswers']) && isset($intent['intentAnswers'][0])) {
@@ -252,6 +267,28 @@ function searchStandardAnswer($app_id, $intent)
     return null;
 }
 
+function getStandardErrorMessage($app_id){
+    $intent = App\Intent::where('app_id', $app_id)->where('intent_type', 9)->with('intentAnswers')->first();
+
+    if (isset($intent)) {
+        if (isset($intent['intentAnswers']) && !empty($intent['intentAnswers']) && isset($intent['intentAnswers'][0])) {
+
+            //make array from answers
+            $answerArray = array();
+            foreach ($intent['intentAnswers'] as $key => $value) {
+                array_push($answerArray, $value);
+            }
+
+            $rendered_answers = renderAnswers(array('answers' => $answerArray));
+
+            if (isset($rendered_answers)) {
+                return $rendered_answers;
+            } else {
+                return null;
+            }
+        }
+    }
+}
 
 function getOrInitCache($cache_id, $unique_id, $botDriver)
 {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\App;
+use App\Intent;
+use App\IntentAnswer;
 use Cache;
 class AppController extends Controller
 {
@@ -28,8 +30,29 @@ class AppController extends Controller
 
         $app->save();
 
+        $this->createDefaultErrorIntent($app->id);
+
         return $app;
     }
+
+
+    public function createDefaultErrorIntent($app_id){
+        $intent = new Intent();
+
+        $intent->intent_type = 9; //type for default error message
+        $intent->app_id = $app_id;
+
+        $intent->save();
+
+        $intentAnswer = new IntentAnswer();
+
+        $intentAnswer->answer = 'Ik heb je niet helemaal begrepen';
+        $intentAnswer->intent_id = $intent->id;
+        $intentAnswer->called_at = \Carbon\Carbon::now();
+        $intentAnswer->save();
+    }
+
+
     public function delete(Request $request){
         $this->validate($request,[
             'id' => 'required'

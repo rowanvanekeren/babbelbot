@@ -17,6 +17,7 @@ class CreateIntentsTable extends Migration
             $table->increments('id');
             $table->integer('app_id')->unsigned();
             $table->string('intent')->nullable();
+            $table->tinyInteger('intent_type')->default(1);
             $table->string('action')->nullable();
             $table->tinyInteger('active')->default(1);
             $table->timestamps();

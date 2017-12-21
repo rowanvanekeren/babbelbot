@@ -21,6 +21,7 @@
     <link href="{{ asset('public/css/addons/ng-tags-input.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/angular-tooltips.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/babbelbot.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -32,6 +33,11 @@
                 @yield('content')
             </div>
 
+            <div class="chatbox-placement" ng-controller="chatbotPreviewController" ng-init="initPreview()" active-app="activateChatbotPreview(data)">
+                <div id="babbelbot-chatbot-preview" >
+
+                </div>
+            </div>
             <script>
                 /* routes */
                 var currentPath = '{{ Request::path() }}';
@@ -41,6 +47,7 @@
 <!-- Scripts -->
     <script src="{{asset('public/js/jquery-3.2.1.min.js')}}"></script>
     @yield('custom-scripts-before')
+    <script src="{{asset('public/js/addons/babbelbot.js')}}"></script>
     <script src="{{asset('public/js/angular/angular.min.js')}}"></script>
     <script src="{{asset('public/js/angular/angular-animate.min.js')}}"></script>
     <script src="{{asset('public/js/angular/angular-cookies.min.js')}}"></script>

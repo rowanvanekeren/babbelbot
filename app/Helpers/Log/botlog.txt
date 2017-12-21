@@ -10,3 +10,42 @@ Content: "hoi doei"
 ::1 - 6 December 2017, 10:55
 Content: "hoi doei"
 -------------------------
+::1 - 21 December 2017, 12:40
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0D81SfLwj8Qu62Ehg"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:40
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0GesSshADkoK3hww5"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:40
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0iPuGIj2tsMihDTyM"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:40
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"024XX2Nz8sDk31C5i"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:40
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0WhF14lUdL2XcmE3e"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:40
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0hbkRco0AdmHCQsEx"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:40
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0u1OlPbpbm6aXRurI"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:41
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"047KxcF0WnBryFt39"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:41
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0Eq40zUm7MSQVERgK"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:41
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"096T785pxlLWINFAH"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:47
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0B2baxip79MgFlzK5"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:48
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"0bhDEtY8HPhy4qzTe"},"user_input":"hey"}}
+-------------------------
+::1 - 21 December 2017, 12:48
+Content: {"app":{"id":6,"title":"tatdfsd 3","unique_id":"5a3ba44d8cc4a","fb_access_token":null,"fb_verify_token":null,"webhook":null,"access_token":"IAWZVJFITX5JINQJBRPVZHJ6XAQHWOAI","server_token":"DE3HICX3ZV7CZWLCHHID662CFNOIH25C","user_id":2,"active":1,"created_at":"2017-12-21 12:08:45","updated_at":"2017-12-21 12:35:01"},"driver":"default","data":{"wit_data":{"_text":"hey","entities":{"intent":[{"confidence":"0.89525064336904","value":"greeting"}]},"msg_id":"08SiscrbHJS7H3ZcE"},"user_input":"hey"}}
+-------------------------

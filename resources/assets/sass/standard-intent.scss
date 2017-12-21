@@ -1,4 +1,11 @@
 .standard-intent{
+
+  &.standard-error-intent{
+    h3{
+      text-align: center;
+      color: $main-error-red;
+    }
+  }
   .intent-top-section{
     width: 100%;
     display:inline-flex;
