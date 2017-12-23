@@ -32,7 +32,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
         $(element).attr('data-entity-name', $scope.entityName);
         $scope.toggleEntityPopup({toggle: 'close'});
         }else{
-            console.log('error');
+
         }
     }
     $scope.toggleEntityPopup = function (data) {
@@ -98,7 +98,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
 
         $http(req).then(function (data) {
 
-            //console.log(data);
+
 
             $scope.allEntities = data.data;
 

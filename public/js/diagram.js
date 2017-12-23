@@ -117,8 +117,6 @@ $(document).ready(function () {
 
         /* data: data,*/
         onOperatorCreate: function onOperatorCreate(operatorID, operatorData) {
-            // console.log( $flowchart.flowchart('getOperatorElement', data) );
-
 
             return true;
         },
@@ -131,7 +129,7 @@ $(document).ready(function () {
         onLinkCreate: function onLinkCreate(linkID, linkData) {
 
             if (flowchartReady) {
-                //  $flowchart.flowchart('redrawLinksLayer');
+
                 //  console.log( $flowchart.flowchart('getOperatorCompleteData', $flowchart.flowchart('getOperatorData', linkData.fromOperator)));
                 createLinkOperator(linkID, linkData);
             }
@@ -299,13 +297,7 @@ $(document).ready(function () {
         },
 
         success: function success(data) {
-            // console.log(JSON.parse(data));
-            //  console.log(data);
 
-            // $flowchart.flowchart('setData', JSON.parse(data));
-            console.log('test init');
-
-            //  flowchartReady = !flowchartReady;
             processData(data);
         }
     });
@@ -372,8 +364,6 @@ $(document).ready(function () {
     }
     function processData(data) {
 
-        console.log('data = ');
-        console.log(data);
         var chartJson = {
 
             operators: {},
@@ -393,7 +383,7 @@ $(document).ready(function () {
             } else if (parseInt(data[i].state_intents.intent_type) == 3) {
                 var titleToCheck = data[i].state_intents.parameter;
             }
-            //console.log(JSON.parse(data[i].next_states));
+
             chartJson.operators[data[i].id] = {
                 top: data[i].state_data.top,
                 left: data[i].state_data.left,
@@ -436,8 +426,6 @@ $(document).ready(function () {
                 }
             }
         }
-
-        console.log(chartJson);
 
         $flowchart.flowchart('setData', chartJson);
 
@@ -496,7 +484,6 @@ $(document).ready(function () {
     }
 
     function createDraggableOperator($element, $left, $top) {
-        console.log('createDraggableoperator called');
 
         $.ajax({
             url: '../../createState',
@@ -549,7 +536,6 @@ $(document).ready(function () {
         });
     }
     function generateClass(type, data) {
-        console.log(type);
 
         switch (type) {
             case 1:
@@ -584,14 +570,8 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
 
-            success: function success(data) {
-                //  console.log(data);
-
-            },
-            error: function error(_error2) {
-                //  console.log(error);
-
-            }
+            success: function success(data) {},
+            error: function error(_error2) {}
         });
     }
 });

@@ -106,14 +106,26 @@
 
 }
 
+/*
+old version
 .drag-intent{
   border: 2px solid #373737;
   background: #373737;
   color: #fff;
+}*/
+.drag-intent{
+  border: 2px solid $main-color;
+  background: $main-color;
+  color: #fff;
 }
-
 .drag-keyword{
   border: 2px solid #ffbc45;
   background: #ffbc45;
   color: #fff;
+}
+
+.add-flowchart{
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
 }

@@ -3,9 +3,7 @@
  */
 angular.module('botApp').controller("navController", function ($scope, $http, $parse) {
 
-    /*  $scope.changeActiveApp = function(){
-     console.log('broadcasted to navcontroller');
-     }*/
+
     $scope.navInit = function(){
         $scope.checkActiveApp();
         $scope.createBreadCrumbs();
@@ -22,8 +20,7 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
         };
 
         $http(req).then(function (data) {
-            console.log( 'active session ');
-            console.log(data);
+
 
             $scope.activeApp = data.data.title;
             $scope.createBreadCrumbs();
@@ -37,7 +34,7 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
     }
 
     $scope.changeActiveApp = function(data){
-        console.log(data);
+
 
         $scope.activeApp = data.title;
     }
@@ -50,7 +47,7 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
         for(var i = 0; i < $scope.rawBreadCrumbs.length ; i++){
             rawRenderedCrumbs.push($scope.rawBreadCrumbs[i]);
             var currentCrumb = rawRenderedCrumbs;
-            console.log($scope.rawBreadCrumbs[i]);
+
             $scope.breadCrumbs.push(
                 {
                     href: defaultURL + '/' + currentCrumb.join('/'),
@@ -71,8 +68,7 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
                 }
             }
         }
-        console.log($scope.breadCrumbs);
-        console.log($scope.activeApp);
+
     }
 
 });

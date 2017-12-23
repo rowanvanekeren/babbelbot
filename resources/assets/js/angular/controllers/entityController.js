@@ -50,8 +50,6 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            //  $scope.entityData = data.data;
             if (data.status == 200) {
                 $scope.entityData = $scope.removeDoubleValuesInSynonims(data.data);
                 $scope.loadEntityValues = false;
@@ -65,9 +63,7 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
     $scope.addSynonym = function (data, entityValue, entityData) {
         var lookups = entityData.lookups;
 
-        console.log(entityData.name);
-        console.log(entityValue.value);
-        console.log(data.text);
+
 
       /*  if (lookups.indexOf('keywords') > -1) {*/
             $scope.addKeywordSynonym(entityData.name, entityValue.value, data.text, entityValue);
@@ -102,8 +98,7 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            //  $scope.entityData = data.data;
+
             if (data.status == 200) {
 
                 $scope.entityData.values.splice($scope.deleteValueIndex, 1);
@@ -137,8 +132,7 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            //  $scope.entityData = data.data;
+
             if (data.status == 200) {
                 $scope.getAllEntities();
                 $scope.entityData = null;
@@ -151,17 +145,13 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
     }
     $scope.storeNewEntity = function (entity, type) {
 
-        console.log(entity);
+
 
         $scope.addEntity(entity , type);
     };
 
     $scope.storeNewEntityValue = function (entity, value, expressions) {
-        console.log(entity);
-        console.log(value);
-        console.log(expressions);
 
-        console.log($scope.createAddEntityValueObject(value, expressions));
 
         $scope.addEntityValue(entity, $scope.createAddEntityValueObject(value, expressions));
     };
@@ -258,7 +248,7 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
 
             if (data.status == 200) {
 

@@ -221,7 +221,7 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
                 }, 1500);
             }
 
-            console.log(data);
+
 
 
         }).catch(function (data) {

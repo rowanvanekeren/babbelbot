@@ -204,8 +204,21 @@
                         </div>
                     </div>
                     <div class="app-footer-section">
+
                         <button class="main-btn" ng-click="openEmbed = !openEmbed">Embedden</button>
-                        <button class="main-btn" ng-click="selectApp(app)">Selecteer</button>
+                        <button class="main-btn" ng-click="selectApp($event, app, apps, $index)">Selecteer</button>
+
+                        <div class="input-error">
+                            <div class="has-error" ng-repeat="error in app.errors" ><i
+                                        class="fa fa-times " aria-hidden="true"></i> @{{ error }}
+                            </div>
+
+                            <div class="has-error" ng-if="app.errors" ><i
+                                        class="fa fa-times " aria-hidden="true"></i> Toch verdergaan <a href="" ng-click="selectApp($event, app, apps, $index, true)">Klik hier</a>
+                            </div>
+
+
+                        </div>
                     </div>
 
                 </div>

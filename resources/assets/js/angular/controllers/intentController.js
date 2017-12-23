@@ -59,8 +59,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.addNewIntent = function(intentValue, intentExpression ){
 
-        console.log(intentValue);
-        console.log(intentExpression);
 
 
         var intentObj = {
@@ -81,7 +79,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
 
             $scope.intentData['state_intent_data']['name'] = intentExpression;
             $scope.intentData['intent'] = intentValue;
@@ -121,18 +118,13 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log($scope.intentData);
-        /*    if(typeof $scope.intentData['state_intent_data'] =='undefined'){
-                $scope.intentData['state_intent_data'] = {};
-            }
-            $scope.intentData['state_intent_data']['name'] = data.data.keyword;*/
-            //$scope.intentData['intent'] = data.data.intent;
+
             $('#intent-title').trigger('changeOperatorTitle', [data.data.keyword, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
             $scope.resetIntentSearch();
 
         }).catch(function (data) {
-            console.log(data);
+
             shrinkLoading.do(currentElement, 'error');
         });
     }
@@ -178,7 +170,11 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.popupClose = function () {
+
         $('#flowchart-popup').addClass('hidden');
+
+        /* make sure deletebutton isnt present on load */
+        $('.hide-load').addClass('hidden');
         $rootScope.$emit("toggleIntentTraining", {intent: null, toggle: 'close'});
     };
 
@@ -198,6 +194,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.getIntentState = function (stateID) {
+        $scope.hideIntentFooter = true;
         $scope.intentData = null;
         var req = {
             method: 'POST',
@@ -213,6 +210,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
         $http(req).then(function (data) {
             $scope.updateFullPopUp(data, 'open');
+            $scope.hideIntentFooter = false;
         }).catch(function (data) {
 
         });
@@ -245,29 +243,38 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log($scope.intentData);
+
 
             $('#intent-title').trigger('changeOperatorTitle', [data.data.parameter, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
             $scope.resetIntentSearch();
 
         }).catch(function (data) {
-            console.log(data);
+
             shrinkLoading.do(currentElement, 'error');
         });
     }
     $scope.updateFullPopUp = function (data, openOrClose) {
-        console.log(data);
+
+        /* make sure deletebutton isnt present on load */
+        $('.hide-load').removeClass('hidden');
 
         $scope.resetIntentSearch();
 
 
         if (openOrClose == 'open') {
-            console.log('open');
-            //console.log(data);
+
+
+
+
             $scope.intentData = data.data;
 
             if (typeof data.data != 'undefined') {
+
+
+
+
+
                 $scope.intentID = (typeof data.data.id != 'undefined') ? data.data.id : '';
                 $scope.typeSetter(data.data['response_type']);
                 $scope.intentData.id;
@@ -280,6 +287,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         } else {
             $scope.intentData = {};
             $scope.activeStateID = '';
+
         }
 
 
@@ -301,7 +309,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
 
             $scope.intentData.intent = null;
            // $scope.intentData.state_intent_data.name = data.data.default_state_name;
@@ -351,9 +359,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
     $scope.addAction = function(currentElement, currentModel, value){
 
-        console.log(currentElement);
-        console.log(currentModel);
-        console.log(currentModel.intentData.action);
         shrinkLoading.do(currentElement, 'loading');
 
         var req = {
@@ -388,7 +393,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         })
     };
     $scope.updateIntentType = function(state_id, type){
-
+        $scope.hideIntentFooter = true;
         $scope.intentData= null;
         var req = {
             method: 'POST',
@@ -404,18 +409,24 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
+
            if(data.status == 200){
-               console.log(data);
+
                $(document).trigger('changeOperatorClass', [ type, $scope.activeStateID]);
                $('#intent-title').trigger('changeOperatorTitle', [data.data.name, $scope.activeStateID]);
                $scope.getIntentState(state_id);
+
+
            }
         }).catch(function (data) {
-            console.log(data);
+            $scope.hideIntentFooter = false;
+
         });
     };
 
     $scope.updateType = function () {
+
+
         //response type
         var req = {
             method: 'POST',
@@ -431,7 +442,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            //console.log(data);
+
         }).catch(function (data) {
 
         });
@@ -496,8 +507,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.deleteAnswer = function(event, currentScope, answerID){
-        console.log('delete answer');
-        console.log(answerID);
+
 
         var req = {
             method: 'POST',
@@ -535,7 +545,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         var inputObject = {};
         inputObject[currentElement.attr('name')] = currentElement.val();
         //inputObject['id'] = currentScope.dialogue.id;
-        //console.log(currentElement.attr('name') + " " + currentElement.val() + ' ' + currentScope.app.id);
 
 
         shrinkLoading.do(currentElement, 'loading');

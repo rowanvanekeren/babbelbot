@@ -26,7 +26,7 @@
         @include('popup/intentTrain')
         @include('popup.intent-state-select')
 
-        <div id="flowchart-menu" class="flowchart-menu">
+{{--        <div id="flowchart-menu" class="flowchart-menu">
 
             <div class="toggle-menu"><i class="fa fa-wrench" aria-hidden="true"></i></div>
             <div class="toggle-menu-collapse">
@@ -38,6 +38,10 @@
                 </div>
                 </div>
             </div>
+        </div>--}}
+
+        <div class="add-flowchart">
+            <div  tooltips tooltip-smart="true" tooltip-class="wide-tooltip" tooltip-template="Sleep mij op een plek op dit scherm om een blok te plaatsen" tooltip-side="right" class="drag-intent draggable_operator ui-draggable ui-draggable-handle" data-default-text="(nog geen titel)" data-intent-type="1" data-nb-inputs="1" data-nb-outputs="1"><i class="fa fa-plus" aria-hidden="true"></i></div>
         </div>
     </div>
 @endsection

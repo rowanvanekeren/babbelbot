@@ -111,14 +111,14 @@
 
         /* localStorage Variant */
 
-        if(localStorage.getItem('bb_chatbot_user') != null && typeof localStorage.getItem('embed_chatbot_user') != 'undefined' ){
+    /*    if(localStorage.getItem('bb_chatbot_user') != null && typeof localStorage.getItem('embed_chatbot_user') != 'undefined' ){
             currentUser = localStorage.getItem('bb_chatbot_user');
         }else{
             var generator = new IDGenerator();
             currentUser = generator.generate();
 
             localStorage.setItem('bb_chatbot_user', currentUser);
-        }
+        }*/
 
 
 

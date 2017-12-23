@@ -165,6 +165,7 @@ input[type=checkbox]:focus {
 }
 
 .input-error div {
+  text-align: left;
   position: relative;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -183,6 +184,11 @@ input[type=checkbox]:focus {
 .input-error .has-error {
   margin-top: 5px;
   opacity: 1;
+}
+
+.input-error .has-error a {
+  font-weight: bold;
+  color: #ff625d;
 }
 
 .input-error .has-error.ng-enter {
@@ -537,6 +543,7 @@ input[type=checkbox]:focus {
   width: 250px;
   background-color: #2d333f;
   height: 100vh;
+  overflow: hidden;
 }
 
 .left-navigation .top-info-bar {
@@ -673,9 +680,10 @@ input[type=checkbox]:focus {
 .top-user .top-user-li .top-user-sub {
   z-index: 20;
   background-color: #fff;
-  width: 100%;
+  min-width: 200px;
   display: none;
   position: absolute;
+  right: 0;
   border: 1px solid grey;
 }
 
@@ -774,6 +782,7 @@ input[type=checkbox]:focus {
     width: 100%;
     height: auto;
     position: relative;
+    overflow: visible;
   }
 
   .left-navigation .top-info-bar {
@@ -1632,9 +1641,17 @@ input[type=checkbox]:focus {
           align-items: center;
 }
 
-.drag-intent {
+/*
+old version
+.drag-intent{
   border: 2px solid #373737;
   background: #373737;
+  color: #fff;
+}*/
+
+.drag-intent {
+  border: 2px solid #4ca78c;
+  background: #4ca78c;
   color: #fff;
 }
 
@@ -1642,6 +1659,12 @@ input[type=checkbox]:focus {
   border: 2px solid #ffbc45;
   background: #ffbc45;
   color: #fff;
+}
+
+.add-flowchart {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
 }
 
 #flowchart-popup,

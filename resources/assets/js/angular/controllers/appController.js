@@ -1,7 +1,7 @@
-angular.module('botApp').controller("appController", function ($rootScope, $scope, $http, $parse) {
+angular.module('botApp').controller("appController", function ($rootScope, $scope, $http, $parse, shrinkLoading, buttonLoading) {
 
     $scope.newAppTrigger = function (formElem) {
-       console.log(formElem);
+
         $scope.showCreateApp = !$scope.showCreateApp;
         $scope.resetForm(formElem);
     };
@@ -42,7 +42,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
     $scope.resetForm = function(formElem){
 
         for(var key in  formElem.$$controls){
-            //console.log(formElem.$$controls[key].$name);
+
             var fieldName = formElem.$$controls[key].$name;
             var serverMessage = $parse(formElem.$name + '.' + fieldName + '.$error.serverMessage');
             //var model = $parse(formElem.$name + '.' + fieldName);
@@ -51,7 +51,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
             //model.assign($scope, undefined);
         }
 
-        console.log('formname = ' + formElem.$name);
 
         $('form[name=' + formElem.$name + '] :input').each(function(){
             var input = $(this); // This is the jquery object of the input, do what you will
@@ -65,13 +64,53 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
     }
     $scope.deleteAppTrigger = function(id){
-
-
         $scope.deleteID = id;
 
-        console.log( $scope.deleteID);
+
         $scope.showDeleteApp = !$scope.showDeleteApp;
     };
+
+    $scope.checkWitConnection = function(succesCallback, errorCallback){
+        var req = {
+            method: 'POST',
+            url: './check-wit-connection',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+        };
+
+        $http(req).then(function (data) {
+
+            var response = data.data;
+
+            if(typeof response.code != 'undefined'){
+                if(response.code == 'no-auth'){
+                    errorCallback(response.error);
+                }else{
+                    succesCallback();
+                }
+
+            }else{
+                succesCallback();
+            }
+        }).catch(function (data) {
+
+            var response = data.data;
+            if(typeof response.code != 'undefined'){
+                if(response.code == 'no-auth'){
+                    errorCallback(response.error);
+                }else{
+                    succesCallback();
+                }
+
+            }else{
+                succesCallback();
+            }
+        });
+    };
+
+
     $scope.deleteApp = function(event, id){
 
         setLoadingButton('.danger-btn', true, 'Verwijder');
@@ -88,14 +127,15 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
+
             setLoadingButton('.danger-btn', false, 'Verwijder');
             $scope.getUserApps(1);
             $scope.showDeleteApp = !$scope.showDeleteApp;
 
 
         }).catch(function (data) {
-            console.log(data);
+
 
         });
 
@@ -112,20 +152,19 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             shrinkLoading(currentElement, 'success');
 
         }).catch(function (data) {
-            console.log(data);
+
             shrinkLoading(currentElement, 'error');
         });
     };
     $scope.storeNewApp = function (currModel) {
 
-        console.log(currModel);
-        //$scope.$apply();
+
         setLoadingButton('.async-save', true, 'Opslaan');
-        //console.log( currModel.access_token.$modelValue);
+
         var req = {
             method: 'POST',
             url: './create-app',
@@ -142,9 +181,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
         $http(req).then(function (data) {
 
-            console.log('success');
 
-            console.log(data);
 
             $scope.parseServerMessages(data.config.data, data.config.data , data.status, currModel);
 
@@ -156,7 +193,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
 
         }).catch(function (data) {
-            console.log('error');
+
 
             $scope.parseServerMessages(data.data, data.config.data ,data.status, currModel);
 
@@ -179,7 +216,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         var apiURL = './get-user-apps';
 
             $http.get(apiURL + '?page=' + $scope.pageNumber).then(function (data) {
-               // console.log(data);
+
                 if(data.data.data.length == 0){
                     $scope.latestPost = true;
                 }else{
@@ -208,7 +245,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         $scope.getUserApps();
     });
     $scope.$on("repeatReady", function() {
-       console.log('klaar jonguh');
+
     });
 
     $scope.inputEnter = function(currentElement, currentScope) {
@@ -216,8 +253,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         var inputObject = {};
         inputObject[currentElement.attr('name')] = currentElement.val();
         inputObject['id'] = currentScope.app.id;
-        //console.log(currentElement.attr('name') + " " + currentElement.val() + ' ' + currentScope.app.id);
-        console.log(inputObject);
+
 
         shrinkLoading(currentElement, 'loading');
         $scope.updateApp(inputObject, currentElement);
@@ -270,7 +306,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
     $scope.growBack = function(event){
 
-        console.log(event);
+
         var inpElemClass = '.input-wrapper input';
         var inpIconElemClass = '.input-saving-overlay';
 
@@ -283,7 +319,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
                     currentParent.removeClass('processing');
                     currentParent.children(inpIconElemClass).addClass('hidden');
                     currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-                    console.log('i added space');
+
                 });
             } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') &&
                 (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
@@ -295,7 +331,12 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
     }
 
 
-    $scope.selectApp = function(app){
+    $scope.selectApp = function(event, app, apps, index, force){
+
+        if(!force){
+            buttonLoading.do($(event.currentTarget), 'loading');
+        }
+
         var req = {
             method: 'POST',
             url: './select-app',
@@ -307,15 +348,56 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            $rootScope.$emit("toggleApp", data.data);
+            var appData = data.data;
+            if(!force){
+
+            $scope.checkWitConnection(function(){
+                $rootScope.$emit("toggleApp", appData);
+                buttonLoading.do($(event.currentTarget), 'success');
+
+            },function(error){
+                $scope.clearAppSession();
+                buttonLoading.do($(event.currentTarget), 'error');
+             $scope.apps[index]['errors'] = ['Wit.ai response: ' + error];
+
+
+            });
+            }else{
+              $rootScope.$emit("toggleApp", appData);
+                delete $scope.apps[index]['errors'];
+            }
 
 
 
         }).catch(function (data) {
+            if(!force){
+                buttonLoading.do($(event.currentTarget), 'error');
+            }
 
 
         });
     }
+    $scope.clearAppSession = function(){
+        var req = {
+            method: 'POST',
+            url: './clear-session',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+        };
+
+        $http(req).then(function (data) {
+
+            $rootScope.$emit("toggleApp", {
+                unique_id : null,
+                title: null
+            });
+        }).catch(function (data) {
+
+        });
+    };
+
+
 
 });

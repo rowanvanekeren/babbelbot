@@ -170,3 +170,28 @@ angular.module('botApp').factory('shrinkLoading', function() {
         }
     };
 });
+
+
+angular.module('botApp').factory('buttonLoading', function() {
+    return {
+        do: function(element, state) {
+            var currentInput = element;
+            var currentText = element.text();
+
+            currentInput.attr('disabled', true);
+            if (state == 'loading') {
+                currentInput.html(currentText + ' <i class="fa fa-repeat"></i>');
+
+            }else if(state == 'success') {
+                currentInput.html(currentText + ' <i class="fa fa-check"></i>');
+                currentInput.attr('disabled', false);
+            }else if(state == 'error'){
+                currentInput.html(currentText + ' <i class="fa fa-times"></i>');
+                currentInput.attr('disabled', false);
+            }else if(state == 'reset'){
+                currentInput.html(currentText);
+                currentInput.attr('disabled', false);
+            }
+        }
+    };
+});

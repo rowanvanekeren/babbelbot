@@ -3,11 +3,16 @@ angular.module('botApp').controller("chatbotPreviewController", function ($rootS
         $scope.initChatbot(data);
     };
     $scope.initChatbot = function (data) {
-        $('#babbelbot-chatbot-preview').babbelbot({
-            babbelbotUrl: defaultURL + '/api/chatbot/' + data.unique_id,
-            accessToken: data.server_token,
-            title: 'babbelbot(' + data.title + ')'
-        });
+        if(data.title != null){
+            $('#babbelbot-chatbot-preview').babbelbot({
+                babbelbotUrl: defaultURL + '/api/chatbot/' + data.unique_id,
+                accessToken: data.server_token,
+                title: 'babbelbot(' + data.title + ')'
+            });
+        }else{
+            $('#babbelbot-chatbot-preview').empty();
+        }
+
     }
     $scope.initPreview = function () {
         $scope.checkActiveApp();

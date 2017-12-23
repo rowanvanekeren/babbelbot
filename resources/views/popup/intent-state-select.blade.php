@@ -12,7 +12,7 @@
         </div >
         <hr>
 
-        <div class="form-group" ng-if="intentData.start_state != 1">
+        <div class="form-group hide-load hidden" ng-if="intentData.start_state != 1">
             <h3>Intentie type</h3>
             <div class="input-wrapper " >
 
@@ -96,7 +96,7 @@
                 <span ng-click="addQuickReply()">  voeg toe </span>
             </div>
         </div>
-        <div class="footer-options">
+        <div class="footer-options"  ng-if="intentData.start_state != 1" ng-hide="hideIntentFooter" ng-cloak>
             <button class="danger-btn" ng-click="toggleDelete(true)">Verwijderen
             </button>
         </div>

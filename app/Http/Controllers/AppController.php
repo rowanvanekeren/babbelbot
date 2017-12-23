@@ -58,11 +58,30 @@ class AppController extends Controller
             'id' => 'required'
         ]);
 
+        $currentActiveSession = $request->session()->get('active_app');
+        if(isset($currentActiveSession->id)){
+            if($currentActiveSession->id == $request->id){
+                $request->session()->forget('active_app');
+            }
+        }
+
         $app = App::where('id', $request->id);
 
         $app->delete();
 
         return $request;
+    }
+
+    public function checkConnection(Request $request){
+        $app =  $request->session()->get('active_app');
+
+        return witGet($app->server_token, 'test babbelbot connection');
+    }
+
+    public function clearSession(Request $request){
+        $request->session()->forget('active_app');
+
+        return array('status' => 'success');
     }
 
     public function select(Request $request){

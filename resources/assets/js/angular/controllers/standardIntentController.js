@@ -25,7 +25,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
     };
     $scope.popupOpen = function (data, index) {
 
-        console.log(data);
+
         $scope.initDataPopup(data,index);
        $scope.intentPopupToggle = true;
     };
@@ -65,7 +65,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
 
             $scope.intents.splice($scope.deleteIndex, 1);
             $scope.deleteIndex = null;
@@ -129,7 +129,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
         var intentGetUrl = '../get-all-standard-intents'
         $http.get(intentGetUrl + '?page=' + $scope.pageNumber).then(function (data) {
-             console.log(data);
+
             if(data.data.data.length == 0){
                 $scope.latestPost = true;
             }else{
@@ -229,7 +229,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
         $http(req).then(function (data) {
 
-        console.log(data);
+
 
             $scope.intentData['intent'] = data.data.intent;
 /*            console.log(data);
@@ -248,7 +248,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
         }).catch(function (data) {
             $scope.intentData.error = data.data;
-            console.log(data);
+
         });
     }
 
@@ -273,7 +273,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
             };
 
             $http(req).then(function (data) {
-                console.log(data);
+
 
                 $scope.intentData.intent = null;
                 // $scope.intentData.state_intent_data.name = data.data.default_state_name;
@@ -401,7 +401,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
 
             $scope.intentData['intent_data']['name'] = intentExpression;
             $scope.intentData['intent'] = intentValue;

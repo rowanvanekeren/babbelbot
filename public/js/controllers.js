@@ -90,9 +90,6 @@ module.exports = __webpack_require__(12);
  */
 angular.module('botApp').controller("navController", function ($scope, $http, $parse) {
 
-    /*  $scope.changeActiveApp = function(){
-     console.log('broadcasted to navcontroller');
-     }*/
     $scope.navInit = function () {
         $scope.checkActiveApp();
         $scope.createBreadCrumbs();
@@ -109,8 +106,6 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
         };
 
         $http(req).then(function (data) {
-            console.log('active session ');
-            console.log(data);
 
             $scope.activeApp = data.data.title;
             $scope.createBreadCrumbs();
@@ -118,7 +113,6 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
     };
 
     $scope.changeActiveApp = function (data) {
-        console.log(data);
 
         $scope.activeApp = data.title;
     };
@@ -131,7 +125,7 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
         for (var i = 0; i < $scope.rawBreadCrumbs.length; i++) {
             rawRenderedCrumbs.push($scope.rawBreadCrumbs[i]);
             var currentCrumb = rawRenderedCrumbs;
-            console.log($scope.rawBreadCrumbs[i]);
+
             $scope.breadCrumbs.push({
                 href: defaultURL + '/' + currentCrumb.join('/'),
                 text: $scope.rawBreadCrumbs[i]
@@ -146,8 +140,6 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
                 }
             }
         }
-        console.log($scope.breadCrumbs);
-        console.log($scope.activeApp);
     };
 });
 
@@ -155,10 +147,10 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
 /* 5 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("appController", function ($rootScope, $scope, $http, $parse) {
+angular.module('botApp').controller("appController", function ($rootScope, $scope, $http, $parse, shrinkLoading, buttonLoading) {
 
     $scope.newAppTrigger = function (formElem) {
-        console.log(formElem);
+
         $scope.showCreateApp = !$scope.showCreateApp;
         $scope.resetForm(formElem);
     };
@@ -196,7 +188,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
     $scope.resetForm = function (formElem) {
 
         for (var key in formElem.$$controls) {
-            //console.log(formElem.$$controls[key].$name);
+
             var fieldName = formElem.$$controls[key].$name;
             var serverMessage = $parse(formElem.$name + '.' + fieldName + '.$error.serverMessage');
             //var model = $parse(formElem.$name + '.' + fieldName);
@@ -204,8 +196,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
             serverMessage.assign($scope, undefined);
             //model.assign($scope, undefined);
         }
-
-        console.log('formname = ' + formElem.$name);
 
         $('form[name=' + formElem.$name + '] :input').each(function () {
             var input = $(this); // This is the jquery object of the input, do what you will
@@ -216,12 +206,49 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         });
     };
     $scope.deleteAppTrigger = function (id) {
-
         $scope.deleteID = id;
 
-        console.log($scope.deleteID);
         $scope.showDeleteApp = !$scope.showDeleteApp;
     };
+
+    $scope.checkWitConnection = function (succesCallback, errorCallback) {
+        var req = {
+            method: 'POST',
+            url: './check-wit-connection',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            }
+        };
+
+        $http(req).then(function (data) {
+
+            var response = data.data;
+
+            if (typeof response.code != 'undefined') {
+                if (response.code == 'no-auth') {
+                    errorCallback(response.error);
+                } else {
+                    succesCallback();
+                }
+            } else {
+                succesCallback();
+            }
+        }).catch(function (data) {
+
+            var response = data.data;
+            if (typeof response.code != 'undefined') {
+                if (response.code == 'no-auth') {
+                    errorCallback(response.error);
+                } else {
+                    succesCallback();
+                }
+            } else {
+                succesCallback();
+            }
+        });
+    };
+
     $scope.deleteApp = function (event, id) {
 
         setLoadingButton('.danger-btn', true, 'Verwijder');
@@ -238,13 +265,11 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             setLoadingButton('.danger-btn', false, 'Verwijder');
             $scope.getUserApps(1);
             $scope.showDeleteApp = !$scope.showDeleteApp;
-        }).catch(function (data) {
-            console.log(data);
-        });
+        }).catch(function (data) {});
     };
     $scope.updateApp = function (updateData, currentElement) {
         var req = {
@@ -258,19 +283,17 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             shrinkLoading(currentElement, 'success');
         }).catch(function (data) {
-            console.log(data);
+
             shrinkLoading(currentElement, 'error');
         });
     };
     $scope.storeNewApp = function (currModel) {
 
-        console.log(currModel);
-        //$scope.$apply();
         setLoadingButton('.async-save', true, 'Opslaan');
-        //console.log( currModel.access_token.$modelValue);
+
         var req = {
             method: 'POST',
             url: './create-app',
@@ -287,10 +310,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
         $http(req).then(function (data) {
 
-            console.log('success');
-
-            console.log(data);
-
             $scope.parseServerMessages(data.config.data, data.config.data, data.status, currModel);
 
             setLoadingButton('.async-save', false, 'Opslaan');
@@ -299,7 +318,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
             $scope.getUserApps(1);
         }).catch(function (data) {
-            console.log('error');
 
             $scope.parseServerMessages(data.data, data.config.data, data.status, currModel);
 
@@ -320,7 +338,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         var apiURL = './get-user-apps';
 
         $http.get(apiURL + '?page=' + $scope.pageNumber).then(function (data) {
-            // console.log(data);
+
             if (data.data.data.length == 0) {
                 $scope.latestPost = true;
             } else {
@@ -342,17 +360,13 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
     $scope.$on("atBottomOfElem", function () {
         $scope.getUserApps();
     });
-    $scope.$on("repeatReady", function () {
-        console.log('klaar jonguh');
-    });
+    $scope.$on("repeatReady", function () {});
 
     $scope.inputEnter = function (currentElement, currentScope) {
 
         var inputObject = {};
         inputObject[currentElement.attr('name')] = currentElement.val();
         inputObject['id'] = currentScope.app.id;
-        //console.log(currentElement.attr('name') + " " + currentElement.val() + ' ' + currentScope.app.id);
-        console.log(inputObject);
 
         shrinkLoading(currentElement, 'loading');
         $scope.updateApp(inputObject, currentElement);
@@ -392,7 +406,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
     $scope.growBack = function (event) {
 
-        console.log(event);
         var inpElemClass = '.input-wrapper input';
         var inpIconElemClass = '.input-saving-overlay';
 
@@ -404,7 +417,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
                 currentParent.removeClass('processing');
                 currentParent.children(inpIconElemClass).addClass('hidden');
                 currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-                console.log('i added space');
             });
         } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
             currentParent.removeClass('processing');
@@ -413,7 +425,12 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         }
     };
 
-    $scope.selectApp = function (app) {
+    $scope.selectApp = function (event, app, apps, index, force) {
+
+        if (!force) {
+            buttonLoading.do($(event.currentTarget), 'loading');
+        }
+
         var req = {
             method: 'POST',
             url: './select-app',
@@ -425,8 +442,43 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            $rootScope.$emit("toggleApp", data.data);
+            var appData = data.data;
+            if (!force) {
+
+                $scope.checkWitConnection(function () {
+                    $rootScope.$emit("toggleApp", appData);
+                    buttonLoading.do($(event.currentTarget), 'success');
+                }, function (error) {
+                    $scope.clearAppSession();
+                    buttonLoading.do($(event.currentTarget), 'error');
+                    $scope.apps[index]['errors'] = ['Wit.ai response: ' + error];
+                });
+            } else {
+                $rootScope.$emit("toggleApp", appData);
+                delete $scope.apps[index]['errors'];
+            }
+        }).catch(function (data) {
+            if (!force) {
+                buttonLoading.do($(event.currentTarget), 'error');
+            }
+        });
+    };
+    $scope.clearAppSession = function () {
+        var req = {
+            method: 'POST',
+            url: './clear-session',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+
+        };
+
+        $http(req).then(function (data) {
+
+            $rootScope.$emit("toggleApp", {
+                unique_id: null,
+                title: null
+            });
         }).catch(function (data) {});
     };
 });
@@ -438,23 +490,19 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 angular.module('botApp').controller("dialogueController", function ($scope, $http, $parse, shrinkLoading) {
 
     $scope.newDialogueTrigger = function (formElem) {
-        console.log(formElem);
+
         $scope.showCreateDialogue = !$scope.showCreateDialogue;
         $scope.resetForm(formElem);
     };
     $scope.resetForm = function (formElem) {
 
         for (var key in formElem.$$controls) {
-            //console.log(formElem.$$controls[key].$name);
+
             var fieldName = formElem.$$controls[key].$name;
             var serverMessage = $parse(formElem.$name + '.' + fieldName + '.$error.serverMessage');
-            //var model = $parse(formElem.$name + '.' + fieldName);
             formElem.$setValidity(fieldName, true, formElem);
             serverMessage.assign($scope, undefined);
-            //model.assign($scope, undefined);
         }
-
-        console.log('formname = ' + formElem.$name);
 
         $('form[name=' + formElem.$name + '] :input').each(function () {
             var input = $(this); // This is the jquery object of the input, do what you will
@@ -466,10 +514,9 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
     };
 
     $scope.storeNewDialogue = function (currModel) {
-        console.log(currModel);
-        //$scope.$apply();
+
         setLoadingButton('.async-save', true, 'Opslaan');
-        //console.log( currModel.access_token.$modelValue);
+
         var req = {
             method: 'POST',
             url: '../create-dialogue',
@@ -485,10 +532,6 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
         $http(req).then(function (data) {
 
-            console.log('success');
-
-            console.log(data);
-
             $scope.parseServerMessages(data.config.data, data.config.data, data.status, currModel);
 
             setLoadingButton('.async-save', false, 'Opslaan');
@@ -497,9 +540,6 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
             $scope.getDialogues(1);
         }).catch(function (data) {
-
-            console.log(data);
-            console.log('error');
 
             $scope.parseServerMessages(data.data, data.config.data, data.status, currModel);
 
@@ -549,7 +589,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
         var apiURL = '../get-dialogues';
 
         $http.get(apiURL + '?page=' + $scope.pageNumber).then(function (data) {
-            // console.log(data);
+
             if (data.data.data.length == 0) {
                 $scope.latestPost = true;
             } else {
@@ -577,8 +617,6 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
         var inputObject = {};
         inputObject[currentElement.attr('name')] = currentElement.val();
         inputObject['id'] = currentScope.dialogue.id;
-        //console.log(currentElement.attr('name') + " " + currentElement.val() + ' ' + currentScope.app.id);
-        console.log(inputObject);
 
         shrinkLoading.do(currentElement, 'loading');
         $scope.updateDialogue(inputObject, currentElement);
@@ -599,18 +637,15 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             setLoadingButton('.danger-btn', false, 'Verwijder');
             $scope.getDialogues(1);
             $scope.showDeleteDialogue = !$scope.showDeleteDialogue;
-        }).catch(function (data) {
-            console.log(data);
-        });
+        }).catch(function (data) {});
     };
     $scope.deleteDialogueTrigger = function (id) {
         $scope.deleteID = id;
 
-        console.log($scope.deleteID);
         $scope.showDeleteDialogue = !$scope.showDeleteDialogue;
     };
     $scope.updateDialogue = function (updateData, currentElement) {
@@ -625,10 +660,10 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             shrinkLoading.do(currentElement, 'success');
         }).catch(function (data) {
-            console.log(data);
+
             shrinkLoading.do(currentElement, 'error');
         });
     };
@@ -645,7 +680,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             // $rootScope.$emit("toggleApp", data.data);
 
             window.location = './dialogen/diagram';
@@ -713,9 +748,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.addNewIntent = function (intentValue, intentExpression) {
 
-        console.log(intentValue);
-        console.log(intentExpression);
-
         var intentObj = {
             value: intentValue,
             expressions: [intentExpression]
@@ -734,7 +766,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
 
             $scope.intentData['state_intent_data']['name'] = intentExpression;
             $scope.intentData['intent'] = intentValue;
@@ -770,17 +801,12 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log($scope.intentData);
-            /*    if(typeof $scope.intentData['state_intent_data'] =='undefined'){
-                    $scope.intentData['state_intent_data'] = {};
-                }
-                $scope.intentData['state_intent_data']['name'] = data.data.keyword;*/
-            //$scope.intentData['intent'] = data.data.intent;
+
             $('#intent-title').trigger('changeOperatorTitle', [data.data.keyword, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
             $scope.resetIntentSearch();
         }).catch(function (data) {
-            console.log(data);
+
             shrinkLoading.do(currentElement, 'error');
         });
     };
@@ -822,7 +848,11 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.popupClose = function () {
+
         $('#flowchart-popup').addClass('hidden');
+
+        /* make sure deletebutton isnt present on load */
+        $('.hide-load').addClass('hidden');
         $rootScope.$emit("toggleIntentTraining", { intent: null, toggle: 'close' });
     };
 
@@ -838,6 +868,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.getIntentState = function (stateID) {
+        $scope.hideIntentFooter = true;
         $scope.intentData = null;
         var req = {
             method: 'POST',
@@ -853,6 +884,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
         $http(req).then(function (data) {
             $scope.updateFullPopUp(data, 'open');
+            $scope.hideIntentFooter = false;
         }).catch(function (data) {});
     };
     $scope.resetIntentSearch = function () {
@@ -883,27 +915,28 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log($scope.intentData);
 
             $('#intent-title').trigger('changeOperatorTitle', [data.data.parameter, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
             $scope.resetIntentSearch();
         }).catch(function (data) {
-            console.log(data);
+
             shrinkLoading.do(currentElement, 'error');
         });
     };
     $scope.updateFullPopUp = function (data, openOrClose) {
-        console.log(data);
+
+        /* make sure deletebutton isnt present on load */
+        $('.hide-load').removeClass('hidden');
 
         $scope.resetIntentSearch();
 
         if (openOrClose == 'open') {
-            console.log('open');
-            //console.log(data);
+
             $scope.intentData = data.data;
 
             if (typeof data.data != 'undefined') {
+
                 $scope.intentID = typeof data.data.id != 'undefined' ? data.data.id : '';
                 $scope.typeSetter(data.data['response_type']);
                 $scope.intentData.id;
@@ -932,7 +965,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
 
             $scope.intentData.intent = null;
             // $scope.intentData.state_intent_data.name = data.data.default_state_name;
@@ -977,9 +1009,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
     $scope.addAction = function (currentElement, currentModel, value) {
 
-        console.log(currentElement);
-        console.log(currentModel);
-        console.log(currentModel.intentData.action);
         shrinkLoading.do(currentElement, 'loading');
 
         var req = {
@@ -1014,7 +1043,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         });
     };
     $scope.updateIntentType = function (state_id, type) {
-
+        $scope.hideIntentFooter = true;
         $scope.intentData = null;
         var req = {
             method: 'POST',
@@ -1030,18 +1059,20 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
+
             if (data.status == 200) {
-                console.log(data);
+
                 $(document).trigger('changeOperatorClass', [type, $scope.activeStateID]);
                 $('#intent-title').trigger('changeOperatorTitle', [data.data.name, $scope.activeStateID]);
                 $scope.getIntentState(state_id);
             }
         }).catch(function (data) {
-            console.log(data);
+            $scope.hideIntentFooter = false;
         });
     };
 
     $scope.updateType = function () {
+
         //response type
         var req = {
             method: 'POST',
@@ -1056,9 +1087,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             }
         };
 
-        $http(req).then(function (data) {
-            //console.log(data);
-        }).catch(function (data) {});
+        $http(req).then(function (data) {}).catch(function (data) {});
     };
     $scope.typeChecker = function () {
         var type = 0;
@@ -1122,8 +1151,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.deleteAnswer = function (event, currentScope, answerID) {
-        console.log('delete answer');
-        console.log(answerID);
 
         var req = {
             method: 'POST',
@@ -1158,7 +1185,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         var inputObject = {};
         inputObject[currentElement.attr('name')] = currentElement.val();
         //inputObject['id'] = currentScope.dialogue.id;
-        //console.log(currentElement.attr('name') + " " + currentElement.val() + ' ' + currentScope.app.id);
 
 
         shrinkLoading.do(currentElement, 'loading');
@@ -1418,8 +1444,6 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
                     shrinkLoading.do(currentElement, 'success');
                 }, 1500);
             }
-
-            console.log(data);
         }).catch(function (data) {});
     };
 
@@ -1561,9 +1585,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
             $scope.entityName = $scope.selectedEntity;
             $(element).attr('data-entity-name', $scope.entityName);
             $scope.toggleEntityPopup({ toggle: 'close' });
-        } else {
-            console.log('error');
-        }
+        } else {}
     };
     $scope.toggleEntityPopup = function (data) {
         $scope.selectedEntity = null;
@@ -1619,8 +1641,6 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
 
         $http(req).then(function (data) {
 
-            //console.log(data);
-
             $scope.allEntities = data.data;
         }).catch(function (data) {});
     };
@@ -1660,7 +1680,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
     };
     $scope.popupOpen = function (data, index) {
 
-        console.log(data);
         $scope.initDataPopup(data, index);
         $scope.intentPopupToggle = true;
     };
@@ -1695,7 +1714,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         };
 
         $http(req).then(function (data) {
-            console.log(data);
 
             $scope.intents.splice($scope.deleteIndex, 1);
             $scope.deleteIndex = null;
@@ -1748,7 +1766,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
         var intentGetUrl = '../get-all-standard-intents';
         $http.get(intentGetUrl + '?page=' + $scope.pageNumber).then(function (data) {
-            console.log(data);
+
             if (data.data.data.length == 0) {
                 $scope.latestPost = true;
             } else {
@@ -1835,8 +1853,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
         $http(req).then(function (data) {
 
-            console.log(data);
-
             $scope.intentData['intent'] = data.data.intent;
             /*            console.log(data);
             
@@ -1852,7 +1868,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
                         $scope.saveIntentLocal();*/
         }).catch(function (data) {
             $scope.intentData.error = data.data;
-            console.log(data);
         });
     };
 
@@ -1876,7 +1891,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         };
 
         $http(req).then(function (data) {
-            console.log(data);
 
             $scope.intentData.intent = null;
             // $scope.intentData.state_intent_data.name = data.data.default_state_name;
@@ -1988,7 +2002,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         };
 
         $http(req).then(function (data) {
-            console.log(data);
 
             $scope.intentData['intent_data']['name'] = intentExpression;
             $scope.intentData['intent'] = intentValue;
@@ -2055,8 +2068,6 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            //  $scope.entityData = data.data;
             if (data.status == 200) {
                 $scope.entityData = $scope.removeDoubleValuesInSynonims(data.data);
                 $scope.loadEntityValues = false;
@@ -2066,10 +2077,6 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
 
     $scope.addSynonym = function (data, entityValue, entityData) {
         var lookups = entityData.lookups;
-
-        console.log(entityData.name);
-        console.log(entityValue.value);
-        console.log(data.text);
 
         /*  if (lookups.indexOf('keywords') > -1) {*/
         $scope.addKeywordSynonym(entityData.name, entityValue.value, data.text, entityValue);
@@ -2102,8 +2109,7 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            //  $scope.entityData = data.data;
+
             if (data.status == 200) {
 
                 $scope.entityData.values.splice($scope.deleteValueIndex, 1);
@@ -2132,8 +2138,7 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            //  $scope.entityData = data.data;
+
             if (data.status == 200) {
                 $scope.getAllEntities();
                 $scope.entityData = null;
@@ -2143,17 +2148,10 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
     };
     $scope.storeNewEntity = function (entity, type) {
 
-        console.log(entity);
-
         $scope.addEntity(entity, type);
     };
 
     $scope.storeNewEntityValue = function (entity, value, expressions) {
-        console.log(entity);
-        console.log(value);
-        console.log(expressions);
-
-        console.log($scope.createAddEntityValueObject(value, expressions));
 
         $scope.addEntityValue(entity, $scope.createAddEntityValueObject(value, expressions));
     };
@@ -2241,7 +2239,6 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
 
             if (data.status == 200) {}
         }).catch(function (data) {
@@ -2287,11 +2284,15 @@ angular.module('botApp').controller("chatbotPreviewController", function ($rootS
         $scope.initChatbot(data);
     };
     $scope.initChatbot = function (data) {
-        $('#babbelbot-chatbot-preview').babbelbot({
-            babbelbotUrl: defaultURL + '/api/chatbot/' + data.unique_id,
-            accessToken: data.server_token,
-            title: 'babbelbot(' + data.title + ')'
-        });
+        if (data.title != null) {
+            $('#babbelbot-chatbot-preview').babbelbot({
+                babbelbotUrl: defaultURL + '/api/chatbot/' + data.unique_id,
+                accessToken: data.server_token,
+                title: 'babbelbot(' + data.title + ')'
+            });
+        } else {
+            $('#babbelbot-chatbot-preview').empty();
+        }
     };
     $scope.initPreview = function () {
         $scope.checkActiveApp();
