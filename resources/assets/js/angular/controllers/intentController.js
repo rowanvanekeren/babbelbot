@@ -2,6 +2,10 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.activeStateID = null;
 
+    $scope.toggleNewIntent = function(){
+    $scope.newIntent = true;
+    };
+
     $scope.getIntent = function (inputObj, currentElement) {
         var req = {
             method: 'POST',
@@ -23,6 +27,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
 
     $scope.getAvailableIntent = function (inputObj, currentElement) {
+        $scope.searchingIntent = true;
         var req = {
             method: 'POST',
             url: '../../get-intent-wit',
@@ -34,7 +39,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-
+            $scope.searchingIntent = false;
             if (typeof data.data.entities.intent[0] != 'undefined') {
                 shrinkLoading.do(currentElement, 'success');
                 $scope.intentSearchValue = data.data.entities.intent[0].value;
@@ -48,8 +53,12 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             }
 
-        }).catch(function (data) {
+            if(!$scope.$$phase) {
+                $scope.$apply();
+            }
 
+        }).catch(function (data) {
+            $scope.searchingIntent = false;
             shrinkLoading.do(currentElement, 'error');
             $scope.newIntent = true;
             $scope.intentSearchResult = false;

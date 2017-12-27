@@ -57,7 +57,7 @@ $(document).ready(function() {
         onLinkCreate: function(linkID, linkData){
 
             if(flowchartReady){
-           
+
               //  console.log( $flowchart.flowchart('getOperatorCompleteData', $flowchart.flowchart('getOperatorData', linkData.fromOperator)));
                 createLinkOperator(linkID,linkData);
             }

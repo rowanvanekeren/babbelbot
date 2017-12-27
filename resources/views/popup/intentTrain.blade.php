@@ -16,7 +16,7 @@
                     <input id="" class="default-input inp-loading" type="text"
                            name="user_input_intent"
                            placeholder="Als gebruiker zegt..." ng-focus="growBack($event)"
-                           my-enter="addExpressionToIntent($element, this)" ng-model="newExpression">
+                           my-enter="addExpressionToIntent($element, this)" ng-model="newExpression" grow-back>
 
                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
 
@@ -32,7 +32,10 @@
                 </div>
             </div>
         </div>
-        <span ng-show="intentValueData.expressions" ng-click="checkExpressionsForEntities(intentValueData.expressions)">Kijk voor data parameters</span>
+        <div class="intent-train-options">
+            <button ng-show="intentValueData.expressions" ng-click="checkExpressionsForEntities(intentValueData.expressions, $event)" class="main-btn">Zoek parameters</button>
+            <button ng-click="refreshExpressions($event, intentValueData)" class="main-btn">Vernieuw lijst</button>
+        </div>
         <div class="intent-content">
             <div class="form-group" ng-repeat="intent in intentValueData.expressions">
 
@@ -43,7 +46,7 @@
                 </div>
 
                 <button class="main-btn" ng-click="trainExpression($event)">Train</button>
-                <button class="danger-btn"> <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"></i></button>
+                <button class="danger-btn" ng-click="deleteExpression($event, $index, intentValueData)"> <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"></i></button>
 
             </div>
             <div class="col-md-12 apps-loading" ng-show="!intentValueData.expressions">

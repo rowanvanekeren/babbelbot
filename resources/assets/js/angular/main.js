@@ -51,6 +51,34 @@ angular.module('botApp').directive('myEnter', function () {
     };
 });
 
+
+angular.module('botApp').directive('growBack', function () {
+    return function (scope, element, attrs) {
+        element.bind("focus", function (event) {
+            var inpElemClass = '.input-wrapper input';
+            var inpIconElemClass = '.input-saving-overlay';
+
+            var currentParent = $(event.target.parentElement);
+            var cuurentInput = $(event.currentTarget);
+
+            if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') &&
+                (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
+                currentParent.animate({'width': (currentParent.width() + 25)}, 100, 'linear', function () {
+                    currentParent.removeClass('processing');
+                    currentParent.children(inpIconElemClass).addClass('hidden');
+                    currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
+
+                });
+            } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') &&
+                (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
+                currentParent.removeClass('processing');
+                currentParent.children(inpIconElemClass).addClass('hidden');
+                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
+            }
+        });
+    };
+});
+
 angular.module('botApp').directive('myRepeatDirective', function () {
     return function (scope, element, attrs) {
         if (scope.$last) {
@@ -185,9 +213,15 @@ angular.module('botApp').factory('buttonLoading', function() {
             }else if(state == 'success') {
                 currentInput.html(currentText + ' <i class="fa fa-check"></i>');
                 currentInput.attr('disabled', false);
+                setTimeout(function(){
+                    currentInput.html(currentText);
+                },3000);
             }else if(state == 'error'){
                 currentInput.html(currentText + ' <i class="fa fa-times"></i>');
                 currentInput.attr('disabled', false);
+                setTimeout(function(){
+                    currentInput.html(currentText);
+                },3000);
             }else if(state == 'reset'){
                 currentInput.html(currentText);
                 currentInput.attr('disabled', false);

@@ -1,3 +1,4 @@
+
 <h3 ng-if="intentData.intent_type == 1">Actieve intent:</h3>
 <div class="current-active-intent" ng-if="intentData.intent_type == 1">
 
@@ -32,18 +33,18 @@
 </div>
 
 <div class="form-group" ng-if="intentData.intent_type == 1">
-    <div class="found-intent" ng-show="!newIntent && intentSearchResult">
+    <div class="found-intent" ng-show="!newIntent && intentSearchResult && !searchingIntent">
         <span>@{{intentSearchValue}}</span>
         <div>
             <div class="confidence-intent" >@{{intentSearchConf}} %</div>
-            <button class="main-btn">Details</button>
+           {{-- <button class="main-btn">Details</button>--}}
             <button class="main-btn" ng-click="saveIntentLocal()">Gebruiken</button>
         </div>
     </div>
-    <div class='span-option' ng-show="!newIntent && intentSearchResult">
-        <span ng-click="newIntent = true" >  of maak een nieuw </span>
+    <div class='span-option' ng-show="!newIntent && intentSearchResult && !searchingIntent">
+        <span ng-click="toggleNewIntent()" >  of maak een nieuw </span>
     </div>
-    <div class=" new-intent" ng-show="newIntent">
+    <div class="new-intent" ng-show="newIntent && !searchingIntent">
         <input class="default-input" type="text" placeholder="voer nieuwe intent naam in" ng-model="newIntentValue">
 
         <button class="main-btn" ng-click="addNewIntent(newIntentValue, intentData.state_intent_data.name)">Nieuw</button>

@@ -434,6 +434,12 @@ input[type=checkbox]:focus {
           align-items: center;
 }
 
+.ng-hide,
+.ng-show {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
 .navbar {
   width: 100%;
   padding: 10px;
@@ -1915,6 +1921,10 @@ old version
   padding-left: 5px;
   color: #ff625d;
   cursor: pointer;
+}
+
+.intent-train-options {
+  text-align: right;
 }
 
 .standard-intent.standard-error-intent h3 {

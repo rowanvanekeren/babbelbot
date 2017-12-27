@@ -112,8 +112,10 @@
                     </div>
                     <div class="app-center-section">
                         <div class="form-group">
-                            <label for="inp-access-token"  >
-                                Wit.ai access token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-smart="true" tooltip-class="wide-tooltip" tooltip-template="Deze token kun je verkrijgen
+                            <label for="inp-access-token">
+                                Wit.ai access token <i class="fa fa-info-circle" aria-hidden="true" tooltips
+                                                       tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                       tooltip-template="Deze token kun je verkrijgen
                             door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
                             settings de tokens kunt verkrijgen"></i>
                             </label>
@@ -135,7 +137,9 @@
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Wit.ai server token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-smart="true" tooltip-class="wide-tooltip" tooltip-template="Deze token kun je verkrijgen
+                                Wit.ai server token <i class="fa fa-info-circle" aria-hidden="true" tooltips
+                                                       tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                       tooltip-template="Deze token kun je verkrijgen
                             door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
                             settings de tokens kunt verkrijgen"></i>
                             </label>
@@ -152,7 +156,9 @@
                         <hr>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Backend webhook <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-smart="true" tooltip-class="wide-tooltip" tooltip-template="Wanneer je bij dialogen een antwoord selecteerd met optie 'backend' dan zal babbelbot een 'post request' sturen naar deze url. Meer info hierover vindt je in de Help sectie"></i>
+                                Backend webhook <i class="fa fa-info-circle" aria-hidden="true" tooltips
+                                                   tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                   tooltip-template="Wanneer je bij dialogen een antwoord selecteerd met optie 'backend' dan zal babbelbot een 'post request' sturen naar deze url. Meer info hierover vindt je in de Help sectie"></i>
                             </label>
 
                             <div class="input-wrapper">
@@ -168,7 +174,46 @@
                     <div class="app-embed-section" ng-class="{'open': openEmbed}">
                         <hr>
                         <div>
+                            <h3>app id: <span> @{{ app.unique_id }}</span></h3>
+                        </div>
+                        <hr>
+
+                        <div>
+                            <h3>Website</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-dev-token">
+                                Babbelbot Url <i class="fa fa-info-circle" aria-hidden="true"
+                                                 tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                 tooltip-template="Wanneer je bij facebook moet connecteren met een webhook zal facebook vragen om een 'verify token', dit is een token die je zelf mag verzinnen maar bij zowel facebook als babbelbot het zelfde moeten zijn"></i>
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <input class="default-input " type="text"
+                                       value="https://babbelbot.be/api/chatbot/@{{ app.unique_id }}" disabled>
+
+
+                            </div>
+                        </div>
+
+                        <div>
                             <h3>Facebook</h3>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp-dev-token">
+                                Facebook webhook url <i class="fa fa-info-circle" aria-hidden="true"
+                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                         tooltip-template="Wanneer je bij facebook moet connecteren met een webhook zal facebook vragen om een 'verify token', dit is een token die je zelf mag verzinnen maar bij zowel facebook als babbelbot het zelfde moeten zijn"></i>
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <input class="default-input " type="text"
+                                       value="https://babbelbot.be/api/facebook/@{{ app.unique_id }}" disabled>
+
+
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
@@ -209,12 +254,14 @@
                         <button class="main-btn" ng-click="selectApp($event, app, apps, $index)">Selecteer</button>
 
                         <div class="input-error">
-                            <div class="has-error" ng-repeat="error in app.errors" ><i
+                            <div class="has-error" ng-repeat="error in app.errors"><i
                                         class="fa fa-times " aria-hidden="true"></i> @{{ error }}
                             </div>
 
-                            <div class="has-error" ng-if="app.errors" ><i
-                                        class="fa fa-times " aria-hidden="true"></i> Toch verdergaan <a href="" ng-click="selectApp($event, app, apps, $index, true)">Klik hier</a>
+                            <div class="has-error" ng-if="app.errors"><i
+                                        class="fa fa-times " aria-hidden="true"></i> Toch verdergaan <a href=""
+                                                                                                        ng-click="selectApp($event, app, apps, $index, true)">Klik
+                                    hier</a>
                             </div>
 
 

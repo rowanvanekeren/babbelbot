@@ -696,6 +696,10 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.activeStateID = null;
 
+    $scope.toggleNewIntent = function () {
+        $scope.newIntent = true;
+    };
+
     $scope.getIntent = function (inputObj, currentElement) {
         var req = {
             method: 'POST',
@@ -716,6 +720,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.getAvailableIntent = function (inputObj, currentElement) {
+        $scope.searchingIntent = true;
         var req = {
             method: 'POST',
             url: '../../get-intent-wit',
@@ -727,7 +732,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-
+            $scope.searchingIntent = false;
             if (typeof data.data.entities.intent[0] != 'undefined') {
                 shrinkLoading.do(currentElement, 'success');
                 $scope.intentSearchValue = data.data.entities.intent[0].value;
@@ -738,8 +743,12 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
                 $scope.newIntent = true;
                 $scope.intentSearchResult = false;
             }
-        }).catch(function (data) {
 
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        }).catch(function (data) {
+            $scope.searchingIntent = false;
             shrinkLoading.do(currentElement, 'error');
             $scope.newIntent = true;
             $scope.intentSearchResult = false;
@@ -1245,7 +1254,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 /* 8 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("intentTrainController", function ($rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
+angular.module('botApp').controller("intentTrainController", function (buttonLoading, $rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
 
     $scope.toggleTrainingPopup = function (data) {
 
@@ -1279,7 +1288,7 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
         });
     };
 
-    $scope.getIntentDataWit = function (intent) {
+    $scope.getIntentDataWit = function (intent, callback) {
 
         var req = {
             method: 'POST',
@@ -1296,9 +1305,18 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
         $http(req).then(function (data) {
 
             $scope.intentValueData = data.data;
-        }).catch(function (data) {});
+
+            if (typeof callback != 'undefined') {
+                callback('success');
+            }
+        }).catch(function (data) {
+            if (typeof callback != 'undefined') {
+                callback('error');
+            }
+        });
     };
-    $scope.checkExpressionsForEntities = function (expressions) {
+    $scope.checkExpressionsForEntities = function (expressions, $event) {
+        buttonLoading.do($($event.currentTarget), 'loading');
 
         for (var keyExpression in expressions) {
             if (!expressions.hasOwnProperty(keyExpression)) continue;
@@ -1306,6 +1324,9 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
                 $scope.checkEntityInIntent(expressions[currKey], currKey);
             }.bind(this, keyExpression), 500);
         }
+        setTimeout(function () {
+            buttonLoading.do($($event.currentTarget), 'success');
+        }, 2000);
     };
 
     $scope.checkEntityInIntent = function (intentValue, index) {
@@ -1362,6 +1383,44 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
         //var fullHtml = $(domSelector).html();
         // var replaceHtml = fullHtml.replace(selectedText, "<span style='background:red'>" + selectedText + "</span>");
     };
+
+    $scope.deleteExpression = function ($event, $index, valueData) {
+        buttonLoading.do($($event.currentTarget), 'loading');
+        var req = {
+            method: 'POST',
+            url: defaultURL + '/delete-entity-expression',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                entity: 'intent',
+                value: valueData.value,
+                expression: valueData.expressions[$index]
+            }
+        };
+
+        $http(req).then(function (data) {
+            if (data.status == 200) {
+                buttonLoading.do($($event.currentTarget), 'success');
+                $scope.getIntentDataWit($scope.intentValueData.value);
+            }
+        }).catch(function (data) {
+            buttonLoading.do($($event.currentTarget), 'error');
+        });
+    };
+
+    $scope.refreshExpressions = function ($event, valueData) {
+        $scope.intentValueData.expressions = null;
+        buttonLoading.do($($event.currentTarget), 'loading');
+        $scope.getIntentDataWit($scope.intentValueData.value, function (data) {
+            if (data == 'success') {
+                buttonLoading.do($($event.currentTarget), 'success');
+            } else if (data == 'error') {
+                buttonLoading.do($($event.currentTarget), 'error');
+            }
+        });
+    };
     $scope.selectedIntentText = function ($event) {
 
         var tempClass = 'temp-' + guidGenerator();
@@ -1413,7 +1472,12 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
     };
 
     $scope.trainExpression = function (event, currentElement, singleExpressionObj) {
+        if (event != null && event.hasOwnProperty('currentTarget')) {
+            buttonLoading.do($(event.currentTarget), 'loading');
+        }
+
         if (!currentElement && !singleExpressionObj) {
+
             var trainElement = $(event.target.parentElement).find('.styled-input');
             var currentIntent = $scope.intentValueData.value;
             var trainObject = $scope.convertSentenceToTrainObj(trainElement, currentIntent);
@@ -1437,14 +1501,26 @@ angular.module('botApp').controller("intentTrainController", function ($rootScop
         };
 
         $http(req).then(function (data) {
+            if (event != null && event.hasOwnProperty('currentTarget')) {
+                buttonLoading.do($(event.currentTarget), 'success');
+            }
             if (currentElement && data.data.sent == true) {
 
                 setTimeout(function () {
+
                     $scope.getIntentDataWit($scope.intentValueData.value);
                     shrinkLoading.do(currentElement, 'success');
                 }, 1500);
+            } else {
+                /*   if(event.hasOwnProperty('currentTarget')){
+                       buttonLoading.do($(event.currentTarget), 'error');
+                   }*/
             }
-        }).catch(function (data) {});
+        }).catch(function (data) {
+            if (event != null && event.hasOwnProperty('currentTarget')) {
+                buttonLoading.do($(event.currentTarget), 'error');
+            }
+        });
     };
 
     $scope.convertSentenceToTrainObj = function (trainElement, currentIntent) {

@@ -91,6 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/add-entity-value', 'EntityController@addEntityValue');
         Route::post('/delete-entity', 'EntityController@deleteEntity');
         Route::post('/delete-entity-value', 'EntityController@deleteEntityValue');
+        Route::post('/delete-entity-expression', 'EntityController@deleteEntityExpression');
 
         /* train */
         Route::post('/train-intent', 'IntentController@trainIntent');

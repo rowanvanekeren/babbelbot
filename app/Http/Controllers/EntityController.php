@@ -47,4 +47,13 @@ class EntityController extends Controller
 
         return witDeleteEntityValue($server_token,$request->entity, $request->value);
     }
+
+    public function deleteEntityExpression(Request $request){
+        $server_token = $request->session()->get('active_app')->server_token;
+
+        //return $request->all();
+
+
+        return witDeleteEntityExpression($server_token,$request->entity, $request->value, $request->expression);
+    }
 }
