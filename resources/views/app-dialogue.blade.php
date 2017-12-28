@@ -85,12 +85,12 @@
                 <div class="col-md-12 app-wrapper" ng-repeat="dialogue in dialogues" my-repeat-directive>
                     <div class="app-top-section">
                         <div class="input-wrapper disable-shrink">
-                            <input type="text" class='inp-head-name' name="title" placeholder="Dialoog naam"  ng-focus="growBack($event)"
+                            <input type="text" class='inp-head-name' name="title" placeholder="Dialoog naam" grow-back
                                    my-enter="inputEnter($element, this)" ng-model="dialogue.title">
                             <i class="fa fa-repeat input-saving-overlay hidden"></i>
                         </div>
 
-                        <span ng-click="deleteDialogueTrigger(dialogue.id)"><i class="fa fa-times " aria-hidden="true"></i></span>
+                        <span ng-click="deleteDialogueTrigger(dialogue.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
 
 
                     </div>
@@ -100,7 +100,7 @@
 
                                 <input id="" class="inp-description inp-loading" type="text"
                                        name="description"
-                                       placeholder="Plaats een kleine descriptie" ng-focus="growBack($event)"
+                                       placeholder="Plaats een kleine descriptie" grow-back
                                        my-enter="inputEnter($element, this)" ng-model="dialogue.description">
 
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>

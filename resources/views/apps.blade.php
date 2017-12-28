@@ -106,7 +106,7 @@
                             <i class="fa fa-repeat input-saving-overlay hidden"></i>
 
                         </div>
-                        <span ng-click="deleteAppTrigger(app.id)"><i class="fa fa-times " aria-hidden="true"></i></span>
+                        <span ng-click="deleteAppTrigger(app.id)"><i class="fa fa-trash-o " aria-hidden="true"></i></span>
 
 
                     </div>

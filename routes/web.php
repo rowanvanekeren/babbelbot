@@ -34,6 +34,10 @@ Route::group(['middleware' => 'auth'], function () {
         return view('apps');
     });
 
+    Route::get('/help', function () {
+        return view('help');
+    });
+
     Route::get('/check-app-session', 'SessionController@checkActiveApp');
 
     Route::group(['middleware' => 'checkapp'], function () {

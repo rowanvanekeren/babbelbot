@@ -13,7 +13,7 @@
         <div class="app-wrapper warning-box" ng-show="showDeleteEntityValue">
             <h2>Weet je zeker dat je deze entity waarde wilt verwijderen?</h2>
 
-            <button class="danger-btn" ng-click="deleteEntityValue()">Verwijder</button>
+            <button class="danger-btn" ng-click="deleteEntityValue($event)">Verwijder</button>
             <button class="main-btn" ng-click="showDeleteEntityValue = false">Annuleer</button>
         </div>
         <div class="row top-row-navigation">
@@ -77,7 +77,7 @@
                         </div>
                         <div class="app-footer-section">
 
-                            <button class="main-btn async-save" ng-click="storeNewEntity(newEntity,newEntityType)"> Opslaan
+                            <button class="main-btn async-save" ng-click="storeNewEntity(newEntity,newEntityType, $event)"> Opslaan
                             </button>
                         </div>
                     </form>
@@ -147,7 +147,7 @@
                     </div>
 
 
-                    <div class="add-entity-wrapper">
+                    <div class="add-entity-wrapper" ng-show="entityData.lookups.length == 1">
 
                         <div class="form-group">
                             <label for="inp-dev-token">
@@ -172,7 +172,7 @@
 
                     <div class="app-footer-section">
 
-                        <button class="main-btn async-save" ng-click="storeNewEntityValue(entityData.name, newEntityValue,newEntityExpressions )"> Opslaan
+                        <button class="main-btn async-save" ng-click="storeNewEntityValue(entityData.name, newEntityValue,newEntityExpressions, $event )"> Opslaan
                         </button>
                     </div>
                 </div>
@@ -187,16 +187,16 @@
                         <div class="input-wrapper disable-shrink">
                             <h3>@{{ value.value }}</h3>
                         </div>
-                            <span ng-click="toggleDeleteEntityValue(value, $index)"><i class="fa fa-times "
+                            <span ng-click="toggleDeleteEntityValue(value, $index)"><i class="fa fa-trash-o "
                                                                          aria-hidden="true"></i></span>
 
 
                     </div>
-                    <hr>
 
 
-                    <div class="add-entity-wrapper">
 
+                    <div class="add-entity-wrapper" ng-if="entityData.lookups.length == 1">
+                        <hr>
                         <div class="form-group">
                             <label for="inp-dev-token">
                                 Synoniemen
@@ -205,6 +205,7 @@
                             <div class="input-wrapper  disable-shrink">
                                 <tags-input ng-model="value.expressions"
                                             on-tag-added="addSynonym($tag, value, entityData)"
+                                            on-tag-removing="deleteSynonym($tag, value, entityData)"
                                             replace-spaces-with-dashes="false"></tags-input>
                             </div>
 

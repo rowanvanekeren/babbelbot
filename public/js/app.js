@@ -79,6 +79,15 @@ module.exports = __webpack_require__(14);
 $(document).ready(function () {
     var runExamplesOnceCalled = false;
 
+    $('.burger').click(function (e) {
+        e.preventDefault();
+        console.log('click!');
+        if ($('.nav').css('display') == 'block') {
+            $('.nav').css('display', 'none ');
+        } else {
+            $('.nav').css('display', 'block ');
+        }
+    });
     $(window).on('resize scroll', function () {
 
         if ($('.chat-examples').isInViewport()) {

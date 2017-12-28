@@ -281,6 +281,7 @@ input[type=checkbox]:focus {
 }
 
 .input-saving-overlay {
+  color: #5e5e5e !important;
   position: absolute;
   bottom: 0;
   right: -25px;
@@ -440,6 +441,14 @@ input[type=checkbox]:focus {
   transition: none !important;
 }
 
+.help-section {
+  padding-top: 25px;
+}
+
+.fa-trash-o {
+  cursor: pointer;
+}
+
 .navbar {
   width: 100%;
   padding: 10px;
@@ -455,7 +464,6 @@ input[type=checkbox]:focus {
 }
 
 .logged-in-user {
-  color: #4ca78c;
   color: #4ca78c;
   font-size: 13px;
   font-weight: 600;
@@ -497,11 +505,6 @@ input[type=checkbox]:focus {
           align-items: center;
 }
 
-.navbar-inner ul.nav .burger-main .burger {
-  color: #4ca78c;
-  font-size: 30px;
-}
-
 .navbar-inner ul.nav li {
   display: inline;
 }
@@ -516,14 +519,59 @@ input[type=checkbox]:focus {
   border: 2px solid #4ca78c;
 }
 
-@media only screen and (max-width: 500px) {
-  ul.nav li:not(.burger-main) {
+.burger-main .burger {
+  color: #4ca78c;
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 767px) {
+  .navbar {
+    padding: 0;
+    background: #353b49;
+  }
+
+  .burger-main {
+    display: block;
+  }
+
+  .navbar .navbar-inner .nav {
+    margin: 0;
+    background: #2d333f;
+    width: 100%;
     display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+  }
+
+  .navbar .navbar-inner .nav .logged-in-user {
+    text-align: center;
+  }
+
+  .navbar .navbar-inner .nav li:nth-child(even) {
+    background: #353b49;
+  }
+
+  .navbar .navbar-inner .nav li {
+    padding: 15px !important;
+    width: 100%;
+    display: block;
+  }
+
+  .navbar .navbar-inner .nav li a {
+    margin: 0 !important;
+    font-size: 18px !important;
+    display: block;
+  }
+
+  .navbar-inner {
+    padding: 15px;
+    position: relative;
   }
 }
 
-@media only screen and (min-width: 501px) {
-  ul.nav li.burger-main {
+@media only screen and (min-width: 768px) {
+  .burger-main {
     display: none;
   }
 }
@@ -797,6 +845,7 @@ input[type=checkbox]:focus {
   }
 
   .left-navigation .center-navigation {
+    display: none;
     position: absolute;
     top: 60px;
     width: 100%;
@@ -843,6 +892,7 @@ input[type=checkbox]:focus {
   }
 
   .top-info-bar #nav-bars {
+    cursor: pointer;
     color: #4ca78c;
     display: block !important;
   }
@@ -894,11 +944,15 @@ input[type=checkbox]:focus {
 }
 
 .home-bg {
+  background-size: cover;
+  background-repeat: no-repeat;
   min-height: 85vh;
 }
 
 .home-bg-full {
   min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .home-auth-image {
@@ -1257,6 +1311,7 @@ input[type=checkbox]:focus {
 
 @media only screen and (max-width: 768px) {
   .chat-examples {
+    margin-top: 15px;
     display: block;
   }
 

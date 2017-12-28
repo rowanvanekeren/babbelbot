@@ -2,7 +2,7 @@
 <div class="left-navigation">
 <div class="top-info-bar">
     <a id="nav-logo" href="/"><img src="{{asset('public/img/logo/babbelbot-logo.png')}}" alt="babbelbot logo"></a>
-    <a id="nav-bars" href="/"><i class="fa fa-bars" aria-hidden="true"></i></a>
+    <a id="nav-bars" ng-click="toggleDashboardNavigation()"><i class="fa fa-bars" aria-hidden="true"></i></a>
 </div>
 <div class="location-navigation">
 

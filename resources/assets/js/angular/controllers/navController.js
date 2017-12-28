@@ -8,6 +8,16 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
         $scope.checkActiveApp();
         $scope.createBreadCrumbs();
     }
+
+    $scope.toggleDashboardNavigation = function(){
+        console.log('burger click');
+
+        if($('.center-navigation').css('display') == 'none'){
+            $('.center-navigation').css('display', 'block');
+        }else{
+            $('.center-navigation').css('display','none');
+        };
+    }
     $scope.checkActiveApp = function(){
         var req = {
             method: 'GET',

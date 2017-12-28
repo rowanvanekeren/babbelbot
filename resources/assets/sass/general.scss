@@ -241,6 +241,7 @@ input[type=checkbox]{
   }
 }
 .input-saving-overlay {
+  color:#5e5e5e !important;
   position: absolute;
   bottom: 0;
   right: -25px;
@@ -361,6 +362,14 @@ input[type=checkbox]{
 .ng-hide, .ng-show {
 
   transition: none !important;
+}
+
+.help-section{
+  padding-top: 25px;
+}
+
+.fa-trash-o{
+  cursor:pointer;
 }
 
 

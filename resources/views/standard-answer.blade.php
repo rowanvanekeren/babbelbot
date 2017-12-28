@@ -81,7 +81,7 @@
 
                 <div class="col-md-12 app-wrapper standard-intent" ng-repeat="intent in intents | filter: { intent_type : 1 }">
                     <div class="delete-intent-wrapper">
-                        <i class="fa fa-times " aria-hidden="true" ng-click="deleteIntentTrigger(intent, $index)"></i>
+                        <i class="fa fa-trash-o " aria-hidden="true" ng-click="deleteIntentTrigger(intent, $index)"></i>
                     </div>
                     <div class="intent-top-section " ng-click="popupOpen(intent, $index)">
                         <div class="standard-intent-info">
@@ -106,7 +106,7 @@
                                     <input id="inp-access-token" class="default-input inp-loading" type="text"
                                            my-enter="saveAnswer($element, intent, answer)"
                                            placeholder="Geef antwoord in"
-                                           ng-model="answer.answer">
+                                           ng-model="answer.answer" grow-back>
                                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                                 </div>
 

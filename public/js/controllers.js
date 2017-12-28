@@ -94,6 +94,16 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
         $scope.checkActiveApp();
         $scope.createBreadCrumbs();
     };
+
+    $scope.toggleDashboardNavigation = function () {
+        console.log('burger click');
+
+        if ($('.center-navigation').css('display') == 'none') {
+            $('.center-navigation').css('display', 'block');
+        } else {
+            $('.center-navigation').css('display', 'none');
+        };
+    };
     $scope.checkActiveApp = function () {
         var req = {
             method: 'GET',
@@ -2097,7 +2107,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 /* 11 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("entityController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("entityController", function (buttonLoading, $rootScope, $scope, $http, $parse, shrinkLoading) {
     $scope.newEntityTrigger = function () {
         $scope.showCreateEntity = !$scope.showCreateEntity;
     };
@@ -2159,15 +2169,43 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         /*  }*/
     };
 
+    $scope.deleteSynonym = function (tag, value, entityData) {
+        console.log(entityData);
+        var req = {
+            method: 'POST',
+            url: defaultURL + '/delete-entity-expression',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                /* 'Content-Type': 'application/x-www-form-urlencoded'*/
+            },
+            data: {
+                entity: entityData.name,
+                value: value.value,
+                expression: tag.text
+            }
+        };
+
+        $http(req).then(function (data) {
+            if (data.status == 200) {
+                return true;
+            } else {
+                return false;
+            }
+        }).catch(function (data) {
+            return false;
+        });
+    };
+
     $scope.toggleDeleteEntityValue = function (value, index) {
         $scope.showDeleteEntityValue = true;
         $scope.deleteValue = value;
         $scope.deleteValueIndex = index;
     };
 
-    $scope.deleteEntityValue = function () {
-
+    $scope.deleteEntityValue = function (event) {
+        buttonLoading.do($(event.currentTarget), 'loading');
         if (!$scope.deleteValue.value) {
+            buttonLoading.do($(event.currentTarget), 'error');
             return;
         }
 
@@ -2187,15 +2225,20 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         $http(req).then(function (data) {
 
             if (data.status == 200) {
-
+                buttonLoading.do($(event.currentTarget), 'success');
                 $scope.entityData.values.splice($scope.deleteValueIndex, 1);
                 $scope.deleteValueIndex = null;
                 $scope.deleteValue = null;
                 $scope.showDeleteEntityValue = false;
+            } else {
+                buttonLoading.do($(event.currentTarget), 'error');
             }
-        }).catch(function (data) {});
+        }).catch(function (data) {
+            buttonLoading.do($(event.currentTarget), 'error');
+        });
     };
     $scope.deleteEntity = function (event, entityID) {
+        buttonLoading.do($(event.currentTarget), 'loading');
 
         if (!entityID) {
             return;
@@ -2216,20 +2259,25 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         $http(req).then(function (data) {
 
             if (data.status == 200) {
+                buttonLoading.do($(event.currentTarget), 'success');
                 $scope.getAllEntities();
                 $scope.entityData = null;
                 $scope.showDeleteEntity = false;
+            } else {
+                buttonLoading.do($(event.currentTarget), 'error');
             }
-        }).catch(function (data) {});
+        }).catch(function (data) {
+            buttonLoading.do($(event.currentTarget), 'error');
+        });
     };
-    $scope.storeNewEntity = function (entity, type) {
-
-        $scope.addEntity(entity, type);
+    $scope.storeNewEntity = function (entity, type, event) {
+        $scope.addEntity(entity, type, event);
     };
 
-    $scope.storeNewEntityValue = function (entity, value, expressions) {
+    $scope.storeNewEntityValue = function (entity, value, expressions, event) {
+        buttonLoading.do($(event.currentTarget), 'loading');
 
-        $scope.addEntityValue(entity, $scope.createAddEntityValueObject(value, expressions));
+        $scope.addEntityValue(entity, $scope.createAddEntityValueObject(value, expressions), event);
     };
     $scope.createAddEntityValueObject = function (value, expressions) {
         var addObj = {
@@ -2238,13 +2286,15 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
             expressions: []
         };
 
-        for (var i = 0; i < expressions.length; i++) {
-            addObj.expressions.push(expressions[i].text);
+        if (typeof expressions != 'undefined' && expressions.length > 0) {
+            for (var i = 0; i < expressions.length; i++) {
+                addObj.expressions.push(expressions[i].text);
+            }
         }
-
+        console.log(addObj);
         return addObj;
     };
-    $scope.addEntityValue = function (entity, valueObject) {
+    $scope.addEntityValue = function (entity, valueObject, event) {
         var req = {
             method: 'POST',
             url: defaultURL + '/add-entity-value',
@@ -2260,11 +2310,19 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
 
         $http(req).then(function (data) {
 
-            if (data.status == 200) {}
-        }).catch(function (data) {});
+            if (data.status == 200) {
+                buttonLoading.do($(event.currentTarget), 'success');
+                $scope.showNewEntityValue = false;
+                $scope.getAllValuesEntity(entity);
+            } else {
+                buttonLoading.do($(event.currentTarget), 'error');
+            }
+        }).catch(function (data) {
+            buttonLoading.do($(event.currentTarget), 'error');
+        });
     };
-    $scope.addEntity = function (entity, type) {
-
+    $scope.addEntity = function (entity, type, event) {
+        buttonLoading.do($(event.currentTarget), 'loading');
         if (typeof type == 'undefined' || type == '') {
             var addObj = {
                 id: entity.replace(/ /g, "_")
@@ -2291,12 +2349,16 @@ angular.module('botApp').controller("entityController", function ($rootScope, $s
         $http(req).then(function (data) {
 
             if (data.status == 200) {
-
+                buttonLoading.do($(event.currentTarget), 'success');
                 $scope.showCreateEntity = false;
                 $scope.allEntities = false;
                 $scope.getAllEntities();
+            } else {
+                buttonLoading.do($(event.currentTarget), 'error');
             }
-        }).catch(function (data) {});
+        }).catch(function (data) {
+            buttonLoading.do($(event.currentTarget), 'error');
+        });
     };
 
     $scope.addKeywordSynonym = function (entity, value, expression, entityValue) {
