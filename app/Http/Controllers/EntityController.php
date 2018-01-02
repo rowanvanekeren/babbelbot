@@ -23,6 +23,10 @@ class EntityController extends Controller
     public function addEntity(Request $request){
         $server_token = $request->session()->get('active_app')->server_token;
 
+        $this->validate($request,[
+            'entity' => 'required'
+        ]);
+
    /*     $addObj = array(
             "id" => $request->entity,
            "lookups" => ["keywords"]
@@ -32,6 +36,11 @@ class EntityController extends Controller
 
     public function addEntityValue(Request $request){
         $server_token = $request->session()->get('active_app')->server_token;
+
+        $this->validate($request,[
+            'entity' => 'required',
+            'valueObject' => 'required'
+        ]);
 
         return witAddKeywordEntityValue($server_token,$request->entity, $request->valueObject);
     }

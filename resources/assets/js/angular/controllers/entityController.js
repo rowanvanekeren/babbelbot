@@ -1,5 +1,7 @@
 angular.module('botApp').controller("entityController", function (buttonLoading, $rootScope, $scope, $http, $parse, shrinkLoading) {
     $scope.newEntityTrigger = function () {
+        $scope.newEntityError = null;
+        $scope.newEntity = null;
         $scope.showCreateEntity = !$scope.showCreateEntity;
     }
 
@@ -199,9 +201,16 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
             }
         }
         console.log(addObj);
-        return addObj;
+
+        if(typeof value == 'undefined'){
+            return null;
+        }else{
+            return addObj;
+        }
+
     }
     $scope.addEntityValue = function (entity, valueObject, event) {
+        $scope.entityValueError = null;
         var req = {
             method: 'POST',
             url: defaultURL + '/add-entity-value',
@@ -227,20 +236,30 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
             }
 
         }).catch(function (data) {
+            $scope.entityValueError = data.data.valueObject;
                 buttonLoading.do($(event.currentTarget), 'error');
         });
     };
     $scope.addEntity = function (entity, type, event) {
         buttonLoading.do($(event.currentTarget), 'loading');
-        if(typeof type == 'undefined' || type == '' ){
-            var addObj = {
-                id : entity.replace(/ /g, "_")
+        $scope.newEntityError = null;
+        if(typeof entity != 'undefined'){
+            if(typeof type == 'undefined' || type == '' ){
+                var currEntity = entity.replace(/ /g, "_");
+                var addObj = {
+                    id : entity.replace(/ /g, "_")
+                }
+            }else if(type == 'keywords'){
+                var currEntity = entity.replace(/ /g, "_");
+                var addObj = {
+                    id : entity.replace(/ /g, "_"),
+                    lookups : [type]
+                }
             }
-        }else if(type == 'keywords'){
-            var addObj = {
-                id : entity.replace(/ /g, "_"),
-                lookups : [type]
-            }
+        }else{
+            var currEntity = null;
+            var addObj = null;
+            buttonLoading.do($(event.currentTarget), 'error');
         }
         var req = {
             method: 'POST',
@@ -250,7 +269,7 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
                 /* 'Content-Type': 'application/x-www-form-urlencoded'*/
             },
             data: {
-                entity: entity.replace(/ /g, "_"),
+                entity: currEntity,
                 entityObj : addObj
             }
         };
@@ -268,6 +287,8 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
 
         }).catch(function (data) {
             buttonLoading.do($(event.currentTarget), 'error');
+
+            $scope.newEntityError = data.data.entity;
         });
     };
 

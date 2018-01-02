@@ -119,7 +119,7 @@
                     </div>
                     <div class="app-footer-section">
 
-                        <button class="main-btn" ng-click="selectDialogue(dialogue)">Flow chart</button>
+                        <button class="main-btn" ng-click="selectDialogue(dialogue)">Bewerk dialoog</button>
                     </div>
 
                 </div>

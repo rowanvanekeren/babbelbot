@@ -53,9 +53,9 @@
                                 </div>
 
                                 <div class="input-error">
-                                    <div ng-repeat="errorMessage in newApp.server_token.$error.serverMessage"
-                                         ng-show="newApp.server_token.$error.serverMessage"
-                                         ng-class="{'has-error': newApp.server_token.$error.serverMessage }">
+                                    <div ng-repeat="errorMessage in newEntityError"
+                                         ng-show="newEntityError"
+                                         ng-class="{'has-error': newEntityError }">
                                         <i class="fa fa-times " aria-hidden="true"></i> @{{errorMessage}}
                                     </div>
                                 </div>
@@ -160,16 +160,16 @@
                                             replace-spaces-with-dashes="false"></tags-input>
                             </div>
 
-                            <div class="input-error">
-                                <div ng-repeat="errorMessage in newApp.server_token.$error.serverMessage"
-                                     ng-show="newApp.server_token.$error.serverMessage"
-                                     ng-class="{'has-error': newApp.server_token.$error.serverMessage }">
-                                    <i class="fa fa-times " aria-hidden="true"></i> @{{errorMessage}}
-                                </div>
-                            </div>
+
                         </div>
                     </div>
-
+                    <div class="input-error">
+                        <div ng-repeat="errorMessage in entityValueError"
+                             ng-show="entityValueError"
+                             ng-class="{'has-error': entityValueError }">
+                            <i class="fa fa-times " aria-hidden="true"></i> @{{errorMessage}}
+                        </div>
+                    </div>
                     <div class="app-footer-section">
 
                         <button class="main-btn async-save" ng-click="storeNewEntityValue(entityData.name, newEntityValue,newEntityExpressions, $event )"> Opslaan

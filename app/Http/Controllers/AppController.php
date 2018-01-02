@@ -65,6 +65,7 @@ class AppController extends Controller
             }
         }
 
+
         $app = App::where('id', $request->id);
 
         $app->delete();

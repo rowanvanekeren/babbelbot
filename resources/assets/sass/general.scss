@@ -372,4 +372,43 @@ input[type=checkbox]{
   cursor:pointer;
 }
 
+.page-error{
+  padding: 35px 0 ;
+  text-align: center;
+  img{
+    max-width: 300px;
+  }
+  h1{
+    text-align: center;
+    color: #fff;
+    font-size: 4em;
+  }
+}
+
+.help-wrapper{
+  p{
+    padding: 15px 0;
+  }
+.help-img{
+  width:100%;
+  text-align: center;
+}
+  img{
+
+    max-width: 700px;
+    border: 2px solid #000;
+  }
+}
+
+@media only screen and (max-width : 768px) {
+  .help-wrapper{
+
+
+    img{
+
+      max-width: 100%;
+      border: 2px solid #000;
+    }
+  }
+}
 
