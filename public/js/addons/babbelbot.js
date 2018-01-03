@@ -125,6 +125,8 @@
         mainBot.find('#bb-chatbox-input').keypress(function (e) {
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
+                if(mainBot.find('#bb-chatbox-input textarea').val().length > 0){
+
 
                 mainBot.find('#bb-chatbox-conversation-inner').append(
                     '<div class="bb-chat-row">' +
@@ -142,7 +144,9 @@
 
                 mainBot.find('#bb-chatbox-input textarea').val('').scrollTop(0);
 
-
+                }else{
+                 mainBot.find('#bb-chatbox-input textarea').val('').scrollTop(0);
+                }
 
             }
         });

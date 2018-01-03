@@ -22,7 +22,7 @@
         </li>
         <li>
 
-            <a href=""><i class="fa fa-question dash-icon" aria-hidden="true"></i> Help</a>
+            <a href="{{ url('./help') }}" class="{{ Request::path() == 'help' ? 'active' : '' }}"><i class="fa fa-question dash-icon" aria-hidden="true"></i> Help</a>
         </li>
     </ul>
 </div>

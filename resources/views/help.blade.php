@@ -100,7 +100,39 @@
                     <div class="help-img">
                         <img src="{{asset('public/img/help/facebook/embedden-facebook.jpg')}}">
                     </div>
+                    <p>Een verify token mag je al vrij verzinnen. Druk vervolgens op enter om op te slaan. Deze gaan wij later moeten gebruiken.
+                        Via facebook je chatbot activeren kan alleen als je een bedrijfspagina hebt. Heb je dit niet? Bekijk hier de instructies om een bedrijfspagina aan te maken
+                    </p>
 
+                    <p><a href="https://www.zzpservicedesk.nl/1049/hoe-maak-succesvolle-facebook-bedrijfspagina.htm">https://www.zzpservicedesk.nl/1049/hoe-maak-succesvolle-facebook-bedrijfspagina.htm</a></p>
+
+                <p>Heb je al een bedrijfspagina? Ga dan naar <a href="https://developers.facebook.com">https://developers.facebook.com</a>  en selecteer je pagina om op het dashboard te komen.
+                    Eenmaal op het dashboard kies je de optie <q>+ Add product</q> in het linker menu. Vervolgens kies je messenger
+                </p>
+
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/facebook/messenger-optie.jpg')}}">
+                    </div>
+
+                    <p>Vervolgens kun je een eigen token genereren via dit scherm</p>
+
+
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/facebook/token-genereren-facebook.jpg')}}">
+                    </div>
+
+                    <p>Kies je eigen app en kopieer en plak vervolgens de token in het <q>access token</q> veld van je app op Babbelbot.be, en druk op enter om op te slaan.
+                        Vervolgens configureren wij de webhook.
+                    </p>
+
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/facebook/messenger-post-types.jpg')}}">
+                    </div>
+
+
+                    <p>Bij <q>Callback URL</q> voeren we de facebook url in die je via je babbelbot app terug kunt vinden.
+                        De <q>Verify Token</q> moet de zelfde token zijn als je hebt ingegeven op Babbelbot.be. Druk nu op <q>verify and save</q> en voil&#224; je chatbot is nu draaiende.
+                    </p>
                 </div>
             </div>
         </div>
