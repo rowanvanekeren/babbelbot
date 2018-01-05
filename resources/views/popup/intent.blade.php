@@ -49,7 +49,7 @@
                 <span>@{{intentSearchValue}}</span>
                 <div>
                     <div class="confidence-intent" >@{{intentSearchConf}} %</div>
-                    <button class="main-btn">Details</button>
+               {{--     <button class="main-btn">Details</button>--}}
                     <button class="main-btn" ng-click="saveIntent()">Gebruiken</button>
                 </div>
             </div>
@@ -59,7 +59,7 @@
             <div class=" new-intent" ng-show="newIntent">
                 <input class="default-input" type="text" placeholder="voer nieuwe intent naam in" ng-model="newIntentValue">
 
-                <button class="main-btn" ng-click="addNewIntent(newIntentValue, intentData.intent_data.name)">Nieuw</button>
+                <button class="main-btn" ng-click="addNewIntent(newIntentValue, intentData.intent_data.name, $event)">Nieuw</button>
                 <i class="fa fa-times " aria-hidden="true" ng-show="intentSearchResult" ng-click="newIntent = false"></i>
             </div>
         </div>

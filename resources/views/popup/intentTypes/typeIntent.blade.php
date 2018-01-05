@@ -42,12 +42,12 @@
         </div>
     </div>
     <div class='span-option' ng-show="!newIntent && intentSearchResult && !searchingIntent">
-        <span ng-click="toggleNewIntent()" >  of maak een nieuw </span>
+        <span ng-click="toggleNewIntent(true)" >  of maak een nieuw </span>
     </div>
     <div class="new-intent" ng-show="newIntent && !searchingIntent">
         <input class="default-input" type="text" placeholder="voer nieuwe intent naam in" ng-model="newIntentValue">
 
-        <button class="main-btn" ng-click="addNewIntent(newIntentValue, intentData.state_intent_data.name)">Nieuw</button>
-        <i class="fa fa-times " aria-hidden="true" ng-show="intentSearchResult" ng-click="newIntent = false"></i>
+        <button class="main-btn" ng-click="addNewIntent(newIntentValue, intentData.state_intent_data.name, $event)">Nieuw</button>
+        <i class="fa fa-times " aria-hidden="true" ng-show="intentSearchResult" ng-click="toggleNewIntent(false)"></i>
     </div>
 </div>

@@ -702,12 +702,17 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 /* 7 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("intentController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("intentController", function ($rootScope, $scope, $http, $parse, shrinkLoading, buttonLoading) {
 
     $scope.activeStateID = null;
 
-    $scope.toggleNewIntent = function () {
-        $scope.newIntent = true;
+    $scope.toggleNewIntent = function (show) {
+
+        if (show) {
+            $scope.newIntent = true;
+        } else if (!show) {
+            $scope.newIntent = false;
+        }
     };
 
     $scope.getIntent = function (inputObj, currentElement) {
@@ -765,7 +770,11 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         });
     };
 
-    $scope.addNewIntent = function (intentValue, intentExpression) {
+    $scope.addNewIntent = function (intentValue, intentExpression, event) {
+        console.log(event);
+        if (typeof event != 'undefined') {
+            buttonLoading.do($(event.currentTarget), 'loading');
+        }
 
         var intentObj = {
             value: intentValue,
@@ -785,18 +794,37 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
+            console.log(data);
+            if (data.status == 200) {
+                if (typeof data.data.code != 'undefined') {
+                    if (data.data.code == 'bad-request') {
+                        buttonLoading.do($(event.currentTarget), 'error');
+                        $scope.intentData['error'] = [['Wit reponse: ' + data.data.error]];
+                        return;
+                    }
+                }
+                $scope.intentData['state_intent_data']['name'] = intentExpression;
+                $scope.intentData['intent'] = intentValue;
+                $scope.intentSearchValue = intentValue;
+                /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
+                 $scope.resetIntentSearch();*/
 
-            $scope.intentData['state_intent_data']['name'] = intentExpression;
-            $scope.intentData['intent'] = intentValue;
-            $scope.intentSearchValue = intentValue;
-            /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
-             $scope.resetIntentSearch();*/
-            if (!$scope.$$phase) {
-                $scope.$apply();
+                if (typeof event != 'undefined') {
+                    buttonLoading.do($(event.currentTarget), 'success');
+                }
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+
+                $scope.saveIntentLocal();
+            } else {
+                buttonLoading.do($(event.currentTarget), 'error');
             }
-
-            $scope.saveIntentLocal();
-        }).catch(function (data) {});
+        }).catch(function (data) {
+            if (typeof event != 'undefined') {
+                buttonLoading.do($(event.currentTarget), 'error');
+            }
+        });
     };
 
     $scope.saveKeywordLocal = function (currentElement, currentScope) {
@@ -1740,7 +1768,7 @@ angular.module('botApp').controller("intentEntityController", function ($rootSco
 /* 10 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("standardIntentController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("standardIntentController", function ($rootScope, $scope, $http, $parse, shrinkLoading, buttonLoading) {
     var $flowchartPopup = $('#flowchart-popup');
     var $flowchartPopupIntent = $('#flowchart-popup-intent');
     $flowchartPopupIntent.draggable({ cancel: '.styled-input, .fast-entity-popup, .new-expression-wrapper' });
@@ -1940,18 +1968,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         $http(req).then(function (data) {
 
             $scope.intentData['intent'] = data.data.intent;
-            /*            console.log(data);
-            
-                        $scope.intentData['state_intent_data']['name'] = intentExpression;
-                        $scope.intentData['intent'] = intentValue;
-                        $scope.intentSearchValue = intentValue;
-                        /!* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
-                         $scope.resetIntentSearch();*!/
-                        if(!$scope.$$phase) {
-                            $scope.$apply()
-                        }
-            
-                        $scope.saveIntentLocal();*/
+            $scope.resetIntentSearch();
         }).catch(function (data) {
             $scope.intentData.error = data.data;
         });
@@ -2068,7 +2085,11 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         });
     };
 
-    $scope.addNewIntent = function (intentValue, intentExpression) {
+    $scope.addNewIntent = function (intentValue, intentExpression, event) {
+
+        if (typeof event != 'undefined') {
+            buttonLoading.do($(event.currentTarget), 'loading');
+        }
 
         var intentObj = {
             value: intentValue,
@@ -2089,17 +2110,41 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
         $http(req).then(function (data) {
 
-            $scope.intentData['intent_data']['name'] = intentExpression;
-            $scope.intentData['intent'] = intentValue;
-            $scope.intentSearchValue = intentValue;
-            /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
-             $scope.resetIntentSearch();*/
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
+            $scope.intentData['error'] = null;
+            if (data.status == 200) {
 
-            $scope.saveIntent();
-        }).catch(function (data) {});
+                if (typeof data.data.code != 'undefined') {
+                    if (data.data.code == 'bad-request') {
+                        buttonLoading.do($(event.currentTarget), 'error');
+                        $scope.intentData['error'] = [['Wit reponse: ' + data.data.error]];
+                        return;
+                    }
+                }
+
+                $scope.intentData['intent_data']['name'] = intentExpression;
+                $scope.intentData['intent'] = intentValue;
+                $scope.intentSearchValue = intentValue;
+                /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
+                 $scope.resetIntentSearch();*/
+
+                if (typeof event != 'undefined') {
+                    buttonLoading.do($(event.currentTarget), 'success');
+                }
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+
+                $scope.saveIntent();
+            } else {
+                buttonLoading.do($(event.currentTarget), 'error');
+                $scope.intentData['error'] = data.data;
+            }
+        }).catch(function (data) {
+            if (typeof event != 'undefined') {
+                buttonLoading.do($(event.currentTarget), 'error');
+                $scope.intentData['error'] = data.data;
+            }
+        });
     };
 });
 

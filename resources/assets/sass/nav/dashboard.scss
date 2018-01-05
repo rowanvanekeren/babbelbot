@@ -35,6 +35,10 @@
         }
 
         > a {
+
+          &.logout-mobile{
+            display:none;
+          }
           transition: 0.2s;
           &.active {
             background-color: $main-color;
@@ -230,6 +234,9 @@
   .top-navigation {
     display: none;
   }
+  .logout-mobile{
+    display:block;
+  }
   .left-navigation {
     width: 100%;
     height: auto;
@@ -240,6 +247,7 @@
       z-index: 10;
     }
     .center-navigation {
+
       display: none;
       position: absolute;
       top: 60px;
@@ -249,6 +257,9 @@
       padding: 0;
       z-index: 5;
       > ul > li > a {
+        &.logout-mobile{
+          display:block;
+        }
         display: block;
         padding: 15px;
         font-size: 20px;

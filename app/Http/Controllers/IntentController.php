@@ -9,6 +9,7 @@ use App\StateIntent;
 use App\StateIntentAnswer;
 use App\StateIntentData;
 use Carbon\Carbon;
+use Validator;
 
 class IntentController extends Controller
 {
@@ -271,6 +272,11 @@ class IntentController extends Controller
     }
 
     public function addWitIntent(Request $request){
+      /*  $this->validate($request,[
+            'new_intent' => 'required',
+        ]);*/
+
+
         $server_token = $request->session()->get('active_app')->server_token;
 
         return witAddIntent($server_token, json_encode($request->new_intent));

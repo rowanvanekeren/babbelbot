@@ -1,9 +1,15 @@
-angular.module('botApp').controller("intentController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("intentController", function ($rootScope, $scope, $http, $parse, shrinkLoading, buttonLoading) {
 
     $scope.activeStateID = null;
 
-    $scope.toggleNewIntent = function(){
-    $scope.newIntent = true;
+    $scope.toggleNewIntent = function(show){
+
+        if(show){
+            $scope.newIntent = true;
+        }else if(!show){
+            $scope.newIntent = false;
+        }
+
     };
 
     $scope.getIntent = function (inputObj, currentElement) {
@@ -66,9 +72,11 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         });
     };
 
-    $scope.addNewIntent = function(intentValue, intentExpression ){
-
-
+    $scope.addNewIntent = function(intentValue, intentExpression, event ){
+        console.log(event);
+        if(typeof event != 'undefined'){
+            buttonLoading.do($(event.currentTarget), 'loading');
+        }
 
         var intentObj = {
             value: intentValue,
@@ -88,21 +96,39 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
+            console.log(data);
+            if(data.status == 200){
+                if(typeof data.data.code != 'undefined'){
+                    if(data.data.code == 'bad-request'){
+                        buttonLoading.do($(event.currentTarget), 'error');
+                        $scope.intentData['error'] = [['Wit reponse: ' + data.data.error]];
+                        return;
+                    }
+                }
+                $scope.intentData['state_intent_data']['name'] = intentExpression;
+                $scope.intentData['intent'] = intentValue;
+                $scope.intentSearchValue = intentValue;
+                /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
+                 $scope.resetIntentSearch();*/
 
-            $scope.intentData['state_intent_data']['name'] = intentExpression;
-            $scope.intentData['intent'] = intentValue;
-            $scope.intentSearchValue = intentValue;
-           /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
-            $scope.resetIntentSearch();*/
-            if(!$scope.$$phase) {
-                $scope.$apply()
+                if(typeof event != 'undefined'){
+                    buttonLoading.do($(event.currentTarget), 'success');
+                }
+                if(!$scope.$$phase) {
+                    $scope.$apply()
+                }
+
+                $scope.saveIntentLocal();
+            }else{
+                buttonLoading.do($(event.currentTarget), 'error');
             }
 
-            $scope.saveIntentLocal();
 
 
         }).catch(function (data) {
-
+            if(typeof event != 'undefined'){
+                buttonLoading.do($(event.currentTarget), 'error');
+            }
         });
     };
 

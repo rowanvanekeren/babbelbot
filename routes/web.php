@@ -41,6 +41,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/check-app-session', 'SessionController@checkActiveApp');
 
     Route::group(['middleware' => 'checkapp'], function () {
+
+        Route::group(['middleware' => 'checkdialogue'], function () {
+
+            Route::get('/dashboard/dialogen/diagram', function () {
+                return view('diagram');
+            });
+
+        });
+
+
         Route::get('/dashboard/dialogen', function () {
             return view('app-dialogue');
         });
@@ -124,9 +134,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
-Route::get('/dashboard/dialogen/diagram', function () {
-    return view('diagram');
-});
 
 Auth::routes();
 

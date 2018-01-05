@@ -213,8 +213,11 @@ input[type=checkbox]{
 
 .fa-repeat {
   display: block;
+
   -webkit-animation: rotate-infinite 1s infinite; /* Safari 4.0 - 8.0 */
   animation: rotate-infinite 1s infinite;
+
+
 
 }
 
@@ -278,7 +281,11 @@ input[type=checkbox]{
   padding: 5px 10px;
   transition: color 0.5s, background-color 0.5s;
   i {
+    //color: #fff !important;
     display: inline-block;
+
+    padding: 0!important;
+    margin: 0!important;
   }
   &:hover {
     background: none;
@@ -398,9 +405,21 @@ input[type=checkbox]{
     max-width: 700px;
     border: 2px solid #000;
   }
+
+  .github-icon{
+    font-size: 3em;
+    color: #000;
+  }
+  .center-text{
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width : 768px) {
+  #babbelbot-chatbot-preview{
+    display:none;
+  }
+
   .help-wrapper{
 
 

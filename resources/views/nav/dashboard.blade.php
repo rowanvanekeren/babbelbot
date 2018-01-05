@@ -24,6 +24,10 @@
 
             <a href="{{ url('./help') }}" class="{{ Request::path() == 'help' ? 'active' : '' }}"><i class="fa fa-question dash-icon" aria-hidden="true"></i> Help</a>
         </li>
+        <li>
+
+            <a href="{{ url('./logout') }}" class="logout-mobile"><i class="fa fa-sign-out dash-icon" aria-hidden="true"></i> Uitloggen</a>
+        </li>
     </ul>
 </div>
 <div class="footer-navigation">

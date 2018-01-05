@@ -1,4 +1,4 @@
-angular.module('botApp').controller("standardIntentController", function ($rootScope, $scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("standardIntentController", function ($rootScope, $scope, $http, $parse, shrinkLoading, buttonLoading) {
     var $flowchartPopup = $('#flowchart-popup');
     var $flowchartPopupIntent = $('#flowchart-popup-intent');
     $flowchartPopupIntent.draggable({cancel : '.styled-input, .fast-entity-popup, .new-expression-wrapper'});
@@ -232,19 +232,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
 
             $scope.intentData['intent'] = data.data.intent;
-/*            console.log(data);
-
-            $scope.intentData['state_intent_data']['name'] = intentExpression;
-            $scope.intentData['intent'] = intentValue;
-            $scope.intentSearchValue = intentValue;
-            /!* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
-             $scope.resetIntentSearch();*!/
-            if(!$scope.$$phase) {
-                $scope.$apply()
-            }
-
-            $scope.saveIntentLocal();*/
-
+            $scope.resetIntentSearch();
 
         }).catch(function (data) {
             $scope.intentData.error = data.data;
@@ -380,8 +368,11 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
     };
 
 
-    $scope.addNewIntent = function(intentValue, intentExpression ){
+    $scope.addNewIntent = function(intentValue, intentExpression, event ){
 
+        if(typeof event != 'undefined'){
+            buttonLoading.do($(event.currentTarget), 'loading');
+        }
 
         var intentObj = {
             value: intentValue,
@@ -402,21 +393,43 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
         $http(req).then(function (data) {
 
+            $scope.intentData['error'] = null;
+            if(data.status == 200){
 
-            $scope.intentData['intent_data']['name'] = intentExpression;
-            $scope.intentData['intent'] = intentValue;
-            $scope.intentSearchValue = intentValue;
-            /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
-             $scope.resetIntentSearch();*/
-            if(!$scope.$$phase) {
-                $scope.$apply()
+                if(typeof data.data.code != 'undefined'){
+                    if(data.data.code == 'bad-request'){
+                        buttonLoading.do($(event.currentTarget), 'error');
+                        $scope.intentData['error'] = [['Wit reponse: ' + data.data.error]];
+                        return;
+                    }
+                }
+
+                $scope.intentData['intent_data']['name'] = intentExpression;
+                $scope.intentData['intent'] = intentValue;
+                $scope.intentSearchValue = intentValue;
+                /* $('#intent-title').trigger('changeOperatorTitle', [intentExpression, $scope.activeStateID, true]);
+                 $scope.resetIntentSearch();*/
+
+                if(typeof event != 'undefined'){
+                    buttonLoading.do($(event.currentTarget), 'success');
+                }
+                if(!$scope.$$phase) {
+                    $scope.$apply()
+                }
+
+                $scope.saveIntent();
+            }else{
+                buttonLoading.do($(event.currentTarget), 'error');
+                $scope.intentData['error'] = data.data;
             }
 
-            $scope.saveIntent();
 
 
         }).catch(function (data) {
-
+            if(typeof event != 'undefined'){
+                buttonLoading.do($(event.currentTarget), 'error');
+                $scope.intentData['error'] = data.data;
+            }
         });
     };
 });

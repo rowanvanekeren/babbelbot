@@ -21,11 +21,11 @@ class DefaultChatbotController extends Controller
 
         $cacheObj = getOrInitCache($cache_id, $id, 'default');
 
-        $answers  =  processRequest($cache_id,$id,$request->user_input, 'default', json_encode($request->wit_data));
+    /*    $answers  =  processRequest($cache_id,$id,$request->user_input, 'default', json_encode($request->wit_data));
 
-
-
-        return $answers;
+        return $answers;*/
+       // bot_log(processRequest($cache_id,$id,$request->user_input, 'default', json_encode($request->wit_data)));
+        return processRequest($cache_id,$id,$request->user_input, 'default', json_encode($request->wit_data));
 
 
 

@@ -53,7 +53,7 @@
                 <div class="input-wrapper">
 
                     <input id="inp-access-token" class="default-input inp-loading" type="text"
-                           my-enter="addAction($element, this,intentData.action)" placeholder="Voer actie in" ng-model="intentData.action">
+                           my-enter="addAction($element, this,intentData.action)" placeholder="Voer actie in" ng-model="intentData.action" grow-back>
                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                 </div>
 
@@ -68,7 +68,7 @@
                     <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, answer.id)"></i>
                     <input id="inp-access-token" class="default-input inp-loading" type="text"
                            my-enter="saveAnswer($element, this, 1)" data-answer-id="@{{ answer.id }}" data-state-intents-id="@{{ answer.state_intents_id }}"  placeholder="Geef antwoord in" name="answer.answer"
-                           ng-model="answer.answer">
+                           ng-model="answer.answer" grow-back>
                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                 </div>
 
@@ -85,7 +85,7 @@
                     <div class="input-wrapper deletable-input">
                         <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, quickReply.id)"></i>
                         <input id="inp-access-token" class="default-input inp-loading" type="text"
-                               my-enter="saveAnswer($element, this, 2)" data-answer-id="@{{ quickReply.id }}" data-state-intents-id="@{{ quickReply.state_intents_id }}" name="quickReply" ng-model="quickReply.answer" placeholder="Geef snelle optie in">
+                               my-enter="saveAnswer($element, this, 2)" data-answer-id="@{{ quickReply.id }}" data-state-intents-id="@{{ quickReply.state_intents_id }}" name="quickReply" ng-model="quickReply.answer" placeholder="Geef snelle optie in" grow-back>
                         <i class="fa fa-repeat input-saving-overlay hidden"></i>
                     </div>
                 </div>

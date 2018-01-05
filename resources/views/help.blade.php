@@ -4,12 +4,46 @@
     <div class="container-fluid help-section">
         <div class="row">
             <div class="col-md-12 ">
-                <div class="col-md-12 app-wrapper">
+                <div class="col-md-12 app-wrapper help-wrapper">
                     <h2>Intenties</h2>
                     <hr>
-                    <p>Lorem UIpada sdfasdkfj ashdfkj ashdkflh asdfkjash dfkjhasdkfjasdh kasd fkjsad hfkjh sdfkljash
-                        dfkjsah fkljsadh fkasjdfh kasjdfh asjkdfh sakldjfh asdjkfh sakdjfhasdkjfashdfkjasdhf asjkdfh
-                        asdkjfhasdfkljashdfkjas df</p>
+                    <p>Intenties zijn bedoeld om te begrijpen wat de gebruiker exact bedoeld met een vraag of input. Bijvoorbeeld: </p>
+                    <p>Gebruiker: Vertel een mop
+
+                    </p>
+                    <p>Intentie: vertel_mop
+                       </p>
+                    <p> Dit kunnen we trainen zodat de applicatie automatisch variaties van <q>vertel een mop</q> begrijpt.
+
+                        Een voorbeeld van de werking bij dialogen:</p>
+
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/intents/gebruiker-zegt-input.jpg')}}">
+                    </div>
+                    <p>Hier typen wij vertel een mop in en zoals je zit kent babbelbot dat nog niet <q>out of the box</q>
+                        Wij moeten babbelbot dus trainen, laten we voor de zin <q>vertel een mop</q> een intentie verzinnen die overkoepelend is voor alle variaties. Wij kiezen voor <q>vertel_mop</q> als intentie naam (zie hieronder)
+                    </p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/intents/nieuwe-intent-input-voorbeeld.jpg')}}">
+                    </div>
+                    <p>Nu drukken we op <q>nieuw</q> om de intentie aan te maken</p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/intents/actieve-intentie-voorbeeld.jpg')}}">
+                    </div>
+                    <p>Je zult zien dat de intentie automatisch als actieve intentie word gezet.
+                        Nu kunnen wij de intentie verder trainen zodat babbelbot ons beter begrijpt.
+                    </p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/intents/training-omgeving.jpg')}}">
+                    </div>
+                    <p>Zoals je ziet heb ik hem verder getraind zodat hij mij in de toekomst beter kan begrijpen. Laten we hem nu eens uittesten in het chatvenster (nadat we bij antwoorden een antwoord hebben toegevoegd)</p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/intents/intentie-chat-voorbeeld.jpg')}}">
+                    </div>
+                    <p>
+                        Zoals je ziet staat deze variatie niet letterlijk in onze lijst, en begrijpt babbelbot toch wat je bedoeld.
+                        Op deze manier kunnen we conversaties uitwerken.
+                    </p>
                 </div>
             </div>
         </div>
@@ -139,24 +173,98 @@
 
         <div class="row">
             <div class="col-md-12 ">
-                <div class="col-md-12 app-wrapper">
+                <div class="col-md-12 app-wrapper help-wrapper">
                     <h2>Embedden op website</h2>
                     <hr>
-                    <p>Lorem UIpada sdfasdkfj ashdfkj ashdkflh asdfkjash dfkjhasdkfjasdh kasd fkjsad hfkjh sdfkljash
-                        dfkjsah fkljsadh fkasjdfh kasjdfh asjkdfh sakldjfh asdjkfh sakdjfhasdkjfashdfkjasdhf asjkdfh
-                        asdkjfhasdfkljashdfkjas df</p>
+                    <p>Je kunt er ook voor kiezen om de chatbot op je website te plaatsen. Dit kan a.d.h.v. een jquery plugin gemaakt voor Babbelbot.be deze plugin is terug te vinden op </p>
+                    <p><a href="https://github.com/rowanvanekeren/babbelbot-jquery-plugin">https://github.com/rowanvanekeren/babbelbot-jquery-plugin</a> </p>
+                    <p>Deze plugin genereerd een chatvenster waarmee je via de access token van wit.ai en de unieke babbelbot URL een chatbot kan embedden op je website. Dit ziet er ongeveer alsvolgt uit: </p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/chatbot/chatbox-voorbeeld.jpg')}}">
+                    </div>
+                    <p>Documentatie over deze plugin is te vinden op github (klik op het icoon hieronder)</p>
+                    <div class="center-text">
+                        <a class="github-icon" href="https://github.com/rowanvanekeren/babbelbot-jquery-plugin"><i class="fa fa-github" aria-hidden="true"></i> Bekijk op github</a>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 ">
+                <div class="col-md-12 app-wrapper help-wrapper">
+                    <h2>Backend webhook</h2>
+                    <hr>
+                    <p>Wanneer je zelf een antwoord wilt genereren in je eigen backend kun je gebruikmaken van een webhook hiermee kun je bijvoorbeeld je eigen api&#39;s aanspreken en daarop een antwoord genereren</p>
+                    <p>Voer een webhook in in het volgende veld.</p>
 
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/backend/webhook-inputveld.jpg')}}">
+                    </div>
+
+                    <p>Het object wat je binnenkrijgt ziet er als volgt uit: </p>
+
+                    <pre><code>
+                            1.	{
+                            2.	   "user_input":"ik wil graag een vlucht van antwerpen naar amsterdam",
+                            3.	   "wit_data":{
+                            4.	      "_text":"ik wil graag een vlucht van antwerpen naar amsterdam",
+                            5.	      "entities":{
+                            6.	         "flight_from":[
+                            7.	            {
+                            8.	               "confidence":"1",
+                            9.	               "value":"antwerpen",
+                            10.	               "type":"value"
+                            11.	            }
+                            12.	         ],
+                            13.	          "flight_to":[
+                            14.	            {
+                            15.	               "confidence":"1",
+                            16.	               "value":"amsterdam",
+                            17.	               "type":"value"
+                            18.	            }
+                            19.	         ],
+                            20.	         "intent":[
+                            21.	            {
+                            22.	               "confidence":"1",
+                            23.	               "value":"flight_request"
+                            24.	            }
+                            25.	         ]
+                            26.	      },
+                            27.	      "msg_id":"123465498754"
+                            28.	   },
+                            29.	   "action":"flight_answer",
+                            30.	   "parameters":[
+                            31.	        "gebruikersnaam": "Henk"
+                            32.	   ]
+                            33.	}
+
+                        </code></pre>
+
+                    <p>Parameters is de data die je binnenkrijg van <q>free input</q> blokken. Dit zijn blokken waar het niet uitmaakt wat de gebruiker zegt om in een conversatie te blijven. Deze antwoorden van een gebruiker kun je meegeven als parameter in het object.</p>
+
+                    <p>Je zult een object moeten teruggeven wat er ongeveer zo uitziet: </p>
+
+                    <pre><code>
+                        1.	array(
+                        2.	    'answers' => array(
+                        3.	        array('answer' => 'Jouw antwoord op de gegeven user input'),
+                        4.	    ),
+                        5.	    'quick_replies' => array(
+                        6.	        array('answer' => 'antwoord 1'),
+                        7.	        array('answer' => 'antwoord 2'),
+                        8.	    ),
+                        9.	);
+
+                    </code></pre>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12 ">
                 <div class="col-md-12 app-wrapper">
                     <h2>Dialogen</h2>
                     <hr>
-                    <p>Lorem UIpada sdfasdkfj ashdfkj ashdkflh asdfkjash dfkjhasdkfjasdh kasd fkjsad hfkjh sdfkljash
-                        dfkjsah fkljsadh fkasjdfh kasjdfh asjkdfh sakldjfh asdjkfh sakdjfhasdkjfashdfkjasdhf asjkdfh
-                        asdkjfhasdfkljashdfkjas df</p>
+                    <p>Dialogen zijn bedoeld gesprekken te kunnen voeren met mensen waarbij de applicatie onthoud in welke staat je zit. Je kunt dus zelf bepalen wat er op welk moment gezegd moet worden. Dit bied veel dynamiek voor de gebruik</p>
                 </div>
             </div>
         </div>
@@ -166,9 +274,9 @@
                 <div class="col-md-12 app-wrapper">
                     <h2>Standaard antwoorden</h2>
                     <hr>
-                    <p>Lorem UIpada sdfasdkfj ashdfkj ashdkflh asdfkjash dfkjhasdkfjasdh kasd fkjsad hfkjh sdfkljash
-                        dfkjsah fkljsadh fkasjdfh kasjdfh asjkdfh sakldjfh asdjkfh sakdjfhasdkjfashdfkjasdhf asjkdfh
-                        asdkjfhasdfkljashdfkjas df</p>
+                    <p>Wanneer er geen dialoog bestaat of je gewoon een standaard antwoord op een bepaalde input wilt,
+                        dan kun je standaard antwoorden gebruiken. De applicatie zal altijd eerst proberen in een dialoog te gaan. Kan de applicatie geen geschikt dialoog vinden.
+                        Dan zal babbelbot kijken of er een standaard antwoord aanwezig is</p>
                 </div>
             </div>
         </div>

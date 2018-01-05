@@ -141,8 +141,12 @@ function searchStartState($cache_id, $app_id, $intent)
                         $answers = getStateIntentAnswers($cache_id, $value['startState']['stateIntents']['id'],
                             $value['startState']['stateIntents']['response_type']);
 
-                        updateCache($cache_id, 'dialogue_id', $value['startState']['dialogue_id']);
-                        updateCache($cache_id, 'state', $value['startState']);
+                        if (!empty($answers['stay']) && $answers['stay'] == true) {
+                            //no update cache
+                        } else {
+                            updateCache($cache_id, 'dialogue_id', $value['startState']['dialogue_id']);
+                            updateCache($cache_id, 'state', $value['startState']);
+                        }
 
                         $renderd_answers = renderAnswers($answers);
 
@@ -172,13 +176,16 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
 
                     $answers = getStateIntentAnswers($cache_id, $value1->stateIntents['id'], $value1->stateIntents['response_type']);
 
-                    if(isset($answers)){
-                    $renderd_answers = renderAnswers($answers);
+                    if (isset($answers)) {
+                        $renderd_answers = renderAnswers($answers);
 
-                    updateCache($cache_id, 'dialogue_id', $value1['dialogue_id']);
-                    updateCache($cache_id, 'state', $value1);
-
-                    return $renderd_answers;
+                        if (!empty($answers['stay']) && $answers['stay'] == true) {
+                            //no update cache
+                        } else {
+                            updateCache($cache_id, 'dialogue_id', $value1['dialogue_id']);
+                            updateCache($cache_id, 'state', $value1);
+                        }
+                        return $renderd_answers;
                     }
 
                 }
@@ -192,12 +199,17 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
                     if ($value2->stateIntents->intent_type == 1 && $value2->stateIntents->intent == $intent) {
                         $answers = getStateIntentAnswers($cache_id, $value2->stateIntents['id'], $value2->stateIntents['response_type']);
 
-                        if(isset($answers)){
-                        $renderd_answers = renderAnswers($answers);
-                        updateCache($cache_id, 'dialogue_id', $value2['dialogue_id']);
-                        updateCache($cache_id, 'state', $value2);
+                        if (isset($answers)) {
+                            $renderd_answers = renderAnswers($answers);
 
-                        return $renderd_answers;
+                            if (!empty($answers['stay']) && $answers['stay'] == true) {
+                                //no update cache
+                            } else {
+                                updateCache($cache_id, 'dialogue_id', $value2['dialogue_id']);
+                                updateCache($cache_id, 'state', $value2);
+                            }
+
+                            return $renderd_answers;
                         }
                     }
                 }
@@ -212,11 +224,16 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
 
                     $answers = getStateIntentAnswers($cache_id, $value3->stateIntents['id'], $value3->stateIntents['response_type']);
 
-                    if(isset($answers)) {
+                    if (isset($answers)) {
                         $renderd_answers = renderAnswers($answers);
 
-                        updateCache($cache_id, 'dialogue_id', $value3['dialogue_id']);
-                        updateCache($cache_id, 'state', $value3);
+                        if (!empty($answers['stay']) && $answers['stay'] == true) {
+                            //no update cache
+                        } else {
+                            updateCache($cache_id, 'dialogue_id', $value3['dialogue_id']);
+                            updateCache($cache_id, 'state', $value3);
+                        }
+
                         if (isset($value3->stateIntents->parameter)) {
                             if ($value3->stateIntents->parameter != '' || $value3->stateIntents->parameter != null) {
 
@@ -226,7 +243,6 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
                         }
                         return $renderd_answers;
                     }
-
 
 
                 }
@@ -267,7 +283,8 @@ function searchStandardAnswer($app_id, $intent)
     return null;
 }
 
-function getStandardErrorMessage($app_id){
+function getStandardErrorMessage($app_id)
+{
     $intent = App\Intent::where('app_id', $app_id)->where('intent_type', 9)->with('intentAnswers')->first();
 
     if (isset($intent)) {
@@ -326,23 +343,23 @@ function updateCache($cache_id, $key, $value)
 
 
     if (isset($cacheObj)) {
-        if(strtolower($key) == 'parameters'){
+        if (strtolower($key) == 'parameters') {
 
-           if(!empty($value)) {
+            if (!empty($value)) {
 
-                  if(empty($cacheObj['parameters'])){
-                      $cacheObj['parameters'] = array();
-                  }
+                if (empty($cacheObj['parameters'])) {
+                    $cacheObj['parameters'] = array();
+                }
 
-                  if(is_array($value) && is_array($cacheObj['parameters'])){
-                      foreach($value as $indexKey => $item){
-                          $cacheObj['parameters'][$indexKey] = $item;
-                      }
-                  }
+                if (is_array($value) && is_array($cacheObj['parameters'])) {
+                    foreach ($value as $indexKey => $item) {
+                        $cacheObj['parameters'][$indexKey] = $item;
+                    }
+                }
 
 
-           }
-        }else{
+            }
+        } else {
             $cacheObj[$key] = $value;
         }
         bot_log($cacheObj);
@@ -493,7 +510,8 @@ function processBackendResponse($cacheObject, $intent_id)
     $webhookObject = array(
         'user_input' => $cacheObject['data']['user_input'],
         'wit_data' => $cacheObject['data']['wit_data'],
-        'action' => $intent->action
+        'action' => $intent->action,
+        'parameters' => (!empty($cacheObject['parameters']) ? $cacheObject['parameters'] : null)
     );
 
     //bot_log(sendBackendRequest($webhookURL, $webhookObject);
