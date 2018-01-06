@@ -364,7 +364,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         })
     }
 
-    $scope.saveAnswer = function(currentElement, currentScope, type){
+    $scope.saveAnswer = function(currentElement, currentModel, type, currentIndex){
         shrinkLoading.do(currentElement, 'loading');
 
         var req = {
@@ -376,15 +376,24 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             },
             data: {
                 state_id : $scope.activeStateID,
-                state_intents_id: currentElement.attr('data-state-intents-id'),
-                id : currentElement.attr('data-answer-id'),
+                state_intents_id: currentModel.state_intent_answers[currentIndex].state_intents_id,
+                id : currentModel.state_intent_answers[currentIndex].id,
                 answer: currentElement.val(),
                 answer_type: type
             }
         };
 
         $http(req).then(function (data) {
+
             shrinkLoading.do(currentElement, 'success');
+
+            setTimeout(function(){
+                currentModel.state_intent_answers[currentIndex].id = data.data.id;
+                currentModel.state_intent_answers[currentIndex].state_intents_id = data.data.state_intents_id;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            }, 500)
 
 
 
@@ -541,7 +550,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     };
 
-    $scope.deleteAnswer = function(event, currentScope, answerID){
+    $scope.deleteAnswer = function(event, currentModel ,answerID, index){
 
 
         var req = {
@@ -557,7 +566,8 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-        event.currentTarget.closest('.form-group').remove();
+            currentModel.state_intent_answers.splice(index,1);
+        //event.currentTarget.closest('.form-group').remove();
         }).catch(function (data) {
 
         });

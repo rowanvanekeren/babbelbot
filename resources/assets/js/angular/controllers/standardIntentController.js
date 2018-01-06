@@ -338,7 +338,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         });
     };
 
-    $scope.saveAnswer = function(currentElement, intent, answer){
+    $scope.saveAnswer = function(currentElement, intent, answer, index){
         shrinkLoading.do(currentElement, 'loading');
 
         var req = {
@@ -358,8 +358,9 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         };
 
         $http(req).then(function (data) {
-            shrinkLoading.do(currentElement, 'success');
 
+            shrinkLoading.do(currentElement, 'success');
+            intent.intent_answers[index].id = data.data.id;
 
 
         }).catch(function (data) {

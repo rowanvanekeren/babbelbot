@@ -29,15 +29,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         }
     };
 
-    function setLoadingButton(element, trueOrFalse , defaultText){
-        var icon = ' <i class="fa fa-repeat"></i>';
-        if(!trueOrFalse){
-            angular.element( document.querySelector( element )).html(defaultText);
-        }else if(trueOrFalse){
-            angular.element( document.querySelector( element )).html(defaultText + icon);
-        }
 
-    }
 
     $scope.resetForm = function(formElem){
 
@@ -112,8 +104,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
 
     $scope.deleteApp = function(event, id){
-
-        setLoadingButton('.danger-btn', true, 'Verwijder');
+        buttonLoading.do($('.danger-btn'), 'loading');
         var req = {
             method: 'POST',
             url: './delete-app',
@@ -128,15 +119,15 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
         $http(req).then(function (data) {
 
+            buttonLoading.do($('.danger-btn'), 'success');
 
-            setLoadingButton('.danger-btn', false, 'Verwijder');
             $scope.getUserApps(1);
             $scope.showDeleteApp = !$scope.showDeleteApp;
 
 
         }).catch(function (data) {
 
-
+            buttonLoading.do($('.danger-btn'), 'error');
         });
 
     };
@@ -152,19 +143,19 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-
-            shrinkLoading(currentElement, 'success');
+            console.log(currentElement);
+            shrinkLoading.do(currentElement, 'success');
 
         }).catch(function (data) {
 
-            shrinkLoading(currentElement, 'error');
+            shrinkLoading.do(currentElement, 'error');
         });
     };
     $scope.storeNewApp = function (currModel) {
 
 
-        setLoadingButton('.async-save', true, 'Opslaan');
-
+        buttonLoading.do($('.async-save'), 'loading');
+        //console.log( currModel.access_token.$modelValue);
         var req = {
             method: 'POST',
             url: './create-app',
@@ -185,7 +176,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
             $scope.parseServerMessages(data.config.data, data.config.data , data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'success');
 
             $scope.newAppTrigger(currModel);
 
@@ -197,7 +188,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
             $scope.parseServerMessages(data.data, data.config.data ,data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'error');
 
         });
 
@@ -216,7 +207,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         var apiURL = './get-user-apps';
 
             $http.get(apiURL + '?page=' + $scope.pageNumber).then(function (data) {
-
+               // console.log(data);
                 if(data.data.data.length == 0){
                     $scope.latestPost = true;
                 }else{
@@ -255,14 +246,14 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         inputObject['id'] = currentScope.app.id;
 
 
-        shrinkLoading(currentElement, 'loading');
+        shrinkLoading.do(currentElement, 'loading');
         $scope.updateApp(inputObject, currentElement);
 
 
 
     }
 
-    function shrinkLoading(element, state){
+  /*  function shrinkLoading(element, state){
         var inpIconElemClass = '.input-saving-overlay';
         var inpElemClass = '.input-wrapper input';
         var currentParent = element.parent();
@@ -288,12 +279,12 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         }else if(state == 'success') {
 
                 currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-times').addClass('fa-check');
-          /*  currentParent.removeClass('processing');*/
+          /!*  currentParent.removeClass('processing');*!/
                 cuurentInput.attr('disabled', false);
 
         }else if(state == 'error'){
             currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-check').addClass('fa-times');
-          /*  currentParent.removeClass('processing');*/
+          /!*  currentParent.removeClass('processing');*!/
             cuurentInput.attr('disabled', false);
         }
 
@@ -302,7 +293,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
 
 
-    }
+    }*/
 
     $scope.growBack = function(event){
 

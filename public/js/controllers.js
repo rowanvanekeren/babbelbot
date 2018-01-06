@@ -186,15 +186,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         }
     };
 
-    function setLoadingButton(element, trueOrFalse, defaultText) {
-        var icon = ' <i class="fa fa-repeat"></i>';
-        if (!trueOrFalse) {
-            angular.element(document.querySelector(element)).html(defaultText);
-        } else if (trueOrFalse) {
-            angular.element(document.querySelector(element)).html(defaultText + icon);
-        }
-    }
-
     $scope.resetForm = function (formElem) {
 
         for (var key in formElem.$$controls) {
@@ -260,8 +251,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
     };
 
     $scope.deleteApp = function (event, id) {
-
-        setLoadingButton('.danger-btn', true, 'Verwijder');
+        buttonLoading.do($('.danger-btn'), 'loading');
         var req = {
             method: 'POST',
             url: './delete-app',
@@ -276,10 +266,14 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
         $http(req).then(function (data) {
 
-            setLoadingButton('.danger-btn', false, 'Verwijder');
+            buttonLoading.do($('.danger-btn'), 'success');
+
             $scope.getUserApps(1);
             $scope.showDeleteApp = !$scope.showDeleteApp;
-        }).catch(function (data) {});
+        }).catch(function (data) {
+
+            buttonLoading.do($('.danger-btn'), 'error');
+        });
     };
     $scope.updateApp = function (updateData, currentElement) {
         var req = {
@@ -293,17 +287,17 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-
-            shrinkLoading(currentElement, 'success');
+            console.log(currentElement);
+            shrinkLoading.do(currentElement, 'success');
         }).catch(function (data) {
 
-            shrinkLoading(currentElement, 'error');
+            shrinkLoading.do(currentElement, 'error');
         });
     };
     $scope.storeNewApp = function (currModel) {
 
-        setLoadingButton('.async-save', true, 'Opslaan');
-
+        buttonLoading.do($('.async-save'), 'loading');
+        //console.log( currModel.access_token.$modelValue);
         var req = {
             method: 'POST',
             url: './create-app',
@@ -322,7 +316,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
             $scope.parseServerMessages(data.config.data, data.config.data, data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'success');
 
             $scope.newAppTrigger(currModel);
 
@@ -331,7 +325,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
             $scope.parseServerMessages(data.data, data.config.data, data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'error');
         });
     };
 
@@ -348,7 +342,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         var apiURL = './get-user-apps';
 
         $http.get(apiURL + '?page=' + $scope.pageNumber).then(function (data) {
-
+            // console.log(data);
             if (data.data.data.length == 0) {
                 $scope.latestPost = true;
             } else {
@@ -378,41 +372,42 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         inputObject[currentElement.attr('name')] = currentElement.val();
         inputObject['id'] = currentScope.app.id;
 
-        shrinkLoading(currentElement, 'loading');
+        shrinkLoading.do(currentElement, 'loading');
         $scope.updateApp(inputObject, currentElement);
     };
 
-    function shrinkLoading(element, state) {
-        var inpIconElemClass = '.input-saving-overlay';
-        var inpElemClass = '.input-wrapper input';
-        var currentParent = element.parent();
-        var cuurentInput = element;
-        if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing') && state == 'loading') {
-            currentParent.addClass('processing');
-            currentParent.children(inpIconElemClass).removeClass('fa-times').addClass('fa-repeat');
-            cuurentInput.attr('disabled', true);
-            currentParent.animate({ 'width': currentParent.width() - 25 }, 100, 'linear', function () {
-                setTimeout(function () {
-                    currentParent.children(inpIconElemClass).removeClass('hidden');
-                }, 150);
-            });
-        } else if (!currentParent.hasClass('processing')) {
-
-            currentParent.addClass('processing');
-            cuurentInput.attr('disabled', true);
-
-            currentParent.children(inpIconElemClass).removeClass('hidden');
-        } else if (state == 'success') {
-
-            currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-times').addClass('fa-check');
-            /*  currentParent.removeClass('processing');*/
-            cuurentInput.attr('disabled', false);
-        } else if (state == 'error') {
-            currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-check').addClass('fa-times');
-            /*  currentParent.removeClass('processing');*/
-            cuurentInput.attr('disabled', false);
-        }
-    }
+    /*  function shrinkLoading(element, state){
+          var inpIconElemClass = '.input-saving-overlay';
+          var inpElemClass = '.input-wrapper input';
+          var currentParent = element.parent();
+          var cuurentInput = element;
+          if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing') && state == 'loading') {
+              currentParent.addClass('processing');
+              currentParent.children(inpIconElemClass).removeClass('fa-times').addClass('fa-repeat');
+              cuurentInput.attr('disabled', true);
+              currentParent.animate({'width': (currentParent.width() - 25)}, 100, 'linear', function () {
+                  setTimeout(function () {
+                      currentParent.children(inpIconElemClass).removeClass('hidden');
+                  }, 150);
+                });
+          }else if (!currentParent.hasClass('processing')) {
+                currentParent.addClass('processing');
+              cuurentInput.attr('disabled', true);
+                currentParent.children(inpIconElemClass).removeClass('hidden');
+    
+          }else if(state == 'success') {
+                    currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-times').addClass('fa-check');
+            /!*  currentParent.removeClass('processing');*!/
+                  cuurentInput.attr('disabled', false);
+            }else if(state == 'error'){
+              currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-check').addClass('fa-times');
+            /!*  currentParent.removeClass('processing');*!/
+              cuurentInput.attr('disabled', false);
+          }
+    
+    
+    
+      }*/
 
     $scope.growBack = function (event) {
 
@@ -497,7 +492,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 /* 6 */
 /***/ (function(module, exports) {
 
-angular.module('botApp').controller("dialogueController", function ($scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("dialogueController", function ($scope, $http, $parse, shrinkLoading, buttonLoading) {
 
     $scope.newDialogueTrigger = function (formElem) {
 
@@ -525,7 +520,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
     $scope.storeNewDialogue = function (currModel) {
 
-        setLoadingButton('.async-save', true, 'Opslaan');
+        buttonLoading.do($('.async-save'), 'loading');
 
         var req = {
             method: 'POST',
@@ -544,7 +539,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
             $scope.parseServerMessages(data.config.data, data.config.data, data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'success');
 
             $scope.newDialogueTrigger(currModel);
 
@@ -553,18 +548,9 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
             $scope.parseServerMessages(data.data, data.config.data, data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'error');
         });
     };
-
-    function setLoadingButton(element, trueOrFalse, defaultText) {
-        var icon = ' <i class="fa fa-repeat"></i>';
-        if (!trueOrFalse) {
-            angular.element(document.querySelector(element)).html(defaultText);
-        } else if (trueOrFalse) {
-            angular.element(document.querySelector(element)).html(defaultText + icon);
-        }
-    }
 
     $scope.parseServerMessages = function (serverResponseData, fullArrayInputs, status, currModel) {
         //currModel = the name of the form element
@@ -633,7 +619,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
     };
 
     $scope.deleteDialogue = function (event, id) {
-        setLoadingButton('.danger-btn', true, 'Verwijder');
+        buttonLoading.do($('.danger-btn'), 'loading');
         var req = {
             method: 'POST',
             url: '../delete-dialogue',
@@ -648,10 +634,12 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
         $http(req).then(function (data) {
 
-            setLoadingButton('.danger-btn', false, 'Verwijder');
+            buttonLoading.do($('.danger-btn'), 'success');
             $scope.getDialogues(1);
             $scope.showDeleteDialogue = !$scope.showDeleteDialogue;
-        }).catch(function (data) {});
+        }).catch(function (data) {
+            buttonLoading.do($('.danger-btn'), 'error');
+        });
     };
     $scope.deleteDialogueTrigger = function (id) {
         $scope.deleteID = id;
@@ -1029,7 +1017,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         });
     };
 
-    $scope.saveAnswer = function (currentElement, currentScope, type) {
+    $scope.saveAnswer = function (currentElement, currentModel, type, currentIndex) {
         shrinkLoading.do(currentElement, 'loading');
 
         var req = {
@@ -1041,15 +1029,24 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             },
             data: {
                 state_id: $scope.activeStateID,
-                state_intents_id: currentElement.attr('data-state-intents-id'),
-                id: currentElement.attr('data-answer-id'),
+                state_intents_id: currentModel.state_intent_answers[currentIndex].state_intents_id,
+                id: currentModel.state_intent_answers[currentIndex].id,
                 answer: currentElement.val(),
                 answer_type: type
             }
         };
 
         $http(req).then(function (data) {
+
             shrinkLoading.do(currentElement, 'success');
+
+            setTimeout(function () {
+                currentModel.state_intent_answers[currentIndex].id = data.data.id;
+                currentModel.state_intent_answers[currentIndex].state_intents_id = data.data.state_intents_id;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            }, 500);
         }).catch(function (data) {
             shrinkLoading.do(currentElement, 'error');
         });
@@ -1197,7 +1194,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         }
     };
 
-    $scope.deleteAnswer = function (event, currentScope, answerID) {
+    $scope.deleteAnswer = function (event, currentModel, answerID, index) {
 
         var req = {
             method: 'POST',
@@ -1212,7 +1209,8 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            event.currentTarget.closest('.form-group').remove();
+            currentModel.state_intent_answers.splice(index, 1);
+            //event.currentTarget.closest('.form-group').remove();
         }).catch(function (data) {});
     };
 
@@ -2059,7 +2057,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         });
     };
 
-    $scope.saveAnswer = function (currentElement, intent, answer) {
+    $scope.saveAnswer = function (currentElement, intent, answer, index) {
         shrinkLoading.do(currentElement, 'loading');
 
         var req = {
@@ -2079,7 +2077,9 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         };
 
         $http(req).then(function (data) {
+
             shrinkLoading.do(currentElement, 'success');
+            intent.intent_answers[index].id = data.data.id;
         }).catch(function (data) {
             shrinkLoading.do(currentElement, 'error');
         });

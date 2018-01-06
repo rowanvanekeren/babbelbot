@@ -1,4 +1,4 @@
-angular.module('botApp').controller("dialogueController", function ($scope, $http, $parse, shrinkLoading) {
+angular.module('botApp').controller("dialogueController", function ($scope, $http, $parse, shrinkLoading, buttonLoading) {
 
     $scope.newDialogueTrigger = function (formElem) {
 
@@ -29,7 +29,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
     $scope.storeNewDialogue = function(currModel){
 
-        setLoadingButton('.async-save', true, 'Opslaan');
+        buttonLoading.do($('.async-save'), 'loading');
 
         var req = {
             method: 'POST',
@@ -50,7 +50,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
             $scope.parseServerMessages(data.config.data, data.config.data , data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'success');
 
             $scope.newDialogueTrigger(currModel);
 
@@ -62,20 +62,12 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
             $scope.parseServerMessages(data.data, data.config.data ,data.status, currModel);
 
-            setLoadingButton('.async-save', false, 'Opslaan');
+            buttonLoading.do($('.async-save'), 'error');
 
         });
     }
 
-    function setLoadingButton(element, trueOrFalse , defaultText){
-        var icon = ' <i class="fa fa-repeat"></i>';
-        if(!trueOrFalse){
-            angular.element( document.querySelector( element )).html(defaultText);
-        }else if(trueOrFalse){
-            angular.element( document.querySelector( element )).html(defaultText + icon);
-        }
 
-    }
 
 
     $scope.parseServerMessages = function (serverResponseData, fullArrayInputs, status, currModel) {
@@ -157,7 +149,7 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
     }
 
     $scope.deleteDialogue = function(event, id){
-        setLoadingButton('.danger-btn', true, 'Verwijder');
+        buttonLoading.do($('.danger-btn'), 'loading');
         var req = {
             method: 'POST',
             url: '../delete-dialogue',
@@ -172,12 +164,11 @@ angular.module('botApp').controller("dialogueController", function ($scope, $htt
 
         $http(req).then(function (data) {
 
-            setLoadingButton('.danger-btn', false, 'Verwijder');
+            buttonLoading.do($('.danger-btn'), 'success');
             $scope.getDialogues(1);
             $scope.showDeleteDialogue = !$scope.showDeleteDialogue;
         }).catch(function (data) {
-
-
+            buttonLoading.do($('.danger-btn'), 'error');
         });
     };
     $scope.deleteDialogueTrigger = function(id){

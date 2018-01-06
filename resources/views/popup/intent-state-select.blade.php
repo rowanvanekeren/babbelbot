@@ -65,9 +65,9 @@
             <div class="form-group" ng-repeat="answer in intentData.state_intent_answers | filter: {answer_type: 1}">
 
                 <div class="input-wrapper deletable-input">
-                    <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, answer.id)"></i>
+                    <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, intentData, answer.id , $index)"></i>
                     <input id="inp-access-token" class="default-input inp-loading" type="text"
-                           my-enter="saveAnswer($element, this, 1)" data-answer-id="@{{ answer.id }}" data-state-intents-id="@{{ answer.state_intents_id }}"  placeholder="Geef antwoord in" name="answer.answer"
+                           my-enter="saveAnswer($element, intentData, 1, $index)" data-answer-id="@{{ answer.id }}" data-state-intents-id="@{{ answer.state_intents_id }}"  placeholder="Geef antwoord in" name="answer.answer"
                            ng-model="answer.answer" grow-back>
                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                 </div>
@@ -83,7 +83,7 @@
             <div>
                 <div class="form-group" ng-repeat="quickReply in intentData.state_intent_answers | filter: {answer_type: 2}">
                     <div class="input-wrapper deletable-input">
-                        <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, this, quickReply.id)"></i>
+                        <i class="fa fa-trash-o input-trash-icon" aria-hidden="true" ng-click="deleteAnswer($event, intentData, quickReply.id, $index)"></i>
                         <input id="inp-access-token" class="default-input inp-loading" type="text"
                                my-enter="saveAnswer($element, this, 2)" data-answer-id="@{{ quickReply.id }}" data-state-intents-id="@{{ quickReply.state_intents_id }}" name="quickReply" ng-model="quickReply.answer" placeholder="Geef snelle optie in" grow-back>
                         <i class="fa fa-repeat input-saving-overlay hidden"></i>

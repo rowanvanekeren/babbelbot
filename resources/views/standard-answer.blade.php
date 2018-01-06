@@ -104,7 +104,7 @@
                                     <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
                                        ng-click="deleteAnswer($index, answer, intent)"></i>
                                     <input id="inp-access-token" class="default-input inp-loading" type="text"
-                                           my-enter="saveAnswer($element, intent, answer)"
+                                           my-enter="saveAnswer($element, intent, answer , $index)"
                                            placeholder="Geef antwoord in"
                                            ng-model="answer.answer" grow-back>
                                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
@@ -118,7 +118,7 @@
                                     <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
                                        ng-click="deleteAnswer($index, answer, intent)"></i>
                                     <input id="inp-access-token" class="default-input inp-loading" type="text"
-                                           my-enter="saveAnswer($element, intent, answer)"
+                                           my-enter="saveAnswer($element, intent, answer, $index)"
                                            placeholder="Geef antwoord in"
                                            ng-model="answer.answer">
                                     <i class="fa fa-repeat input-saving-overlay hidden"></i>

@@ -50,9 +50,9 @@
                                 </label>
 
                                 <div class="input-wrapper see-password-input disable-shrink">
-                                    <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                    <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                     <input id="inp-access-token" class="default-input inp-loading" type="password"
-                                           name="access_token" ng-model="access_token">
+                                           name="access_token" ng-model="access_token" >
 
                                 </div>
                                 <div class="input-error">
@@ -71,9 +71,9 @@
                                 </label>
 
                                 <div class="input-wrapper see-password-input disable-shrink">
-                                    <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                    <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                     <input id="inp-dev-token" class="default-input " type="password" name="server_token"
-                                           ng-model="server_token">
+                                           ng-model="server_token" >
 
                                 </div>
                                 <div class="input-error">
@@ -121,7 +121,7 @@
                             </label>
 
                             <div class="input-wrapper see-password-input">
-                                <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input id="inp-access-token" class="default-input inp-loading" type="password"
                                        name="access_token" ng-model="app.access_token"
                                        my-enter="inputEnter($element, this)" ng-focus="growBack($event)">
@@ -145,7 +145,7 @@
                             </label>
 
                             <div class="input-wrapper see-password-input">
-                                <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input id="inp-dev-token" class="default-input " type="password" name="server_token"
                                        ng-model="app.server_token" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">
@@ -223,7 +223,7 @@
                             </label>
 
                             <div class="input-wrapper see-password-input">
-                                <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input id="inp-dev-token" class="default-input " type="password" name="fb_verify_token"
                                        ng-model="app.fb_verify_token" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">
@@ -239,7 +239,7 @@
                             </label>
 
                             <div class="input-wrapper see-password-input">
-                                <i class="fa fa-eye password-eye-icon" aria-hidden="true"></i>
+                                <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input id="inp-dev-token" class="default-input " type="password" name="fb_access_token"
                                        ng-model="app.fb_access_token" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">

@@ -79,28 +79,31 @@ angular.module('botApp').directive('growBack', function () {
     };
 });
 
-angular.module('botApp').directive('myRepeatDirective', function () {
+angular.module('botApp').directive('passwordInput', function () {
     return function (scope, element, attrs) {
-        if (scope.$last) {
-            passwordHint();
-        }
+        element.bind("click", function (event) {
+
+            var passwordIcon = '.see-password-input>i';
+            $(event.currentTarget).parent().children('input').focus();
+            if ($(event.currentTarget).parent().children('input').attr('type') == 'text') {
+                $(event.currentTarget).parent().children('input').attr('type', 'password');
+            } else if ($(event.currentTarget).parent().children('input').attr('type') == 'password') {
+                $(event.currentTarget).parent().children('input').attr('type', 'text');
+            }
+            $(event.currentTarget).toggleClass('fa-eye-slash');
+        });
     };
 });
-function passwordHint() {
-    var passwordIcon = '.see-password-input>i';
-    $(passwordIcon).click(function (e) {
-        console.log('eye clicked');
-        $(this).parent().children('input').focus();
-        if ($(this).parent().children('input').attr('type') == 'text') {
-            $(this).parent().children('input').attr('type', 'password');
-        } else if ($(this).parent().children('input').attr('type') == 'password') {
-            $(this).parent().children('input').attr('type', 'text');
+
+
+/*angular.module('botApp').directive('myRepeatDirective', function () {
+    return function (scope, element, attrs) {
+        if (scope.$last) {
+
         }
-        $(this).toggleClass('fa-eye-slash');
+    };
+});*/
 
-    });
-
-}
 /*angular.module('botApp').directive('navActiveApp', function() {
  return {
  restrict: 'A',

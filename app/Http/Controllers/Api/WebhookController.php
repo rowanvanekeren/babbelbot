@@ -45,6 +45,8 @@ class WebhookController extends Controller
 
             $answer1 = 'dus je wilt een vliegtuig van ' . $flight_from . ' naar ' . $flight_to . '?';
             $answer2 = 'Van ' . $flight_from . ' naar ' . $flight_to . '?';
+
+
             return array(
                 'answers' => array(
                     array('answer' => $answer1),
