@@ -399,7 +399,15 @@ function getStateIntentAnswers($cache_id, $intent_id, $response_type)
                         'quick_replies' => extractQuickReplies($answers)
                     );
                 case 1 : //none
-                    return null;
+                    $cache_object = Cache::get($cache_id);
+
+                    $standard_error_message = getStandardErrorMessage($cache_object['app']['id']);
+                    if (isset($standard_error_message)) {
+                        return $standard_error_message;
+                    }else{
+                        return null;
+                    }
+
             }
         }
     }

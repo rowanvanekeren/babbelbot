@@ -50,12 +50,74 @@
 
         <div class="row">
             <div class="col-md-12 ">
-                <div class="col-md-12 app-wrapper">
+                <div class="col-md-12 app-wrapper help-wrapper">
                     <h2>Entities</h2>
                     <hr>
-                    <p>Lorem UIpada sdfasdkfj ashdfkj ashdkflh asdfkjash dfkjhasdkfjasdh kasd fkjsad hfkjh sdfkljash
-                        dfkjsah fkljsadh fkasjdfh kasjdfh asjkdfh sakldjfh asdjkfh sakdjfhasdkjfashdfkjasdhf asjkdfh
-                        asdkjfhasdfkljashdfkjas df</p>
+                    <p>Met entities kunnen wij zorgen dat gedeeltes uit zinnen kunnen worden gehaald. Bijvoorbeeld:
+                        <q>ik wil een vliegtuig van amsterdam naar parijs</q>.
+                        Hieruit kunnen we amsterdam en parijs halen. Met deze woorden kunnen wij dan eventueel bewerkingen doen. Het werkt als volgt.
+                        Eerst maken wij de entities aan in het entities tab.
+                    </p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/entities/entities-menu.jpg')}}">
+                    </div>
+                    <p>
+                        Vervolgens drukken wij op <q>nieuwe entity</q> nu hebben wij twee opties
+                    </p>
+                    <p>
+                       <strong>Sleutelwoorden en vrije tekst</strong>
+                    </p>
+                    <p>
+                        Hiermee kun je gedeeltes uit zinnen trainen zonder dat ze exact gelijk moeten zijn aan een bepaald sleutelwoord. Dus als je zegt: <q>ik wil een vliegtuig van Amsterdam naar Parijs</q> en je kiest voor deze optie zal de applicatie na voldoende training automatisch andere steden begrijpen zonder dat ze vooraf gedefinieerd zijn
+                    </p>
+                    <p>
+                        <strong>Sleutelwoorden</strong>
+                    </p>
+                    <p>
+                        Als een gedeelte van een zin overeenkomt met de vooraf bepaalde sleutelwoorden dan zal de applicatie dat oppikken en doorgeven. Wanneer dat niet het geval is zal het gedeelte in de zin niet herkend worden.
+                    </p>
+
+                    <p>
+                        Dit zijn de twee opties, bij sleutelwoorden heb je een extra mogelijkheid om synoniemen van woorden in te geven voor betere herkenbaarheid (bijvoorbeeld pizza hawaii en pizza ananas)
+                        Voor dit voorbeeld maken wij twee entities aan met de namen vliegen_vanaf en vliegen_naar met als type <q>Sleutelwoorden en vrije tekst</q>.
+                        Vervolgens gaan we naar <q>dialogen</q> en maken wij een nieuw dialoog bijvoorbeeld <q>vliegtickets</q>
+                    </p>
+
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/entities/dialoog-aanmaken.jpg')}}">
+                    </div>
+
+                    <p>
+                        Nu slepen we het eerste block op het scherm via de plus knop, en drukken wij op het blok
+                        Nu voegen we een intent toe met de naam <q>vliegtickets_aanvragen</q>.
+                    </p>
+
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/entities/intent-toevoegen.jpg')}}">
+                    </div>
+
+                    <p>
+                        Vervolgens drukken we op trainen.
+                        Voeg nu als eerst een aantal vergelijkbare zinnen toe.
+                    </p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/entities/train-entities.jpg')}}">
+                    </div>
+
+                    <p>Nu gaan we een voor een de zinnen trainen. Selecteer de woorden in de zin in de juiste volgorde.</p>
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/entities/woorden-trainen-intent-entities.jpg')}}">
+                    </div>
+
+                    <p>Vervolgens drukken we op trainen.</p>
+
+                    <div class="help-img">
+                        <img src="{{asset('public/img/help/entities/trainen-van-intentie.jpg')}}">
+                    </div>
+
+                    <p>Doe dit vervolgens ook bij de andere zinnen en druk op trainen.
+                        Vanaf nu wanneer je bijvoorbeeld een inkomende zin naar de backend stuurt (zie backend). Komen de namen van de steden als parameters binnen. Hiermee kun je nu makkelijker bewerkingen doen.
+                    </p>
                 </div>
             </div>
         </div>

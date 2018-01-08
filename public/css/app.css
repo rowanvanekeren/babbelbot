@@ -1004,6 +1004,15 @@ input[type=checkbox]:focus {
 
 .wide-tooltip {
   min-width: 300px;
+  height: auto;
+}
+
+.large-text-tt-1 {
+  min-height: 150px;
+}
+
+.large-text-tt-2 {
+  min-height: 100px;
 }
 
 .home-bg {

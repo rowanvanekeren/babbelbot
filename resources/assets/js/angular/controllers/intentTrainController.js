@@ -284,6 +284,10 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
              /*   if(event.hasOwnProperty('currentTarget')){
                     buttonLoading.do($(event.currentTarget), 'error');
                 }*/
+                if(currentElement){
+                    shrinkLoading.do(currentElement, 'error');
+                }
+
             }
 
 
@@ -292,6 +296,9 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
         }).catch(function (data) {
             if(event != null && event.hasOwnProperty('currentTarget')){
                 buttonLoading.do($(event.currentTarget), 'error');
+            }
+            if(currentElement){
+                shrinkLoading.do(currentElement, 'error');
             }
         });
     }

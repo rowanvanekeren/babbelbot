@@ -45,13 +45,17 @@
                         <div class="app-center-section">
 
                             <div class="form-group">
-                                <label for="inp-access-token">
-                                    Wit.ai access token
+                                <label >
+                                    Wit.ai access token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
+                                                           tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
+                                                           tooltip-template="Deze token kun je verkrijgen
+                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
+                            settings de tokens kunt verkrijgen"></i>
                                 </label>
 
                                 <div class="input-wrapper see-password-input disable-shrink">
                                     <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                    <input id="inp-access-token" class="default-input inp-loading" type="password"
+                                    <input  class="default-input inp-loading" type="password"
                                            name="access_token" ng-model="access_token" >
 
                                 </div>
@@ -66,13 +70,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inp-dev-token">
-                                    Wit.ai server token
+                                <label >
+                                    Wit.ai server token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
+                                                           tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
+                                                           tooltip-template="Deze token kun je verkrijgen
+                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
+                            settings de tokens kunt verkrijgen"></i>
                                 </label>
 
                                 <div class="input-wrapper see-password-input disable-shrink">
                                     <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                    <input id="inp-dev-token" class="default-input " type="password" name="server_token"
+                                    <input  class="default-input " type="password" name="server_token"
                                            ng-model="server_token" >
 
                                 </div>
@@ -112,7 +120,7 @@
                     </div>
                     <div class="app-center-section">
                         <div class="form-group">
-                            <label for="inp-access-token">
+                            <label >
                                 Wit.ai access token <i class="fa fa-info-circle" aria-hidden="true" tooltips
                                                        tooltip-smart="true" tooltip-class="wide-tooltip"
                                                        tooltip-template="Deze token kun je verkrijgen
@@ -122,7 +130,7 @@
 
                             <div class="input-wrapper see-password-input">
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                <input id="inp-access-token" class="default-input inp-loading" type="password"
+                                <input  class="default-input inp-loading" type="password"
                                        name="access_token" ng-model="app.access_token"
                                        my-enter="inputEnter($element, this)" ng-focus="growBack($event)">
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
@@ -136,7 +144,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inp-dev-token">
+                            <label >
                                 Wit.ai server token <i class="fa fa-info-circle" aria-hidden="true" tooltips
                                                        tooltip-smart="true" tooltip-class="wide-tooltip"
                                                        tooltip-template="Deze token kun je verkrijgen
@@ -146,7 +154,7 @@
 
                             <div class="input-wrapper see-password-input">
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                <input id="inp-dev-token" class="default-input " type="password" name="server_token"
+                                <input class="default-input " type="password" name="server_token"
                                        ng-model="app.server_token" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">
 
@@ -155,7 +163,7 @@
                         </div>
                         <hr>
                         <div class="form-group">
-                            <label for="inp-dev-token">
+                            <label >
                                 Backend webhook <i class="fa fa-info-circle" aria-hidden="true" tooltips
                                                    tooltip-smart="true" tooltip-class="wide-tooltip"
                                                    tooltip-template="Wanneer je bij dialogen een antwoord selecteerd met optie 'backend' dan zal babbelbot een 'post request' sturen naar deze url. Meer info hierover vindt je in de Help sectie"></i>
@@ -163,7 +171,7 @@
 
                             <div class="input-wrapper">
 
-                                <input id="inp-webhook" class="default-input " type="text" name="webhook"
+                                <input class="default-input " type="text" name="webhook"
                                        ng-model="app.webhook" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">
 
@@ -182,9 +190,9 @@
                             <h3>Website</h3>
                         </div>
                         <div class="form-group">
-                            <label for="inp-dev-token">
-                                Babbelbot Url <i class="fa fa-info-circle" aria-hidden="true"
-                                                 tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                            <label >
+                                Babbelbot Url <i class="fa fa-info-circle" aria-hidden="true" tooltip-append-to-body="true"
+                                                 tooltips tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
                                                  tooltip-template="Wanneer je bij facebook moet connecteren met een webhook zal facebook vragen om een 'verify token', dit is een token die je zelf mag verzinnen maar bij zowel facebook als babbelbot het zelfde moeten zijn"></i>
                             </label>
 
@@ -202,8 +210,8 @@
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Facebook webhook url <i class="fa fa-info-circle" aria-hidden="true"
-                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                                Facebook webhook url <i class="fa fa-info-circle" aria-hidden="true" tooltip-append-to-body="true"
+                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
                                                          tooltip-template="Wanneer je bij facebook moet connecteren met een webhook zal facebook vragen om een 'verify token', dit is een token die je zelf mag verzinnen maar bij zowel facebook als babbelbot het zelfde moeten zijn"></i>
                             </label>
 
@@ -217,14 +225,14 @@
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Facebook verify token <i class="fa fa-info-circle" aria-hidden="true"
-                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                                Facebook verify token <i class="fa fa-info-circle" aria-hidden="true" tooltip-append-to-body="true"
+                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
                                                          tooltip-template="Wanneer je bij facebook moet connecteren met een webhook zal facebook vragen om een 'verify token', dit is een token die je zelf mag verzinnen maar bij zowel facebook als babbelbot het zelfde moeten zijn"></i>
                             </label>
 
                             <div class="input-wrapper see-password-input">
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                <input id="inp-dev-token" class="default-input " type="password" name="fb_verify_token"
+                                <input  class="default-input " type="password" name="fb_verify_token"
                                        ng-model="app.fb_verify_token" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">
 
@@ -233,14 +241,14 @@
                         </div>
                         <div class="form-group">
                             <label for="inp-dev-token">
-                                Facebook access token <i class="fa fa-info-circle" aria-hidden="true"
-                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip"
+                                Facebook access token <i class="fa fa-info-circle" aria-hidden="true" tooltip-append-to-body="true"
+                                                         tooltips tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
                                                          tooltip-template="Wanneer je bij facebook pagina hebt aangemaakt zul je bij de developers pagina een access token kunnen vinden. Deze kun je in dit veld plakken"></i>
                             </label>
 
                             <div class="input-wrapper see-password-input">
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                <input id="inp-dev-token" class="default-input " type="password" name="fb_access_token"
+                                <input  class="default-input " type="password" name="fb_access_token"
                                        ng-model="app.fb_access_token" my-enter="inputEnter($element, this)"
                                        ng-focus="growBack($event)">
 

@@ -38,10 +38,10 @@
                                 <div class="input-wrapper deletable-input intent-answer-input">
                                     <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
                                        ng-click="deleteAnswer($index, answer, intent)"></i>
-                                    <input id="inp-access-token" class="default-input inp-loading" type="text"
-                                           my-enter="saveAnswer($element, intent, answer)"
+                                    <input  class="default-input inp-loading" type="text"
+                                           my-enter="saveAnswer($element, intent, answer, $index)"
                                            placeholder="Geef antwoord in"
-                                           ng-model="answer.answer">
+                                           ng-model="answer.answer" grow-back>
                                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                                 </div>
 
@@ -52,10 +52,10 @@
                                 <div class="input-wrapper deletable-input intent-answer-input">
                                     <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
                                        ng-click="deleteAnswer($index, answer, intent)"></i>
-                                    <input id="inp-access-token" class="default-input inp-loading" type="text"
-                                           my-enter="saveAnswer($element, intent, answer)"
+                                    <input  class="default-input inp-loading" type="text"
+                                           my-enter="saveAnswer($element, intent, answer, $index)"
                                            placeholder="Geef antwoord in"
-                                           ng-model="answer.answer">
+                                           ng-model="answer.answer" grow-back>
                                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                                 </div>
 
@@ -99,11 +99,10 @@
 
                         <div class="answers" ng-class="{'answers-open' : answersToggle == intent.id}">
                             <div class="form-group" ng-repeat="answer in intent.intent_answers ">
-
                                 <div class="input-wrapper deletable-input intent-answer-input">
                                     <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
                                        ng-click="deleteAnswer($index, answer, intent)"></i>
-                                    <input id="inp-access-token" class="default-input inp-loading" type="text"
+                                    <input  class="default-input inp-loading" type="text"
                                            my-enter="saveAnswer($element, intent, answer , $index)"
                                            placeholder="Geef antwoord in"
                                            ng-model="answer.answer" grow-back>
@@ -117,10 +116,10 @@
                                 <div class="input-wrapper deletable-input intent-answer-input">
                                     <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
                                        ng-click="deleteAnswer($index, answer, intent)"></i>
-                                    <input id="inp-access-token" class="default-input inp-loading" type="text"
+                                    <input  class="default-input inp-loading" type="text"
                                            my-enter="saveAnswer($element, intent, answer, $index)"
                                            placeholder="Geef antwoord in"
-                                           ng-model="answer.answer">
+                                           ng-model="answer.answer" grow-back>
                                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
                                 </div>
 

@@ -11,10 +11,14 @@
         </div >
         <hr>
 
-        <h3 >Actieve intent:</h3>
+        <h3 >Actieve intentie:<i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
+                               tooltip-smart="false" tooltip-class="wide-tooltip large-text-tt-1"  tooltip-size="small" tooltip-side="bottom"
+                               tooltip-template="Wanneer je op een intentie zoekt in het veld hieronder
+                                                          en op gebruik klikt of wanneer je een nieuwe intentie aanmaakt, zal de gekozen intentie actief worden en hier tevoorschijn komen.
+                                                          vanaf dan is deze actief en kan hij opgepikt worden tijdens een chat"></i></h3>
         <div class="current-active-intent" >
 
-            <span>@{{ intentData.intent ? intentData.intent : 'geen actieve intent'  }}</span>
+            <span>@{{ intentData.intent ? intentData.intent : 'geen actieve intentie'  }}</span>
             <div ng-show="intentData.intent">
                 <button class="main-btn" ng-click="getIntentData()">Trainen</button>
                 <i class="fa fa-times " aria-hidden="true" ng-click="removeActiveIntent(intentData.id)"></i>
@@ -22,7 +26,11 @@
         </div>
 
         <div class="form-group" >
-            <h3>Gebruiker zegt:</h3>
+            <h3>Gebruiker zegt: <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
+                                   tooltip-smart="false" tooltip-class="wide-tooltip large-text-tt-1"  tooltip-size="small" tooltip-side="bottom"
+                                   tooltip-template="Met dit veld kun je zoeken naar bestaande intenties of nieuwe aanmaken.
+                          Inteties zijn de betekenis van een zin. Met intenties kun je de chatbot slimmer maken.
+                          En kan hij automatisch zinnen interpreteren. Train je intenties voor een beter resultaat"></i></h3>
             <div class="input-wrapper ">
 
                 <input id="" class="default-input inp-loading" type="text"
