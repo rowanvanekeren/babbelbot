@@ -127,7 +127,7 @@
             <div>
                 <img src="{{asset('public/img/logo/payment-method.png')}}">
                 <h3>Bestellen via een chatbot</h3>
-                <p>Waarom chatbot niet gebruiken om bestellingen te doen? Ze kunnen sneller vertrouwen winnen bij klanten. En zelfs advies geven! Je zult zien dat er binnenkort veel van deze chabots online gaan komen.</p>
+                <p>Waarom chatbots niet gebruiken om bestellingen te doen? Ze kunnen sneller vertrouwen winnen bij klanten. En zelfs advies geven! Je zult zien dat er binnenkort veel van deze chabots online gaan komen.</p>
 
             </div>
         </div>
@@ -136,6 +136,6 @@
 
 @section('content-footer')
     <div class="col-md-12 ">
-        <p>2017 - Babbelbot</p>
+        <p>2018 - Babbelbot | Contact: info@babbelbot.be </p>
     </div>
 @endsection

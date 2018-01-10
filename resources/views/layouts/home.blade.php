@@ -5,11 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Babbelbot') }}</title>
+    <title>{{ config('app.name', 'Babbelbot') }} | Maak je eigen slimme chatbot in het nederlands</title>
+    <meta name="description" content="Babbelbot is een slimme chatbot maker, gespecialiseerd in het Nederlands, met ons uniek conversatie systeem
+    hebben wij het u makkelijker gemaakt om met minimale technische ervaring
+    een eigen chatbot te maken">
 
+    <meta name="robots" CONTENT="index, follow" />
+
+
+    <meta property="og:title" content="Babbelbot, de slimme chatbot maker">
+    <meta property="og:description" content="Maak je eigen slimme chatbot in het Nederlands!">
+    <meta property="og:image" content="{{asset('public/img/logo/babbelbot-logo.png')}}">
+    <meta property="og:url" content="https://babbelbot.be">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta name="theme-color" content="#4ca78c">
     <link rel="icon" type="image/png" href="{{asset('public/img/favicon/favicon-babbelbot.png')}}" />
     <!-- Styles -->
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -76,5 +90,19 @@
 <script src="{{asset('public/js/jquery-3.2.1.min.js')}}"></script>
 <script src="{{asset('public/js/addons/typed.min.js')}}"></script>
 <script src="{{ asset('public/js/app.js') }}"></script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-90408679-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-90408679-2');
+</script>
+
+
+
 </body>
 </html>

@@ -140,7 +140,4 @@ Auth::routes();
 
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
-Route::get('/home', 'HomeController@index')->name('home');
 
-
-Route::get('/home', 'HomeController@index')->name('home');

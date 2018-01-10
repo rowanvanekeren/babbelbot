@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.blank')
 
 @section('content')
     <div class="container">
@@ -9,9 +9,11 @@
 
                     <div class="panel-body">
                         @if (session('status'))
+                            <div class="col-md-12">
                             <div class="alert alert-success">
-                                {{ session('status') }}
+                                <i class="fa fa-check" aria-hidden="true"></i> {{ session('status') }}
                             </div>
+                                </div>
                         @endif
 
                         <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
@@ -28,9 +30,13 @@
                                                value="{{ old('email') }}" required>
                                     </div>
                                     @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                        <div class="input-error">
+
+                                            <div class="has-error">
+                                                <i class="fa fa-times " aria-hidden="true"></i> {{ $errors->first('email') }}
+                                            </div>
+
+                                        </div>
                                     @endif
                                 </div>
                             </div>
