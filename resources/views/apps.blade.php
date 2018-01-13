@@ -44,34 +44,10 @@
                         </div>
                         <div class="app-center-section">
 
+
                             <div class="form-group">
                                 <label >
-                                    Wit.ai access token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
-                                                           tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
-                                                           tooltip-template="Deze token kun je verkrijgen
-                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
-                            settings de tokens kunt verkrijgen"></i>
-                                </label>
-
-                                <div class="input-wrapper see-password-input disable-shrink">
-                                    <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                    <input  class="default-input inp-loading" type="password"
-                                           name="access_token" ng-model="access_token" >
-
-                                </div>
-                                <div class="input-error">
-
-                                    <div ng-repeat="errorMessage in newApp.access_token.$error.serverMessage"
-                                         ng-show="newApp.access_token.$error.serverMessage"
-                                         ng-class="{'has-error': newApp.access_token.$error.serverMessage }">
-                                        <i class="fa fa-times " aria-hidden="true"></i> @{{errorMessage}}
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label >
-                                    Wit.ai server token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
+                                    Wit.ai server access token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
                                                            tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
                                                            tooltip-template="Deze token kun je verkrijgen
                             door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
@@ -89,6 +65,31 @@
                                     <div ng-repeat="errorMessage in newApp.server_token.$error.serverMessage"
                                          ng-show="newApp.server_token.$error.serverMessage"
                                          ng-class="{'has-error': newApp.server_token.$error.serverMessage }">
+                                        <i class="fa fa-times " aria-hidden="true"></i> @{{errorMessage}}
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label >
+                                    Wit.ai client access token <i class="fa fa-info-circle" aria-hidden="true" tooltips tooltip-append-to-body="true"
+                                                           tooltip-smart="true" tooltip-class="wide-tooltip large-text-tt-2"
+                                                           tooltip-template="Deze token kun je verkrijgen
+                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
+                            settings de tokens kunt verkrijgen"></i>
+                                </label>
+
+                                <div class="input-wrapper see-password-input disable-shrink">
+                                    <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
+                                    <input  class="default-input inp-loading" type="password"
+                                            name="access_token" ng-model="access_token" >
+
+                                </div>
+                                <div class="input-error">
+
+                                    <div ng-repeat="errorMessage in newApp.access_token.$error.serverMessage"
+                                         ng-show="newApp.access_token.$error.serverMessage"
+                                         ng-class="{'has-error': newApp.access_token.$error.serverMessage }">
                                         <i class="fa fa-times " aria-hidden="true"></i> @{{errorMessage}}
                                     </div>
 
@@ -121,7 +122,25 @@
                     <div class="app-center-section">
                         <div class="form-group">
                             <label >
-                                Wit.ai access token <i class="fa fa-info-circle" aria-hidden="true" tooltips
+                                Wit.ai server access token <i class="fa fa-info-circle" aria-hidden="true" tooltips
+                                                       tooltip-smart="true" tooltip-class="wide-tooltip"
+                                                       tooltip-template="Deze token kun je verkrijgen
+                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
+                            settings de tokens kunt verkrijgen"></i>
+                            </label>
+
+                            <div class="input-wrapper see-password-input">
+                                <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
+                                <input class="default-input " type="password" name="server_token"
+                                       ng-model="app.server_token" my-enter="inputEnter($element, this)"
+                                       ng-focus="growBack($event)">
+
+                                <i class="fa fa-repeat input-saving-overlay hidden"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label >
+                                Wit.ai client access token <i class="fa fa-info-circle" aria-hidden="true" tooltips
                                                        tooltip-smart="true" tooltip-class="wide-tooltip"
                                                        tooltip-template="Deze token kun je verkrijgen
                             door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
@@ -143,24 +162,7 @@
 
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label >
-                                Wit.ai server token <i class="fa fa-info-circle" aria-hidden="true" tooltips
-                                                       tooltip-smart="true" tooltip-class="wide-tooltip"
-                                                       tooltip-template="Deze token kun je verkrijgen
-                            door naar https://wit.ai te gaan, je maakt vervolgens een app aan waarna je bij
-                            settings de tokens kunt verkrijgen"></i>
-                            </label>
 
-                            <div class="input-wrapper see-password-input">
-                                <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
-                                <input class="default-input " type="password" name="server_token"
-                                       ng-model="app.server_token" my-enter="inputEnter($element, this)"
-                                       ng-focus="growBack($event)">
-
-                                <i class="fa fa-repeat input-saving-overlay hidden"></i>
-                            </div>
-                        </div>
                         <hr>
                         <div class="form-group">
                             <label >

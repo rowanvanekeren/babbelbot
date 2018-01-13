@@ -244,6 +244,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
+            console.log('intentstate', data);
             $scope.updateFullPopUp(data, 'open');
             $scope.hideIntentFooter = false;
         }).catch(function (data) {
@@ -304,12 +305,12 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             $scope.intentData = data.data;
 
+
             if (typeof data.data != 'undefined') {
-
-
-
-
-
+                angular.forEach($scope.intentData.state_intent_answers, function(member, index){
+                    //Just add the index to your item
+                    $scope.intentData.state_intent_answers[index].index = index;
+                });
                 $scope.intentID = (typeof data.data.id != 'undefined') ? data.data.id : '';
                 $scope.typeSetter(data.data['response_type']);
                 $scope.intentData.id;
@@ -357,15 +358,33 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         if(typeof $scope.intentData['state_intent_answers'] == 'undefined' || $scope.intentData['state_intent_answers'] == ''){
             $scope.intentData['state_intent_answers'] = [];
         }
-        $scope.intentData['state_intent_answers'].push({
+        var currentAnswerIndex = $scope.intentData['state_intent_answers'].push({
             state_intents_id :  $scope.intentData.id,
             answer : '',
             answer_type : 2
-        })
+        }) -1;
+
+        $scope.intentData.state_intent_answers[currentAnswerIndex]['index'] = currentAnswerIndex;
     }
 
-    $scope.saveAnswer = function(currentElement, currentModel, type, currentIndex){
+    $scope.saveAnswer = function(currentElement, currentModel, type, currentIndex, test){
+        console.log('currentElement', currentElement);
+        console.log('currentModel', currentModel);
+        console.log('type', type);
+        console.log('index;=',currentIndex);
+        console.log('state intent id',currentModel.id);
+
+        console.log('index;=',currentIndex);
+        console.log('test', test);
         shrinkLoading.do(currentElement, 'loading');
+
+
+        if(typeof currentModel.state_intent_answers[currentIndex] != 'undefined' &&
+            currentModel.state_intent_answers[currentIndex].hasOwnProperty('id')){
+            var currentAnswerID = currentModel.state_intent_answers[currentIndex].id;
+        }else{
+            var currentAnswerID = null;
+        }
 
         var req = {
             method: 'POST',
@@ -376,20 +395,25 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             },
             data: {
                 state_id : $scope.activeStateID,
-                state_intents_id: currentModel.state_intent_answers[currentIndex].state_intents_id,
-                id : currentModel.state_intent_answers[currentIndex].id,
+                state_intents_id: currentModel.id,
+                id : currentAnswerID,
                 answer: currentElement.val(),
                 answer_type: type
             }
         };
 
         $http(req).then(function (data) {
+            console.log(data);
+            console.log(currentModel.state_intent_answers[currentIndex]);
 
             shrinkLoading.do(currentElement, 'success');
 
             setTimeout(function(){
-                currentModel.state_intent_answers[currentIndex].id = data.data.id;
-                currentModel.state_intent_answers[currentIndex].state_intents_id = data.data.state_intents_id;
+                if(typeof currentModel.state_intent_answers[currentIndex] != 'undefined'){
+                    currentModel.state_intent_answers[currentIndex]['id'] = data.data.id;
+                    currentModel.state_intent_answers[currentIndex]['state_intents_id'] = data.data.state_intents_id;
+                }
+
                 if (!$scope.$$phase) {
                     $scope.$apply();
                 }
@@ -430,11 +454,13 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         if(typeof $scope.intentData.state_intent_answers == 'undefined' || $scope.intentData.state_intent_answers == ''){
             $scope.intentData['state_intent_answers'] = [];
         }
-        $scope.intentData.state_intent_answers.push({
+        var currentAnswerIndex = $scope.intentData.state_intent_answers.push({
             state_intents_id :  $scope.intentData.id,
             answer : '',
             answer_type : 1
-        })
+        }) -1;
+
+        $scope.intentData.state_intent_answers[currentAnswerIndex]['index'] = currentAnswerIndex;
     };
     $scope.updateIntentType = function(state_id, type){
         $scope.hideIntentFooter = true;

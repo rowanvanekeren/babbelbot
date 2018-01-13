@@ -381,7 +381,7 @@ function getStateIntentAnswers($cache_id, $intent_id, $response_type)
 
                     $cache_object = Cache::get($cache_id);
 
-                    return processBackendResponse($cache_object, $intent_id);
+                    return processBackendResponse($cache_object, $intent_id, $cache_id);
                 case 4 : //quickReplies and normal messages
 
                     return array(
@@ -497,7 +497,7 @@ function keyCacheObjectExist($cacheObject, $key)
     }
 }
 
-function processBackendResponse($cacheObject, $intent_id)
+function processBackendResponse($cacheObject, $intent_id, $cache_id)
 {
 
     $intent = \App\StateIntent::where('id', $intent_id)->first();
@@ -516,6 +516,7 @@ function processBackendResponse($cacheObject, $intent_id)
 
 
     $webhookObject = array(
+        'session_id' => $cache_id,
         'user_input' => $cacheObject['data']['user_input'],
         'wit_data' => $cacheObject['data']['wit_data'],
         'action' => $intent->action,
