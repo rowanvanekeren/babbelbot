@@ -64,12 +64,14 @@
             <div class='span-option' ng-show="!newIntent && intentSearchResult">
                 <span ng-click="newIntent = true" >  of maak een nieuw </span>
             </div>
+            <form>
             <div class=" new-intent" ng-show="newIntent">
                 <input class="default-input" type="text" placeholder="voer nieuwe intent naam in" ng-model="newIntentValue">
 
                 <button class="main-btn" ng-click="addNewIntent(newIntentValue, intentData.intent_data.name, $event)">Nieuw</button>
                 <i class="fa fa-times " aria-hidden="true" ng-show="intentSearchResult" ng-click="newIntent = false"></i>
             </div>
+            </form>
         </div>
         <div class="input-error">
             <div class="no-error" ng-class="{'has-error' : intentData.error}" ng-repeat="error in intentData.error"><i
