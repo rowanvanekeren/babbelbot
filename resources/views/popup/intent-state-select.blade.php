@@ -1,13 +1,13 @@
 <div id="flowchart-popup" ng-controller='intentController' class="flowchart-popup hidden" ng-cloak>
+    <div class="popup-title">
 
+        <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">
+            Titel: @{{ intentData.state_intent_data.name }}</h2>
+        <i class="fa fa-times " aria-hidden="true" ng-click="popupClose()"></i>
+    </div>
+    <hr>
     <div class="popup-wrapper">
-        <div class="popup-title">
 
-            <h2 id="intent-title" data-operator-id="@{{ activeStateID }}">
-                Titel: @{{ intentData.state_intent_data.name }}</h2>
-            <i class="fa fa-times " aria-hidden="true" ng-click="popupClose()"></i>
-        </div>
-        <hr>
 
         <div class="form-group hide-load hidden" ng-if="intentData.start_state != 1">
             <h3>Intentie type</h3>

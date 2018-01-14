@@ -526,8 +526,6 @@ function processBackendResponse($cacheObject, $intent_id, $cache_id)
     //bot_log(sendBackendRequest($webhookURL, $webhookObject);
 
     return sendBackendRequest($webhookURL, $webhookObject);
-
-
 }
 
 function sendBackendRequest($url, $addObj)

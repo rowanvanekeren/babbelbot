@@ -1817,8 +1817,6 @@ old version
   top: 75px;
   -webkit-box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.3);
           box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.3);
-  overflow-y: scroll;
-  padding: 15px;
 }
 
 #flowchart-popup.small-popup,
@@ -1832,8 +1830,24 @@ old version
   width: 100%;
 }
 
+#flowchart-popup .popup-wrapper,
+#flowchart-popup-intent .popup-wrapper {
+  position: relative;
+  width: 100%;
+  max-height: 520px;
+  overflow-y: scroll;
+  padding: 15px;
+}
+
+#flowchart-popup > hr,
+#flowchart-popup-intent > hr {
+  margin: 0 15px;
+}
+
 #flowchart-popup .popup-title,
 #flowchart-popup-intent .popup-title {
+  padding: 15px;
+  height: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

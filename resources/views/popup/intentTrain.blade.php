@@ -1,13 +1,13 @@
 <div id="flowchart-popup-intent" ng-controller='intentTrainController' active-training="toggleTrainingPopup(data)" ng-show="showTrainingPopup">
-
+    <div class="popup-title">
+        <h2 id="intent-title" >Intent: @{{ intentValueData.value }}</h2>
+        <i class="fa fa-times " aria-hidden="true" ng-click="toggleTrainingPopup({intent: null, toggle: 'close'})"></i>
+    </div>
+    <hr>
     <div class="popup-wrapper " >
 
 
-        <div class="popup-title">
-            <h2 id="intent-title" >Intent: @{{ intentValueData.value }}</h2>
-            <i class="fa fa-times " aria-hidden="true" ng-click="toggleTrainingPopup({intent: null, toggle: 'close'})"></i>
-        </div>
-        <hr>
+
         <div class="new-intent-expression">
             <div class="form-group" >
                 <h3>Voeg zin toe:</h3>
