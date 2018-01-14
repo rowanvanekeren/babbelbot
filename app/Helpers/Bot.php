@@ -1,9 +1,6 @@
 <?php
 
-function testBot()
-{
-    return 'testbot';
-}
+
 
 function handleRequest($cache_id, $unique_id, $user_input, $botDriver = 'default', $callback)
 {
@@ -48,6 +45,18 @@ function processRequest($cache_id, $unique_id, $user_input, $botDriver = 'defaul
 
     if (isset($wit_data['entities']['intent'])) {
         $wit_intent = $wit_data['entities']['intent'][0]['value'];
+
+
+        /* add all entities as paramters */
+        foreach($wit_data['entities'] as $key => $value){
+            if($key != 'intent'){
+                updateCache($cache_id, 'parameters', array(
+                    $key => $value
+                ));
+            }
+        };
+
+
     } else {
         $wit_intent = null;
     }
@@ -222,6 +231,13 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
             if (isset($value3->stateIntents)) {
                 if ($value3->stateIntents->intent_type == 3) {
 
+                    if (isset($value3->stateIntents->parameter)) {
+                        if ($value3->stateIntents->parameter != '' || $value3->stateIntents->parameter != null) {
+
+                            updateCache($cache_id, 'parameters', array($value3->stateIntents->parameter => $user_input));
+                        }
+                    }
+
                     $answers = getStateIntentAnswers($cache_id, $value3->stateIntents['id'], $value3->stateIntents['response_type']);
 
                     if (isset($answers)) {
@@ -234,13 +250,12 @@ function searchNextStates($cache_id, $nextStates, $intent = null, $user_input = 
                             updateCache($cache_id, 'state', $value3);
                         }
 
-                        if (isset($value3->stateIntents->parameter)) {
+/*                        if (isset($value3->stateIntents->parameter)) {
                             if ($value3->stateIntents->parameter != '' || $value3->stateIntents->parameter != null) {
 
                                 updateCache($cache_id, 'parameters', array($value3->stateIntents->parameter => $user_input));
                             }
-
-                        }
+                        }*/
                         return $renderd_answers;
                     }
 
