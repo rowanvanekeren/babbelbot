@@ -26,8 +26,13 @@
         </li>
         <li>
 
+            <a href="{{ url('./instellingen') }}" class="settings-mobile {{ Request::path() == 'instellingen' ? 'active' : '' }}"><i class="fa fa-cog dash-icon" aria-hidden="true"></i> Instellingen</a>
+        </li>
+        <li>
+
             <a href="{{ url('./logout') }}" class="logout-mobile"><i class="fa fa-sign-out dash-icon" aria-hidden="true"></i> Uitloggen</a>
         </li>
+
     </ul>
 </div>
 <div class="footer-navigation">
@@ -51,7 +56,7 @@
                 </ul>
         </li>
         <li class="top-user-li">
-           <a href=""> <i class="fa fa-cog" aria-hidden="true"></i></a>
+           <a href="{{ url('instellingen') }}"> <i class="fa fa-cog" aria-hidden="true"></i></a>
         </li>
 </ul>
 </div>

@@ -73,6 +73,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.addNewIntent = function(intentValue, intentExpression, event ){
+        $scope.newIntentValue = '';
         console.log(event);
         if(typeof event != 'undefined'){
             buttonLoading.do($(event.currentTarget), 'loading');
@@ -425,6 +426,9 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
             shrinkLoading.do(currentElement, 'error');
         });
     };
+
+
+
     $scope.addAction = function(currentElement, currentModel, value){
 
         shrinkLoading.do(currentElement, 'loading');

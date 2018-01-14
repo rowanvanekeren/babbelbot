@@ -39,6 +39,10 @@
           &.logout-mobile{
             display:none;
           }
+
+          &.settings-mobile{
+            display:none;
+          }
           transition: 0.2s;
           &.active {
             background-color: $main-color;
@@ -234,7 +238,7 @@
   .top-navigation {
     display: none;
   }
-  .logout-mobile{
+  .logout-mobile, .settings-mobile{
     display:block;
   }
   .left-navigation {
@@ -257,7 +261,11 @@
       padding: 0;
       z-index: 5;
       > ul > li > a {
-        &.logout-mobile{
+        &.logout-mobile, {
+          display:block;
+        }
+
+        &.settings-mobile{
           display:block;
         }
         display: block;

@@ -495,9 +495,20 @@ input[type=checkbox]:focus {
   padding: 5px;
 }
 
+.user-settings {
+  margin-top: 30px;
+}
+
 @media only screen and (max-width: 768px) {
   #babbelbot-chatbot-preview {
     display: none;
+  }
+
+  .warning-box {
+    width: 90%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
   }
 
   .help-wrapper img {
@@ -704,6 +715,10 @@ input[type=checkbox]:focus {
   display: none;
 }
 
+.left-navigation .center-navigation > ul > li > a.settings-mobile {
+  display: none;
+}
+
 .left-navigation .center-navigation > ul > li > a.active {
   background-color: #4ca78c;
   color: #e1e1e1;
@@ -893,7 +908,8 @@ input[type=checkbox]:focus {
     display: none;
   }
 
-  .logout-mobile {
+  .logout-mobile,
+  .settings-mobile {
     display: block;
   }
 
@@ -928,6 +944,10 @@ input[type=checkbox]:focus {
   }
 
   .left-navigation .center-navigation > ul > li > a.logout-mobile {
+    display: block;
+  }
+
+  .left-navigation .center-navigation > ul > li > a.settings-mobile {
     display: block;
   }
 

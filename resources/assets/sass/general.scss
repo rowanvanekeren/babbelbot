@@ -419,11 +419,22 @@ input[type=checkbox]{
   border: 2px solid $main-color;
   padding: 5px;
 }
+.user-settings{
+  margin-top:30px;
+}
 @media only screen and (max-width : 768px) {
   #babbelbot-chatbot-preview{
     display:none;
   }
 
+  .warning-box{
+
+    width: 90%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+  }
   .help-wrapper{
 
 

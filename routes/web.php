@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => 'auth'], function () {
+    /* user */
+    Route::post('/update-user', 'UserController@update');
+    Route::delete('/delete-account', 'UserController@delete');
+
 
     /* logout */
     Route::get('/logout', 'Auth\LoginController@logout');
@@ -36,6 +40,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/help', function () {
         return view('help');
+    });
+
+    Route::get('/instellingen', function () {
+        return view('settings');
     });
 
     Route::get('/check-app-session', 'SessionController@checkActiveApp');
