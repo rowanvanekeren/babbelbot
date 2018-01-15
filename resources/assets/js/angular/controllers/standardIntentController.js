@@ -340,7 +340,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
     $scope.saveAnswer = function(currentElement, intent, answer, index){
         shrinkLoading.do(currentElement, 'loading');
-       
+
         var req = {
             method: 'POST',
             url: '../save-standard-intent-answer',

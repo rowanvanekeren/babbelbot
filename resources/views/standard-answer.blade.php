@@ -119,7 +119,6 @@
 
                             </div>
 
-                            </div>--}}
 
                             <div class='span-option'>
                                 <span ng-click="addAnswer(intent)">  voeg toe </span>
