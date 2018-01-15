@@ -1239,7 +1239,14 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
+
+            console.log(index);
             currentModel.state_intent_answers.splice(index, 1);
+
+            angular.forEach($scope.intentData.state_intent_answers, function (member, index) {
+                //Just add the index to your item
+                $scope.intentData.state_intent_answers[index].index = index;
+            });
             //event.currentTarget.closest('.form-group').remove();
         }).catch(function (data) {});
     };

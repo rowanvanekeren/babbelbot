@@ -28,6 +28,11 @@ class WebhookController extends Controller
 
                 return $this->checkFlight($request->all());
                 break;
+
+            case 'pizza_types' :
+
+                return $this->pizzaTypes($request->all());
+                break;
             default :
                 return null;
         }
@@ -124,10 +129,6 @@ class WebhookController extends Controller
                         '.'. PHP_EOL . PHP_EOL .'En uw email: '. $parameters['flight_request_email']. '.'. PHP_EOL . PHP_EOL .' U kunt betalen via de volgende link: https://babbelbot.be/vlucht/betalen'
                     ),
                 ),
-                'quick_replies' => array(
-                    array('answer' => 'ja'),
-                    array('answer' => 'nee'),
-                )
             );
         }else{
             return array(
