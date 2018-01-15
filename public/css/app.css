@@ -2164,6 +2164,12 @@ old version
   cursor: pointer;
 }
 
+.no-answer {
+  width: 100%;
+  padding: 10px;
+  background-color: #e1e1e1;
+}
+
 .intent-answer-input input {
   width: 100%;
 }

@@ -38,7 +38,7 @@ class FacebookController extends Controller
 
    }
    public function responseFacebook($id, Request $request){
-       bot_log('ik kom binnen');
+
        /* facebook return */
        $data = $request->all();
 
@@ -57,14 +57,14 @@ class FacebookController extends Controller
        }else{
            return ;
        }
-       bot_log($cacheObj['app']);
+
 
        $this->typingOn($fb_access_token, $fbuser_id);
 
        handleRequest($cache_id, $id, $text , 'facebook', function($data) use ($cache_id, $id,$text, $fbuser_id, $fb_access_token){
-           bot_log('ik kom tot hier2');
+
             $answers  =  processRequest($cache_id,$id,$text , 'facebook', $data);
-           bot_log($answers);
+
             $this->sendResponse($fb_access_token, $fbuser_id, $answers['answers'][0]['answer'], isset($answers['quick_replies']) ? $answers['quick_replies'] : null);
 
        });
@@ -114,7 +114,7 @@ class FacebookController extends Controller
       curl_setopt($ch, CURLOPT_POST, true);
       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($messageData));
       $response = curl_exec($ch);
-     bot_log($response);
+
       curl_close($ch);
 
    }

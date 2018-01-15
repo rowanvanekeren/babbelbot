@@ -2122,8 +2122,12 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         $http(req).then(function (data) {
 
             shrinkLoading.do(currentElement, 'success');
-            intent.intent_answers[index].id = data.data.id;
+
+            if (typeof intent.intent_answers[index] != 'undefined') {
+                intent.intent_answers[index]['id'] = data.data.id;
+            }
         }).catch(function (data) {
+
             shrinkLoading.do(currentElement, 'error');
         });
     };

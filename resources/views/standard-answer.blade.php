@@ -111,19 +111,15 @@
 
                             </div>
 
-                            <div class="form-group" ng-if="intent.intent_answers.length == 0">
+                                                        <div class="form-group" ng-if="intent.intent_answers.length == 0">
 
-                                <div class="input-wrapper deletable-input intent-answer-input">
-                                    <i class="fa fa-trash-o input-trash-icon" aria-hidden="true"
-                                       ng-click="deleteAnswer($index, answer, intent)"></i>
-                                    <input  class="default-input inp-loading" type="text"
-                                           my-enter="saveAnswer($element, intent, answer, $index)"
-                                           placeholder="Geef antwoord in"
-                                           ng-model="answer.answer" grow-back>
-                                    <i class="fa fa-repeat input-saving-overlay hidden"></i>
+                                <div class="no-answer">
+                                    <p>U heeft nog geen antwoorden, druk op 'voeg toe' om er een toe te voegen</p>
                                 </div>
 
                             </div>
+
+                            </div>--}}
 
                             <div class='span-option'>
                                 <span ng-click="addAnswer(intent)">  voeg toe </span>

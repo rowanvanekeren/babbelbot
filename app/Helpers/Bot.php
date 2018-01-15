@@ -377,7 +377,7 @@ function updateCache($cache_id, $key, $value)
         } else {
             $cacheObj[$key] = $value;
         }
-        bot_log($cacheObj);
+
         Cache::put($cache_id, $cacheObj, $expiresAt);
     }
 }
@@ -554,7 +554,7 @@ function sendBackendRequest($url, $addObj)
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // make sure you get an return
     $response = curl_exec($curl);
     curl_close($curl);
-    bot_log($response);
+
 
     $decoded_response = json_decode($response, true);
 
