@@ -44,7 +44,8 @@
             quickReplyColor: '#185355',
             standardOpen : true,
             title : 'Babbelbot',
-            botName : 'Babbelbot'
+            botName : 'Babbelbot',
+            saveConversation : true
         }, options);
 
         /* check if bot is available */
@@ -103,6 +104,15 @@
 
         if(readCookie('bb_chatbot_user') != null && typeof readCookie('bb_chatbot_user') != 'undefined' ){
             currentUser = readCookie('bb_chatbot_user');
+
+            if(settings.saveConversation){
+                if(localStorage.getItem('chat_converdation_' +currentUser) != null && typeof localStorage.getItem('chat_converdation_' +currentUser) != 'undefined' ){
+                    mainBot.find('#bb-chatbox-conversation-inner').html(localStorage.getItem('chat_converdation_' +currentUser));
+
+                    scrollDiv.scrollTop(scrollDiv[0].scrollHeight);
+                }
+            }
+
         }else{
             var generator = new IDGenerator();
             currentUser = generator.generate();
@@ -186,7 +196,7 @@
                     q : text,
                 },
                 success: function( data, textStatus ){
-                    console.log(data);
+
                     postRequestToBabbelbot(data, text , user_id);
                 },
                 error: function(data, textStatus ){
@@ -224,14 +234,14 @@
         }
 
         function processQuickReplies(answerObj){
-            console.log(answerObj);
+
             var quick_replies = '';
             if(typeof answerObj.quick_replies != 'undefined' && answerObj.quick_replies.length > 0){
 
                 for(var i = 0; i < answerObj.quick_replies.length; i++){
                     quick_replies += '<div class="quick-reply" style="border: ' + settings.quickReplyBorder +'; color: ' + settings.quickReplyColor + '">' + answerObj.quick_replies[i].answer +  ' </div>';
 
-                    console.log(answerObj.quick_replies[i].answer);
+
                 }
             }
 
@@ -269,6 +279,15 @@
             });
         }
 
+        function saveConversationToLocalStorage(){
+            var chatDom = mainBot.find('#bb-chatbox-conversation-inner');
+            if(settings.saveConversation) {
+                if (readCookie('bb_chatbot_user') != null && typeof readCookie('bb_chatbot_user') != 'undefined') {
+                    var user_id = readCookie('bb_chatbot_user');
+                    localStorage.setItem('chat_converdation_' +user_id, chatDom.html());
+                }
+            }
+        }
 
         function pingToServerChatbot(){
             $.ajax({
@@ -280,10 +299,9 @@
                     type : 'ping'
                 },
                 success: function( data, status, jQxhr ){
+                  /*  if(status == 'success'){
 
-                    if(status == 'success'){
-                        console.log(data);
-                    }
+                    }*/
                 },
                 error: function( data, status, errorThrown ){
                         throw Error("Cannot ping to server please fix connection");
@@ -302,6 +320,8 @@
                 '</div>');
 
                 scrollDiv.scrollTop(scrollDiv[0].scrollHeight);
+
+                saveConversationToLocalStorage();
         }
 
         function nl2br (str, is_xhtml) {

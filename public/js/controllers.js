@@ -97,7 +97,6 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
     };
 
     $scope.toggleDashboardNavigation = function () {
-        console.log('burger click');
 
         if ($('.center-navigation').css('display') == 'none') {
             $('.center-navigation').css('display', 'block');
@@ -288,7 +287,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(currentElement);
+
             shrinkLoading.do(currentElement, 'success');
         }).catch(function (data) {
 
@@ -298,7 +297,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
     $scope.storeNewApp = function (currModel) {
 
         buttonLoading.do($('.async-save'), 'loading');
-        //console.log( currModel.access_token.$modelValue);
+
         var req = {
             method: 'POST',
             url: './create-app',
@@ -343,7 +342,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         var apiURL = './get-user-apps';
 
         $http.get(apiURL + '?page=' + $scope.pageNumber).then(function (data) {
-            // console.log(data);
+
             if (data.data.data.length == 0) {
                 $scope.latestPost = true;
             } else {
@@ -375,60 +374,6 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
         shrinkLoading.do(currentElement, 'loading');
         $scope.updateApp(inputObject, currentElement);
-    };
-
-    /*  function shrinkLoading(element, state){
-          var inpIconElemClass = '.input-saving-overlay';
-          var inpElemClass = '.input-wrapper input';
-          var currentParent = element.parent();
-          var cuurentInput = element;
-          if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing') && state == 'loading') {
-              currentParent.addClass('processing');
-              currentParent.children(inpIconElemClass).removeClass('fa-times').addClass('fa-repeat');
-              cuurentInput.attr('disabled', true);
-              currentParent.animate({'width': (currentParent.width() - 25)}, 100, 'linear', function () {
-                  setTimeout(function () {
-                      currentParent.children(inpIconElemClass).removeClass('hidden');
-                  }, 150);
-                });
-          }else if (!currentParent.hasClass('processing')) {
-                currentParent.addClass('processing');
-              cuurentInput.attr('disabled', true);
-                currentParent.children(inpIconElemClass).removeClass('hidden');
-    
-          }else if(state == 'success') {
-                    currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-times').addClass('fa-check');
-            /!*  currentParent.removeClass('processing');*!/
-                  cuurentInput.attr('disabled', false);
-            }else if(state == 'error'){
-              currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-check').addClass('fa-times');
-            /!*  currentParent.removeClass('processing');*!/
-              cuurentInput.attr('disabled', false);
-          }
-    
-    
-    
-      }*/
-
-    $scope.growBack = function (event) {
-
-        var inpElemClass = '.input-wrapper input';
-        var inpIconElemClass = '.input-saving-overlay';
-
-        var currentParent = $(event.target.parentElement);
-        var cuurentInput = $(event.currentTarget);
-
-        if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.animate({ 'width': currentParent.width() + 25 }, 100, 'linear', function () {
-                currentParent.removeClass('processing');
-                currentParent.children(inpIconElemClass).addClass('hidden');
-                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-            });
-        } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.removeClass('processing');
-            currentParent.children(inpIconElemClass).addClass('hidden');
-            currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-        }
     };
 
     $scope.selectApp = function (event, app, apps, index, force) {
@@ -761,7 +706,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.addNewIntent = function (intentValue, intentExpression, event) {
         $scope.newIntentValue = '';
-        console.log(event);
+
         if (typeof event != 'undefined') {
             buttonLoading.do($(event.currentTarget), 'loading');
         }
@@ -784,7 +729,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             if (data.status == 200) {
                 if (typeof data.data.code != 'undefined') {
                     if (data.data.code == 'bad-request') {
@@ -841,6 +786,12 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             $('#intent-title').trigger('changeOperatorTitle', [data.data.keyword, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
+
+            if (typeof $scope.intentData['state_intent_data'] == 'undefined') {
+                $scope.intentData['state_intent_data'] = {};
+            }
+            $scope.intentData['state_intent_data']['name'] = data.data.keyword;
+
             $scope.resetIntentSearch();
         }).catch(function (data) {
 
@@ -920,7 +871,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log('intentstate', data);
+
             $scope.updateFullPopUp(data, 'open');
             $scope.hideIntentFooter = false;
         }).catch(function (data) {});
@@ -956,6 +907,11 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             $('#intent-title').trigger('changeOperatorTitle', [data.data.parameter, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
+
+            if (typeof $scope.intentData['state_intent_data'] == 'undefined') {
+                $scope.intentData['state_intent_data'] = {};
+            }
+            $scope.intentData['state_intent_data']['name'] = data.data.parameter;
             $scope.resetIntentSearch();
         }).catch(function (data) {
 
@@ -1026,14 +982,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     };
 
     $scope.saveAnswer = function (currentElement, currentModel, type, currentIndex, test) {
-        console.log('currentElement', currentElement);
-        console.log('currentModel', currentModel);
-        console.log('type', type);
-        console.log('index;=', currentIndex);
-        console.log('state intent id', currentModel.id);
 
-        console.log('index;=', currentIndex);
-        console.log('test', test);
         shrinkLoading.do(currentElement, 'loading');
 
         if (typeof currentModel.state_intent_answers[currentIndex] != 'undefined' && currentModel.state_intent_answers[currentIndex].hasOwnProperty('id')) {
@@ -1059,8 +1008,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            console.log(currentModel.state_intent_answers[currentIndex]);
 
             shrinkLoading.do(currentElement, 'success');
 
@@ -1240,7 +1187,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
         $http(req).then(function (data) {
 
-            console.log(index);
             currentModel.state_intent_answers.splice(index, 1);
 
             angular.forEach($scope.intentData.state_intent_answers, function (member, index) {
@@ -1271,26 +1217,6 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
         shrinkLoading.do(currentElement, 'loading');
         $scope.getIntent(inputObject, currentElement);
-    };
-
-    $scope.growBack = function (event) {
-        var inpElemClass = '.input-wrapper input';
-        var inpIconElemClass = '.input-saving-overlay';
-
-        var currentParent = $(event.target.parentElement);
-        var cuurentInput = $(event.currentTarget);
-
-        if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.animate({ 'width': currentParent.width() + 25 }, 100, 'linear', function () {
-                currentParent.removeClass('processing');
-                currentParent.children(inpIconElemClass).addClass('hidden');
-                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-            });
-        } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.removeClass('processing');
-            currentParent.children(inpIconElemClass).addClass('hidden');
-            currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-        }
     };
 
     $scope.getIntentData = function () {
@@ -1330,13 +1256,14 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 angular.module('botApp').controller("intentTrainController", function (buttonLoading, $rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
 
     $scope.toggleTrainingPopup = function (data) {
-
+        $scope.newExpression = '';
         if (data.toggle == 'open') {
             $scope.intentValueData = null;
             $scope.showTrainingPopup = true;
 
             $scope.getIntentDataWit(data.intent);
         } else if (data.toggle == 'close') {
+
             $scope.showTrainingPopup = false;
             $rootScope.$emit("toggleIntentEntity", { toggle: 'close' });
             if (!$scope.$$phase) {
@@ -1362,7 +1289,7 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
     };
 
     $scope.getIntentDataWit = function (intent, callback) {
-
+        $scope.searchingIntents = true;
         var req = {
             method: 'POST',
             url: defaultURL + '/get-intent-data-wit',
@@ -1382,10 +1309,12 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
             if (typeof callback != 'undefined') {
                 callback('success');
             }
+            $scope.searchingIntents = false;
         }).catch(function (data) {
             if (typeof callback != 'undefined') {
                 callback('error');
             }
+            $scope.searchingIntents = false;
         });
     };
     $scope.checkExpressionsForEntities = function (expressions, $event) {
@@ -1489,8 +1418,14 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
         $scope.getIntentDataWit($scope.intentValueData.value, function (data) {
             if (data == 'success') {
                 buttonLoading.do($($event.currentTarget), 'success');
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             } else if (data == 'error') {
                 buttonLoading.do($($event.currentTarget), 'error');
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             }
         });
     };
@@ -1630,14 +1565,6 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
         }
     };
 });
-function setLoadingButton(element, trueOrFalse, defaultText) {
-    var icon = ' <i class="fa fa-repeat"></i>';
-    if (!trueOrFalse) {
-        angular.element(element).html(defaultText);
-    } else if (trueOrFalse) {
-        angular.element(element).html(defaultText + icon);
-    }
-}
 
 function guidGenerator() {
     var S4 = function S4() {
@@ -2042,26 +1969,6 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
         }).catch(function (data) {});
     };
 
-    $scope.growBack = function (event) {
-        var inpElemClass = '.input-wrapper input';
-        var inpIconElemClass = '.input-saving-overlay';
-
-        var currentParent = $(event.target.parentElement);
-        var cuurentInput = $(event.currentTarget);
-
-        if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.animate({ 'width': currentParent.width() + 25 }, 100, 'linear', function () {
-                currentParent.removeClass('processing');
-                currentParent.children(inpIconElemClass).addClass('hidden');
-                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-            });
-        } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') && (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.removeClass('processing');
-            currentParent.children(inpIconElemClass).addClass('hidden');
-            currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-        }
-    };
-
     $scope.deleteAnswer = function ($index, answer, intent) {
 
         if (answer.id) {
@@ -2264,7 +2171,7 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
     };
 
     $scope.deleteSynonym = function (tag, value, entityData) {
-        console.log(entityData);
+
         var req = {
             method: 'POST',
             url: defaultURL + '/delete-entity-expression',
@@ -2385,7 +2292,6 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
                 addObj.expressions.push(expressions[i].text);
             }
         }
-        console.log(addObj);
 
         if (typeof value == 'undefined') {
             return null;
@@ -2590,12 +2496,12 @@ angular.module('botApp').controller("userController", function ($scope, $http, $
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             buttonLoading.do($(event.currentTarget), 'success');
             location.reload();
         }).catch(function (data) {
             $scope.userError = data.data.name;
-            console.log(data);
+
             buttonLoading.do($(event.currentTarget), 'error');
         });
     };

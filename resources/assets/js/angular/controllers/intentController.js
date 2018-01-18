@@ -74,7 +74,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     $scope.addNewIntent = function(intentValue, intentExpression, event ){
         $scope.newIntentValue = '';
-        console.log(event);
+
         if(typeof event != 'undefined'){
             buttonLoading.do($(event.currentTarget), 'loading');
         }
@@ -97,7 +97,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             if(data.status == 200){
                 if(typeof data.data.code != 'undefined'){
                     if(data.data.code == 'bad-request'){
@@ -157,6 +157,12 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             $('#intent-title').trigger('changeOperatorTitle', [data.data.keyword, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
+
+            if(typeof $scope.intentData['state_intent_data'] == 'undefined'){
+                $scope.intentData['state_intent_data'] = {};
+            }
+            $scope.intentData['state_intent_data']['name'] = data.data.keyword;
+
             $scope.resetIntentSearch();
 
         }).catch(function (data) {
@@ -245,7 +251,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log('intentstate', data);
+
             $scope.updateFullPopUp(data, 'open');
             $scope.hideIntentFooter = false;
         }).catch(function (data) {
@@ -284,6 +290,11 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
             $('#intent-title').trigger('changeOperatorTitle', [data.data.parameter, $scope.activeStateID, true]);
             shrinkLoading.do(currentElement, 'success');
+
+            if(typeof $scope.intentData['state_intent_data'] == 'undefined'){
+                $scope.intentData['state_intent_data'] = {};
+            }
+            $scope.intentData['state_intent_data']['name'] = data.data.parameter;
             $scope.resetIntentSearch();
 
         }).catch(function (data) {
@@ -369,14 +380,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
     }
 
     $scope.saveAnswer = function(currentElement, currentModel, type, currentIndex, test){
-        console.log('currentElement', currentElement);
-        console.log('currentModel', currentModel);
-        console.log('type', type);
-        console.log('index;=',currentIndex);
-        console.log('state intent id',currentModel.id);
 
-        console.log('index;=',currentIndex);
-        console.log('test', test);
         shrinkLoading.do(currentElement, 'loading');
 
 
@@ -404,8 +408,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
         };
 
         $http(req).then(function (data) {
-            console.log(data);
-            console.log(currentModel.state_intent_answers[currentIndex]);
+
 
             shrinkLoading.do(currentElement, 'success');
 
@@ -597,7 +600,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
         $http(req).then(function (data) {
 
-            console.log(index);
+
             currentModel.state_intent_answers.splice(index,1);
 
             angular.forEach($scope.intentData.state_intent_answers, function(member, index){
@@ -634,28 +637,7 @@ angular.module('botApp').controller("intentController", function ($rootScope, $s
 
     };
 
-    $scope.growBack = function (event) {
-        var inpElemClass = '.input-wrapper input';
-        var inpIconElemClass = '.input-saving-overlay';
 
-        var currentParent = $(event.target.parentElement);
-        var cuurentInput = $(event.currentTarget);
-
-        if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') &&
-            (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.animate({'width': (currentParent.width() + 25)}, 100, 'linear', function () {
-                currentParent.removeClass('processing');
-                currentParent.children(inpIconElemClass).addClass('hidden');
-                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-            });
-        } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') &&
-            (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.removeClass('processing');
-            currentParent.children(inpIconElemClass).addClass('hidden');
-            currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-        }
-
-    }
 
 
 

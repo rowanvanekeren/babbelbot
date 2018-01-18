@@ -143,7 +143,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         };
 
         $http(req).then(function (data) {
-            console.log(currentElement);
+
             shrinkLoading.do(currentElement, 'success');
 
         }).catch(function (data) {
@@ -155,7 +155,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
 
         buttonLoading.do($('.async-save'), 'loading');
-        //console.log( currModel.access_token.$modelValue);
+
         var req = {
             method: 'POST',
             url: './create-app',
@@ -207,7 +207,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
         var apiURL = './get-user-apps';
 
             $http.get(apiURL + '?page=' + $scope.pageNumber).then(function (data) {
-               // console.log(data);
+
                 if(data.data.data.length == 0){
                     $scope.latestPost = true;
                 }else{
@@ -253,73 +253,7 @@ angular.module('botApp').controller("appController", function ($rootScope, $scop
 
     }
 
-  /*  function shrinkLoading(element, state){
-        var inpIconElemClass = '.input-saving-overlay';
-        var inpElemClass = '.input-wrapper input';
-        var currentParent = element.parent();
-        var cuurentInput = element;
-        if (!currentParent.hasClass('disable-shrink') && !currentParent.hasClass('processing') && state == 'loading') {
-            currentParent.addClass('processing');
-            currentParent.children(inpIconElemClass).removeClass('fa-times').addClass('fa-repeat');
-            cuurentInput.attr('disabled', true);
-            currentParent.animate({'width': (currentParent.width() - 25)}, 100, 'linear', function () {
-                setTimeout(function () {
-                    currentParent.children(inpIconElemClass).removeClass('hidden');
-                }, 150);
 
-            });
-        }else if (!currentParent.hasClass('processing')) {
-
-            currentParent.addClass('processing');
-            cuurentInput.attr('disabled', true);
-
-            currentParent.children(inpIconElemClass).removeClass('hidden');
-
-
-        }else if(state == 'success') {
-
-                currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-times').addClass('fa-check');
-          /!*  currentParent.removeClass('processing');*!/
-                cuurentInput.attr('disabled', false);
-
-        }else if(state == 'error'){
-            currentParent.children(inpIconElemClass).removeClass('fa-repeat fa-check').addClass('fa-times');
-          /!*  currentParent.removeClass('processing');*!/
-            cuurentInput.attr('disabled', false);
-        }
-
-
-
-
-
-
-    }*/
-
-    $scope.growBack = function(event){
-
-
-        var inpElemClass = '.input-wrapper input';
-        var inpIconElemClass = '.input-saving-overlay';
-
-            var currentParent = $(event.target.parentElement);
-            var cuurentInput = $(event.currentTarget);
-
-            if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') &&
-                (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-                currentParent.animate({'width': (currentParent.width() + 25)}, 100, 'linear', function () {
-                    currentParent.removeClass('processing');
-                    currentParent.children(inpIconElemClass).addClass('hidden');
-                    currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-
-                });
-            } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') &&
-                (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-                currentParent.removeClass('processing');
-                currentParent.children(inpIconElemClass).addClass('hidden');
-                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-            }
-
-    }
 
 
     $scope.selectApp = function(event, app, apps, index, force){

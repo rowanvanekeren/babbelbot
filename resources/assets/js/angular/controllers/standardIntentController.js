@@ -274,28 +274,7 @@ angular.module('botApp').controller("standardIntentController", function ($rootS
 
 
 
-    $scope.growBack = function (event) {
-        var inpElemClass = '.input-wrapper input';
-        var inpIconElemClass = '.input-saving-overlay';
 
-        var currentParent = $(event.target.parentElement);
-        var cuurentInput = $(event.currentTarget);
-
-        if (currentParent.hasClass('processing') && !currentParent.hasClass('disable-shrink') &&
-            (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.animate({'width': (currentParent.width() + 25)}, 100, 'linear', function () {
-                currentParent.removeClass('processing');
-                currentParent.children(inpIconElemClass).addClass('hidden');
-                currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-            });
-        } else if (currentParent.hasClass('processing') && currentParent.hasClass('disable-shrink') &&
-            (cuurentInput.attr('disabled') == false || typeof cuurentInput.attr('disabled') == 'undefined')) {
-            currentParent.removeClass('processing');
-            currentParent.children(inpIconElemClass).addClass('hidden');
-            currentParent.children(inpIconElemClass).addClass('fa-repeat').removeClass('fa-check');
-        }
-
-    }
 
 
     $scope.deleteAnswer = function($index, answer, intent){

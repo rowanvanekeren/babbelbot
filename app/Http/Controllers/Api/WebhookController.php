@@ -192,8 +192,8 @@ class WebhookController extends Controller
             'pizza_size' => $data['user_input']
 
         );
-
-        Cache::add('webhook_user_' . $data['session_id'], $webhookCacheObj, $expiresAt);
+s
+        Cache::put('webhook_user_' . $data['session_id'], $webhookCacheObj, $expiresAt);
 
         if ($data['user_input'] == 'small') {
             return array(

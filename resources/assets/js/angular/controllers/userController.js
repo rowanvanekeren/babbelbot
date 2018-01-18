@@ -19,13 +19,13 @@ angular.module('botApp').controller("userController", function ($scope, $http, $
         };
 
         $http(req).then(function (data) {
-            console.log(data);
+
             buttonLoading.do($(event.currentTarget), 'success');
             location.reload();
 
         }).catch(function (data) {
             $scope.userError = data.data.name;
-            console.log(data);
+
             buttonLoading.do($(event.currentTarget), 'error');
 
         });

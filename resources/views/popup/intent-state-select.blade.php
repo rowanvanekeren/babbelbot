@@ -83,7 +83,7 @@
                        ng-click="deleteAnswer($event, intentData, answer.id , answer.index)"></i>
                     <input id="inp-access-token" class="default-input inp-loading" type="text"
                            my-enter="saveAnswer($element, intentData, 1, answer.index )" data-answer-id="@{{ answer.id }}"
-                           data-state-intents-id="@{{ answer.state_intents_id }}" placeholder="Geef antwoord in"
+                           data-state-intents-id="@{{ answer.state_intents_id }}" placeholder="Geef antwoord in (druk enter om toe te voegen)"
                            name="answer.answer"
                            ng-model="answer.answer" grow-back>
                     <i class="fa fa-repeat input-saving-overlay hidden"></i>
@@ -111,7 +111,7 @@
                         <input id="inp-access-token" class="default-input inp-loading" type="text"
                                my-enter="saveAnswer($element, intentData, 2, quickReply.index)" data-answer-id="@{{ quickReply.id }}"
                                data-state-intents-id="@{{ quickReply.state_intents_id }}" name="quickReply"
-                               ng-model="quickReply.answer" placeholder="Geef snelle optie in" grow-back>
+                               ng-model="quickReply.answer" placeholder="Geef snelle optie in (druk enter om toe te voegen)" grow-back>
                         <i class="fa fa-repeat input-saving-overlay hidden"></i>
                     </div>
                 </div>

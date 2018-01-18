@@ -40,6 +40,7 @@ class IntentController extends Controller
         $server_token = $request->session()->get('active_app')->server_token;
         $full_intent = json_decode(witGetIntent($server_token, $request->intent), true);
 
+
         return $this->searchForIntentValue($full_intent['values'], $request->intent);
     }
 

@@ -1,13 +1,14 @@
 angular.module('botApp').controller("intentTrainController", function (buttonLoading, $rootScope, $scope, $http, $parse, shrinkLoading, $compile) {
 
     $scope.toggleTrainingPopup = function (data) {
-
+        $scope.newExpression = '';
         if (data.toggle == 'open') {
             $scope.intentValueData = null;
             $scope.showTrainingPopup = true;
 
             $scope.getIntentDataWit(data.intent);
         } else if (data.toggle == 'close') {
+
             $scope.showTrainingPopup = false;
             $rootScope.$emit("toggleIntentEntity", {toggle: 'close'});
             if (!$scope.$$phase) {
@@ -35,7 +36,7 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
     };
 
     $scope.getIntentDataWit = function (intent, callback) {
-
+        $scope.searchingIntents = true;
         var req = {
             method: 'POST',
             url: defaultURL + '/get-intent-data-wit',
@@ -54,12 +55,15 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
 
             if(typeof callback != 'undefined'){
                 callback('success');
+
             }
+            $scope.searchingIntents = false;
 
         }).catch(function (data) {
             if(typeof callback != 'undefined'){
                 callback('error');
             }
+            $scope.searchingIntents = false;
         });
     };
     $scope.checkExpressionsForEntities = function (expressions, $event) {
@@ -175,8 +179,14 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
         $scope.getIntentDataWit($scope.intentValueData.value, function(data){
             if(data == 'success'){
                 buttonLoading.do($($event.currentTarget), 'success');
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             }else if(data == 'error'){
                 buttonLoading.do($($event.currentTarget), 'error');
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             }
 
         });
@@ -339,16 +349,6 @@ angular.module('botApp').controller("intentTrainController", function (buttonLoa
 
 
 });
-function setLoadingButton(element, trueOrFalse, defaultText) {
-    var icon = ' <i class="fa fa-repeat"></i>';
-    if (!trueOrFalse) {
-        angular.element(element).html(defaultText);
-    } else if (trueOrFalse) {
-        angular.element(element).html(defaultText + icon);
-    }
-
-}
-
 
 function guidGenerator() {
     var S4 = function () {

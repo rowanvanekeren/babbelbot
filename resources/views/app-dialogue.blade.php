@@ -96,7 +96,7 @@
                     </div>
                     <div class="app-center-section">
                         <div class="form-group">
-                            <div class="input-wrapper see-password-input">
+                            <div class="input-wrapper " >
 
                                 <input id="" class="inp-description inp-loading" type="text"
                                        name="description"

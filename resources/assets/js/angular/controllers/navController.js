@@ -10,7 +10,7 @@ angular.module('botApp').controller("navController", function ($scope, $http, $p
     }
 
     $scope.toggleDashboardNavigation = function(){
-        console.log('burger click');
+
 
         if($('.center-navigation').css('display') == 'none'){
             $('.center-navigation').css('display', 'block');

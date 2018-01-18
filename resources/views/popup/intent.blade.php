@@ -35,7 +35,7 @@
 
                 <input id="" class="default-input inp-loading" type="text"
                        name="user_input_intent"
-                       placeholder="Als gebruiker zegt..." ng-focus="growBack($event)"
+                       placeholder="Als gebruiker zegt..." grow-back
                        my-enter="inputEnterSearchIntent($element, this)" ng-model="intentData.intent_data.name">
 
                 <i class="fa fa-repeat input-saving-overlay hidden"></i>

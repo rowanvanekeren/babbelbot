@@ -8,11 +8,10 @@
                     <h2>Intenties</h2>
                     <hr>
                     <p>Intenties zijn bedoeld om te begrijpen wat de gebruiker exact bedoeld met een vraag of input. Bijvoorbeeld: </p>
-                    <p>Gebruiker: Vertel een mop
-
+                    <p>Gebruiker: Vertel een mop <br>
+                        Intentie: vertel_mop
                     </p>
-                    <p>Intentie: vertel_mop
-                       </p>
+
                     <p> Dit kunnen we trainen zodat de applicatie automatisch variaties van <q>vertel een mop</q> begrijpt.
 
                         Een voorbeeld van de werking bij dialogen:</p>

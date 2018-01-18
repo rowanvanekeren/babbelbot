@@ -150,7 +150,7 @@ $(document).ready(function () {
             return true;
         },
         onLinkSelect: function onLinkSelect(linkID) {
-            console.log(linkID);
+
             //deleteSelectedLink(linkID);
             toggleWarningLink(true, linkID);
             return true;

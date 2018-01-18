@@ -73,7 +73,7 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
     };
 
     $scope.deleteSynonym = function(tag, value , entityData){
-        console.log(entityData);
+
         var req = {
             method: 'POST',
             url: defaultURL + '/delete-entity-expression',
@@ -200,7 +200,7 @@ angular.module('botApp').controller("entityController", function (buttonLoading,
                 addObj.expressions.push(expressions[i].text);
             }
         }
-        console.log(addObj);
+
 
         if(typeof value == 'undefined'){
             return null;

@@ -81,7 +81,7 @@ $(document).ready(function() {
             return true;
         },
         onLinkSelect: function(linkID){
-            console.log(linkID);
+
             //deleteSelectedLink(linkID);
             toggleWarningLink(true, linkID);
             return true;

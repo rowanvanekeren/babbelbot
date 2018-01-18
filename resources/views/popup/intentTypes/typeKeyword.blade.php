@@ -4,7 +4,7 @@
 
         <input id="" class="default-input inp-loading" type="text"
                name="user_input_intent"
-               placeholder="sleutelwoord" ng-focus="growBack($event)"
+               placeholder="sleutelwoord" grow-back
                my-enter="saveKeywordLocal($element, this)" ng-model="intentData.keyword">
 
         <i class="fa fa-repeat input-saving-overlay hidden"></i>

@@ -422,7 +422,53 @@ input[type=checkbox]{
 .user-settings{
   margin-top:30px;
 }
+
+.youtube-screencast{
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 265px;
+  top: 75px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid $main-color;
+  >div{
+    width: 100%;
+    height: 100%;
+  }
+  a{
+    color:#fff;
+    font-size: 35px;
+  }
+
+  background: $main-color;
+  transition: 0.5s;
+  &:hover{
+  background: none;
+    a{
+      color: $main-color;
+    }
+
+  }
+  opacity: 0;
+  animation-name: screencast;
+  animation-fill-mode: forwards;
+  animation-duration: .5s;
+  animation-delay: 1s;
+  z-index: 60;
+}
+
+@keyframes screencast {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 @media only screen and (max-width : 768px) {
+  .youtube-screencast{
+    display:none;
+  }
   #babbelbot-chatbot-preview{
     display:none;
   }

@@ -499,7 +499,82 @@ input[type=checkbox]:focus {
   margin-top: 30px;
 }
 
+.youtube-screencast {
+  cursor: pointer;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  left: 265px;
+  top: 75px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #4ca78c;
+  background: #4ca78c;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  opacity: 0;
+  -webkit-animation-name: screencast;
+          animation-name: screencast;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-duration: .5s;
+          animation-duration: .5s;
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+  z-index: 60;
+}
+
+.youtube-screencast > div {
+  width: 100%;
+  height: 100%;
+}
+
+.youtube-screencast a {
+  color: #fff;
+  font-size: 35px;
+}
+
+.youtube-screencast:hover {
+  background: none;
+}
+
+.youtube-screencast:hover a {
+  color: #4ca78c;
+}
+
+@-webkit-keyframes screencast {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes screencast {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @media only screen and (max-width: 768px) {
+  .youtube-screencast {
+    display: none;
+  }
+
   #babbelbot-chatbot-preview {
     display: none;
   }
@@ -1039,6 +1114,19 @@ input[type=checkbox]:focus {
 
 .large-text-tt-2 {
   min-height: 100px;
+}
+
+.large-text-tt-3 {
+  min-height: 275px;
+}
+
+.large-text-tt-4 {
+  min-height: 50px;
+}
+
+.small-text-tt-1 {
+  min-height: 25px;
+  margin-left: 15px;
 }
 
 .home-bg {
@@ -1845,6 +1933,11 @@ old version
   top: 25%;
 }
 
+#flowchart-popup.small-popup hr,
+#flowchart-popup-intent.small-popup hr {
+  padding: 0;
+}
+
 #flowchart-popup input,
 #flowchart-popup-intent input {
   width: 100%;
@@ -1857,6 +1950,12 @@ old version
   max-height: 520px;
   overflow-y: scroll;
   padding: 15px;
+}
+
+#flowchart-popup .popup-wrapper > hr,
+#flowchart-popup-intent .popup-wrapper > hr {
+  margin: 0 0;
+  margin-bottom: 15px;
 }
 
 #flowchart-popup > hr,
@@ -2092,6 +2191,47 @@ old version
 
 .intent-train-options {
   text-align: right;
+}
+
+.training-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 11px;
+  margin-top: 5px;
+  border: 2px solid #4ca78c;
+  padding: 5px;
+  color: #4ca78c;
+}
+
+.training-info i {
+  cursor: pointer;
+}
+
+.training-info .closing-training-info {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  text-align: right;
+}
+
+.messages-wrapper {
+  position: relative;
+  text-align: right;
+  font-weight: bold;
+  color: #4ca78c;
+}
+
+.messages-wrapper i {
+  cursor: pointer;
+}
+
+.messages-wrapper span {
+  font-size: 11px;
+  font-weight: bold;
+  position: absolute;
+  right: -3px;
+  top: -3px;
 }
 
 .standard-intent.standard-error-intent h3 {

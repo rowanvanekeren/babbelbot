@@ -34,6 +34,9 @@
             @include('nav.dashboard')
 
             <div  class="main-dashboard-wrapper"  scrolly="showMore()">
+                <div class="youtube-screencast" ><div tooltips tooltip-append-to-body="false"
+                                                      tooltip-smart="true" tooltip-class="wide-tooltip small-text-tt-1"  tooltip-size="small" tooltip-side="right"
+                                                      tooltip-template="Bekijk de Babbelbot tutorial!"><a href="https://www.youtube.com/watch?v=JToQEHtDh3Q" target="_blank "><i class="fa fa-youtube" aria-hidden="true"></i></a></div></div>
                 @yield('content')
             </div>
 

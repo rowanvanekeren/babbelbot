@@ -4,7 +4,7 @@
 
         <input id="" class="default-input inp-loading" type="text"
                name="user_input_intent"
-               placeholder="geef parameter naam" ng-focus="growBack($event)"
+               placeholder="geef parameter naam" grow-back
                my-enter="saveParameterLocal($element, this)" ng-model="intentData.parameter">
 
         <i class="fa fa-repeat input-saving-overlay hidden"></i>

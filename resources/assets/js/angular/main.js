@@ -21,14 +21,12 @@ angular.module('botApp').directive('scrolly', function () {
         restrict: 'A',
         link: function (scope, element, attrs) {
             var raw = element[0];
-            console.log('loading directive');
+
 
             element.bind('scroll', function () {
-                //   console.log('in scroll');
-                //   console.log(raw.scrollTop + raw.offsetHeight);
-                //   console.log(raw.scrollHeight);
+
                 if (raw.scrollTop + raw.offsetHeight > (raw.scrollHeight - 5)) {
-                    console.log("I am at the bottom");
+
                     scope.$broadcast('atBottomOfElem');
                     scope.$apply(attrs.scrolly);
                 }
@@ -123,7 +121,7 @@ angular.module('botApp').directive('activeApp', ['$rootScope',function ($rootSco
         link: function ($scope, element, attrs) {
 
             $rootScope.$on('toggleApp', function (event, data) {
-                console.log('get a broadcast');
+
                 $scope.$eval(attrs.activeApp, {$element: element, data: data});
 
             });
@@ -138,7 +136,7 @@ angular.module('botApp').directive('activeTraining', ['$rootScope',function ($ro
         link: function ($scope, element, attrs) {
 
             $rootScope.$on('toggleIntentTraining', function (event, data) {
-                console.log('get a broadcast');
+
                 $scope.$eval(attrs.activeTraining, {$element: element, data: data});
 
             });
@@ -153,7 +151,7 @@ angular.module('botApp').directive('activeEntity', ['$rootScope',function ($root
         link: function ($scope, element, attrs) {
 
             $rootScope.$on('toggleIntentEntity', function (event, data) {
-                console.log('get a broadcast');
+
                 $scope.$eval(attrs.activeEntity, {$element: element, data: data});
 
             });

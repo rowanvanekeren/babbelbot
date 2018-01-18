@@ -111,7 +111,7 @@
                     <div class="app-top-section">
                         <div class="input-wrapper disable-shrink">
                             <input type="text" class='inp-head-name' ng-model="app.title" name="title"
-                                   my-enter="inputEnter($element, this)" ng-focus="growBack($event)">
+                                   my-enter="inputEnter($element, this)" grow-back>
                             <i class="fa fa-repeat input-saving-overlay hidden"></i>
 
                         </div>
@@ -133,7 +133,7 @@
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input class="default-input " type="password" name="server_token"
                                        ng-model="app.server_token" my-enter="inputEnter($element, this)"
-                                       ng-focus="growBack($event)">
+                                       grow-back>
 
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
                             </div>
@@ -151,7 +151,7 @@
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input  class="default-input inp-loading" type="password"
                                        name="access_token" ng-model="app.access_token"
-                                       my-enter="inputEnter($element, this)" ng-focus="growBack($event)">
+                                       my-enter="inputEnter($element, this)" grow-back>
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
                             </div>
                             <div class="input-error">
@@ -175,7 +175,7 @@
 
                                 <input class="default-input " type="text" name="webhook"
                                        ng-model="app.webhook" my-enter="inputEnter($element, this)"
-                                       ng-focus="growBack($event)">
+                                       grow-back placeholder="Webhook url (druk enter om toe te voegen)">
 
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
                             </div>
@@ -236,7 +236,7 @@
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input  class="default-input " type="password" name="fb_verify_token"
                                        ng-model="app.fb_verify_token" my-enter="inputEnter($element, this)"
-                                       ng-focus="growBack($event)">
+                                       grow-back placeholder="voer token in (druk enter om toe te voegen)">
 
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
                             </div>
@@ -252,7 +252,7 @@
                                 <i class="fa fa-eye password-eye-icon" aria-hidden="true" password-input></i>
                                 <input  class="default-input " type="password" name="fb_access_token"
                                        ng-model="app.fb_access_token" my-enter="inputEnter($element, this)"
-                                       ng-focus="growBack($event)">
+                                        grow-back placeholder="voer token in (druk enter om toe te voegen)">
 
                                 <i class="fa fa-repeat input-saving-overlay hidden"></i>
                             </div>
